@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://pwbpf24tg453"]
+
+[ext_resource type="Script" uid="uid://cjvenrv7uebfg" path="res://player_body.gd" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://d26kk83378j2i" path="res://thread.gd" id="2_onrkg"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_onrkg"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i3pqv"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_4flbx"]
+
+[node name="Player" type="Node2D"]
+
+[node name="PlayerBody" type="CharacterBody2D" parent="."]
+script = ExtResource("1_4flbx")
+
+[node name="PlayerSprite" type="Sprite2D" parent="PlayerBody"]
+scale = Vector2(20, 30)
+texture = SubResource("PlaceholderTexture2D_onrkg")
+
+[node name="PlayerCollision" type="CollisionShape2D" parent="PlayerBody"]
+shape = SubResource("CapsuleShape2D_i3pqv")
+
+[node name="Thread" type="Node2D" parent="."]
+script = ExtResource("2_onrkg")
+
+[node name="Sprite2D" type="Sprite2D" parent="Thread"]
+texture = SubResource("PlaceholderTexture2D_4flbx")
