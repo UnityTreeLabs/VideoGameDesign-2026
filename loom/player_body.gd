@@ -1,9 +1,11 @@
 extends CharacterBody2D
 
-
+signal shoot_thread
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
+func _ready() -> void:
+	pass
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -28,3 +30,4 @@ func _input(event):
 	# Check if event is mouse click
 	if event is InputEventMouseButton:
 		emit_signal("shoot_thread", event.global_position)
+		
