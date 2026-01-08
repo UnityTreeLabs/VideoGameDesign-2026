@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
-signal shoot_thread
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
+@onready var thread = preload("res://thread.tscn")
 
 func _ready() -> void:
 	pass
@@ -23,11 +23,11 @@ func _physics_process(delta: float) -> void:
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-
-	move_and_slide()
-
-func _input(event):
-	# Check if event is mouse click
-	if event is InputEventMouseButton:
-		emit_signal("shoot_thread", event.global_position)
+	
+	if Input.is_action_just_pressed("ui_click"):
+		var instance = thread.instantiate()
+		instance.rotation = atan2(get_local_mouse_position().y, get_local_mouse_position().x)
+		instance.global_position = global_position + Vector2(-100, -170)
+		get_parent().add_child(instance)
 		
+	move_and_slide()
