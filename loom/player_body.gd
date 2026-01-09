@@ -27,7 +27,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_click"):
 		var instance = thread.instantiate()
 		instance.rotation = atan2(get_local_mouse_position().y, get_local_mouse_position().x)
-		instance.global_position = global_position + Vector2(-100, -170)
+		instance.global_position = global_position + Vector2(-100, -190)
 		get_parent().add_child(instance)
 		
 	move_and_slide()

@@ -1,24 +1,29 @@
-extends Node2D
+extends RigidBody2D
 
 const SPEED = 900
+@onready var string = preload("res://string.tscn")
+var constant_rotation = 0
 var moving = 1
+var velocity = Vector2(0, 0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	print(SPEED * delta * moving)
-	move_local_x(SPEED * delta * moving)
+	velocity = Vector2(900, 0).rotated(get_parent().rotation) * moving
+	angular_velocity = 0
+	rotation = 0
+	$Line2D.remove_point(1)
+	$Line2D.add_point(get_parent().get_parent().get_parent().get_node("Player/PlayerBody").global_position)
+	move_and_collide(velocity * delta)
 
-func _on_player_body_shoot_thread(location) -> void:
-	global_position = get_parent().get_node("PlayerBody").global_position
-	rotation = atan2((location.y-global_position.y), (location.x-global_position.x))
-	show()
+func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
+	pass
 
-func _on_area_2d_body_entered(body: Node2D) -> void:
+
+func _on_body_entered(body: Node) -> void:
 	moving = 0
-	while get_node("Area2D").get_overlapping_bodies().size() >= 1:
-		move_local_x(-1)
+	linear_velocity = Vector2(0, 0)
+	

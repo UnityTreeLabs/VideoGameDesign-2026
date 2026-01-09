@@ -1,26 +1,37 @@
-[gd_scene load_steps=4 format=3 uid="uid://giwmiu0vmpw3"]
+[gd_scene load_steps=5 format=3 uid="uid://giwmiu0vmpw3"]
 
-[ext_resource type="Script" uid="uid://d26kk83378j2i" path="res://thread.gd" id="1_73fnl"]
+[ext_resource type="Script" uid="uid://xa8tphvsa6q2" path="res://thread.gd" id="1_73fnl"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_73fnl"]
+rough = true
+absorbent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
+size = Vector2(18, 1)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_4flbx"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
-size = Vector2(18.516476, 1.0209141)
-
 [node name="Thread" type="Node2D"]
-script = ExtResource("1_73fnl")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-9, 0)
-scale = Vector2(18.5, 1)
-texture = SubResource("PlaceholderTexture2D_4flbx")
-
-[node name="Area2D" type="Area2D" parent="."]
+[node name="ThreadBody" type="RigidBody2D" parent="."]
 collision_layer = 4
 collision_mask = 2
+physics_material_override = SubResource("PhysicsMaterial_73fnl")
+gravity_scale = 0.0
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_73fnl")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-9.002867, -0.00284338)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ThreadBody"]
+position = Vector2(9, 0)
 shape = SubResource("RectangleShape2D_onrkg")
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[node name="Sprite2D" type="Sprite2D" parent="ThreadBody"]
+position = Vector2(9, 0)
+scale = Vector2(18, 1)
+texture = SubResource("PlaceholderTexture2D_4flbx")
+
+[node name="Line2D" type="Line2D" parent="ThreadBody"]
+points = PackedVector2Array(0, 0, 0, 0)
+
+[connection signal="body_entered" from="ThreadBody" to="ThreadBody" method="_on_body_entered"]
