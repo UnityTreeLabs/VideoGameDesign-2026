@@ -15,9 +15,10 @@ func _process(delta: float) -> void:
 	velocity = Vector2(900, 0).rotated(get_parent().rotation) * moving
 	angular_velocity = 0
 	rotation = 0
-	$Line2D.remove_point(1)
-	$Line2D.add_point(get_parent().get_parent().get_parent().get_node("Player/PlayerBody").global_position)
 	move_and_collide(velocity * delta)
+	$Line2D.remove_point(1)
+	$Line2D.add_point(get_parent().get_parent().get_node("Player/PlayerBody").global_position - global_position)
+	$Line2D.rotation = -get_parent().rotation
 
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	pass

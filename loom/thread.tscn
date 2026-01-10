@@ -33,5 +33,9 @@ texture = SubResource("PlaceholderTexture2D_4flbx")
 
 [node name="Line2D" type="Line2D" parent="ThreadBody"]
 points = PackedVector2Array(0, 0, 0, 0)
+width = 1.0
+
+[node name="Area2D" type="Area2D" parent="ThreadBody"]
+collision_layer = 0
 
 [connection signal="body_entered" from="ThreadBody" to="ThreadBody" method="_on_body_entered"]
