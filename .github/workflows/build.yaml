@@ -36,7 +36,7 @@ jobs:
           mkdir -v -p build/web  # Create the output directory for the web build
           EXPORT_DIR="$(readlink -f build)"  # Define the output directory path
           cd $PROJECT_PATH  # Go to the project directory
-          godot --headless --verbose --export-release "WebProd" "$EXPORT_DIR/web/index.html"  # Export project as HTML5
+          godot --headless --verbose --export-release "debugrun" "$EXPORT_DIR/web/index.html"  # Export project as HTML5
 
       # Step 4: Upload the exported HTML5 build as an artifact
       - name: Upload Artifact
