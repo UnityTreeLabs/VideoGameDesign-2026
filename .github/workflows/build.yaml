@@ -10,7 +10,7 @@ env:
   GODOT_VERSION: 4.5.1
   BUTLER_API_KEY: ${{secrets.BUTLER_API_KEY}}
   EXPORT_NAME: debugrun
-  PROJECT_PATH: .
+  PROJECT_PATH: ./loom
   # Environment variables to configure Godot project and export settings
 
 jobs:
