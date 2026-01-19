@@ -1,0 +1,61 @@
+name: CI
+# Public ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDPqqZ0YMBzHqrp4x2Mwv3ny6xHlaeWw+YpJ5zXFgf/ubyl6tQHCuKWoFclfjazgEv3T/3BdGdh3DCI9TAJ7rOWPsZrigyFSctx/EpinlespwGGE1jHYF58NE0eqMnf+C1bwlsrxv0CZffkld+FqmkjAhBd6jvzQ8vGnFAS6Dp8nKEZQcRm3Xy55lMpeHxVLM9a6Nd16R3CdjJs5CSVrfti43T/Epftibsw8cZW2tY/y0+BPVEyKzLyveI8wXXCyP3OZBOiewDbkboHJJPWtUqcvjcYOfv+66Myb0FfCAWPl5PVdOlSJ6gvTV/GHPmLhPla1IDcptCVffyWiln0Q7FQJcczxhWspXtXeM47eS22T0Usw7u3avlr4MFFuzHhYguQWhpcrBcyABCgNGH8i3jYOgTkWtzOUoYf/Myx9JzHWu4LkL1+Yolg4Fgt3TjYpl5BylxjFhnbKfxIHQvSSKqDbOLLzU0z4VvtN70p6SMUS7H9DZ0IOUuFe+e3icrTHpJTJ/YuayhV7GWls9pjDXG4CJyhC4n9QPtXqmGTTFEke3/M1skG09+azWVG2TiMJ4MhqqIJ0063zFvQSI2gPEiKAKU4Yz7GGjoj6fi77+0RbADwugP2I3dsBpiCBKgQQ/SLLJn6+mlZ6wNwxKid8izzP+Z25KPN0ioq+nzrgwiTOQ== jenks\li.sun50@17HS6244-16
+# Controls when the workflow will run
+on:
+  push:
+    branches: [ "main" ]  # Triggers the workflow on push to the 'main' branch
+  workflow_dispatch:  # Allows you to run this workflow manually from the Actions tab
+
+env:
+  GODOT_VERSION: 4.5.1
+  BUTLER_API_KEY: ${{secrets.BUTLER_API_KEY}}
+  EXPORT_NAME: debugrun
+  PROJECT_PATH: .
+  # Environment variables to configure Godot project and export settings
+
+jobs:
+  build_and_export:
+    name: Godot CI Build and Export for Web
+    runs-on: ubuntu-latest  # Defines the runner (can be ubuntu, macos, etc.)
+    container: barichello/godot-ci:4.5.1
+
+    steps:
+      # Step 1: Check out the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v4  # Check out the repository to access the project files
+
+      # Step 2: Setup Godot version and export templates
+      - name: Setup Godot and Export Templates
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/  # Create export templates directory
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable  # Move the export template
+
+      # Step 3: Build the project for Web (HTML5)
+      - name: Web Build
+        run: |
+          mkdir -v -p build/web  # Create the output directory for the web build
+          EXPORT_DIR="$(readlink -f build)"  # Define the output directory path
+          cd $PROJECT_PATH  # Go to the project directory
+          godot --headless --verbose --export-release "WebProd" "$EXPORT_DIR/web/index.html"  # Export project as HTML5
+
+      # Step 4: Upload the exported HTML5 build as an artifact
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web  # The name for the artifact
+          path: build/web  # The directory to upload as the artifact
+
+      - name: SCP to debug Server
+        uses: appleboy/scp-action@v0.1.7
+        with: 
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.KEY }}
+          source: "build/web/index.html, build/web/index.wasm, build/web/index.pck, build/web/index.js,build/web/index.icon.png, build/web/index.audio.worklet.js, build/web/index.apple-touch-icon.png"
+          target: "/var/www/html/"
+     # - name: Itchio Deployment
+    #    run: |
+        #  zip -r build/index.zip build/web
+      #    butler push build/index.zip $ITCHIO_USERNAME/$ITCHIO_GAME:web
+        
