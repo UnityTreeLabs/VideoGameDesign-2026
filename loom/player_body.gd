@@ -1,24 +1,38 @@
 extends CharacterBody2D
 
 const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
+const JUMP_VELOCITY = -500.0
+var direction = 0
+var can_jump = false
+var jumping = false
+
 @onready var thread = preload("res://thread.tscn")
 
 func _ready() -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
 
 	# Handle jump.
-	if (Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("ui_up")) and is_on_floor():
+	if Input.is_action_just_pressed("ui_up") and can_jump:
 		velocity.y = JUMP_VELOCITY
-
+		jumping = true
+		can_jump = false
+		
+	if not (Input.is_action_pressed("ui_up") and jumping and velocity.y < 0):
+		jumping = false
+		
+	# Add the gravity.
+	if not is_on_floor():
+		if get_parent().get_node("CoyoteTime").is_stopped() and can_jump:
+			get_parent().get_node("CoyoteTime").start()
+		velocity += get_gravity() * delta * (1.25 - int(jumping) * 0.5)
+	else:
+		can_jump = true
+		
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis("ui_left", "ui_right")
+	direction = Input.get_axis("ui_left", "ui_right")
 	if direction:
 		velocity.x = direction * SPEED
 		$AnimatedSprite2D.flip_h = (direction - 1)/2
@@ -32,3 +46,7 @@ func _physics_process(delta: float) -> void:
 		get_parent().get_parent().add_child(instance)
 		
 	move_and_slide()
+
+
+func _on_coyote_time_timeout() -> void:
+	can_jump = false

@@ -40,8 +40,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i3pqv"]
-radius = 5.0
-height = 42.0
+radius = 6.0
+height = 41.0
 
 [node name="Player" type="Node2D"]
 
@@ -58,5 +58,11 @@ autoplay = "Idle"
 frame_progress = 0.9010658
 
 [node name="PlayerCollision" type="CollisionShape2D" parent="PlayerBody"]
-position = Vector2(0, 3)
+position = Vector2(-0.5, 3.5)
 shape = SubResource("CapsuleShape2D_i3pqv")
+
+[node name="CoyoteTime" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="timeout" from="CoyoteTime" to="PlayerBody" method="_on_coyote_time_timeout"]
