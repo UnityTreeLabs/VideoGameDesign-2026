@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://pwbpf24tg453"]
 
 [ext_resource type="Script" uid="uid://cjvenrv7uebfg" path="res://player_body.gd" id="1_4flbx"]
-[ext_resource type="Texture2D" uid="uid://dao8odyneodiq" path="res://Fox Updated Static.png" id="2_onrkg"]
+[ext_resource type="Texture2D" uid="uid://r1beo4sioeot" path="res://character idle.tres" id="2_onrkg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i3pqv"]
 atlas = ExtResource("2_onrkg")
@@ -55,7 +55,7 @@ position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_1jxqw")
 animation = &"Idle"
 autoplay = "Idle"
-frame_progress = 0.9010658
+frame_progress = 0.7298674
 
 [node name="PlayerCollision" type="CollisionShape2D" parent="PlayerBody"]
 position = Vector2(-0.5, 3.5)
@@ -65,4 +65,8 @@ shape = SubResource("CapsuleShape2D_i3pqv")
 wait_time = 0.1
 one_shot = true
 
+[node name="BasicCooldown" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="timeout" from="CoyoteTime" to="PlayerBody" method="_on_coyote_time_timeout"]
+[connection signal="timeout" from="BasicCooldown" to="PlayerBody" method="_on_basic_cooldown_timeout"]

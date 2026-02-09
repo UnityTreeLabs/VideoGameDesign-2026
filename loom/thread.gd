@@ -1,14 +1,14 @@
 extends RigidBody2D
 
 const SPEED = 900
-@onready var string = preload("res://string.tscn")
 var constant_rotation = 0
+var num = 0
 var moving = 1
 var velocity = Vector2(0, 0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	get_parent().get_parent().get_node("Player/PlayerBody").destroy_thread.connect(_on_destroy_thread)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -26,10 +26,6 @@ func _process(delta: float) -> void:
 	$Line2D.add_point(get_parent().get_parent().get_node("Player/PlayerBody").global_position - global_position)
 	$Line2D.rotation = -get_parent().rotation
 
-func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
-	pass
-
-
 func _on_body_entered(body: Node) -> void:
 	collision_layer = 6
 	moving = 0
@@ -37,3 +33,11 @@ func _on_body_entered(body: Node) -> void:
 	
 func _on_timer_timeout() -> void:
 	get_parent().queue_free()
+
+func _on_destroy_thread() -> void:
+	num -= 1
+	if num == 0:
+		get_parent().queue_free()
+
+func _initialize(thread_num) -> void:
+	num = thread_num
