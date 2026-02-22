@@ -1,0 +1,11 @@
+[gd_resource type="CanvasTexture" load_steps=4 format=3 uid="uid://dx2bkufy56un6"]
+
+[ext_resource type="Texture2D" uid="uid://snr7wps4qx5d" path="res://Thread_Creation (2).png" id="1_nly85"]
+[ext_resource type="Texture2D" uid="uid://jylnvj11sj4g" path="res://Thread_Creation_n.png" id="2_fo6e6"]
+[ext_resource type="Texture2D" uid="uid://dhc440xlh5o16" path="res://Thread_Creation_s.png" id="3_deyrc"]
+
+[resource]
+diffuse_texture = ExtResource("1_nly85")
+normal_texture = ExtResource("2_fo6e6")
+specular_texture = ExtResource("3_deyrc")
+specular_color = Color(1, 1, 0.8156863, 1)

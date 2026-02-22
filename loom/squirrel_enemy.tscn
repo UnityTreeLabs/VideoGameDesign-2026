@@ -1,0 +1,81 @@
+[gd_scene load_steps=6 format=3 uid="uid://ccx2rl2c4rtfu"]
+
+[ext_resource type="Texture2D" uid="uid://cjsp7gln7mvn7" path="res://squirrel.tres" id="1_730o3"]
+[ext_resource type="Script" uid="uid://hkmnbj5r5x8q" path="res://squirrel.gd" id="1_mb0cq"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_mb0cq"]
+polygon = PackedVector2Array(-11.5, 0, -2, 7.5, 10.5, 7.5, 5.5, 6, 5.5, 2, 15.5, 0)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mb0cq"]
+height = 32.0
+
+[sub_resource type="Curve2D" id="Curve2D_vpmvj"]
+_data = {
+"points": PackedVector2Array(0, 0, 200, 0, 0, 0, 0, 0, 0, 0, 200, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 3
+
+[node name="SquirrelEnemy" type="Node2D"]
+light_mask = 3
+scale = Vector2(2, 2)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("1_mb0cq")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="CharacterBody2D"]
+visible = false
+occluder = SubResource("OccluderPolygon2D_mb0cq")
+occluder_light_mask = 8
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+light_mask = 8
+texture = ExtResource("1_730o3")
+
+[node name="Area2D" type="Area2D" parent="CharacterBody2D"]
+visible = false
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
+position = Vector2(0, -2)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_mb0cq")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="CharacterBody2D"]
+visible = false
+position = Vector2(0, -2)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_mb0cq")
+
+[node name="PlayerDetection" type="RayCast2D" parent="CharacterBody2D"]
+target_position = Vector2(400, 0)
+hit_from_inside = true
+
+[node name="PlayerDetection2" type="RayCast2D" parent="CharacterBody2D"]
+target_position = Vector2(400, 0)
+hit_from_inside = true
+
+[node name="FloorDetection" type="RayCast2D" parent="CharacterBody2D"]
+position = Vector2(22, 0)
+target_position = Vector2(0, 20)
+collision_mask = 2
+hit_from_inside = true
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_vpmvj")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+
+[node name="ChaseStart" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[node name="ChaseEnd" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[connection signal="body_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="ChaseStart" to="CharacterBody2D" method="_on_chase_start_timeout"]
+[connection signal="timeout" from="ChaseEnd" to="CharacterBody2D" method="_on_chase_end_timeout"]
