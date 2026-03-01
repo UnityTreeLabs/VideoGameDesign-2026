@@ -26,6 +26,9 @@ func _physics_process(delta: float) -> void:
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_up") and can_jump:
 		velocity.y = JUMP_VELOCITY
+		var squash_tween = create_tween()
+		squash_tween.tween_property($Sprite2D, "scale", Vector2(0.8, 1.1), 0.07).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
+		squash_tween.tween_property($Sprite2D, "scale", Vector2(1, 1), 0.2).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_IN_OUT)
 		jumping = true
 		can_jump = false
 		
@@ -74,6 +77,12 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("ui_click") and can_shoot:
 		can_shoot = false
+		var light_tween = create_tween()
+		var mod_tween = create_tween()
+		light_tween.tween_property($PointLight2D, "energy", 0.5, 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		light_tween.tween_property($PointLight2D, "energy", 0.2, 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+		mod_tween.tween_property($"..", "modulate", Color(2.454, 2.363, 2.042) * 1, 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		mod_tween.tween_property($"..", "modulate", Color(1.572, 1.572, 1.499), 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 		get_parent().get_node("BasicCooldown").start()
 		if global.thread_max <= thread_num:
 			destroy_thread.emit()
@@ -87,6 +96,9 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("dash") and global.dash and can_dash and not dash_cooldown:
 		dashing = true
+		var squash_tween = create_tween()
+		squash_tween.tween_property($Sprite2D, "scale", Vector2(1.3, 0.8), 0.07).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
+		squash_tween.tween_property($Sprite2D, "scale", Vector2(1, 1), 0.12).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_IN_OUT)
 		$Area2D.monitoring = false
 		can_jump = false
 		can_dash = false

@@ -1,0 +1,92 @@
+[gd_scene load_steps=13 format=3 uid="uid://datuojbmkf53o"]
+
+[ext_resource type="Texture2D" uid="uid://mjmvlipr3uil" path="res://Anchor.tres" id="1_tkecr"]
+[ext_resource type="Texture2D" uid="uid://bm17pyrkbmqw6" path="res://Light_Orb.png" id="2_b420j"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nok0i"]
+atlas = ExtResource("1_tkecr")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uy2so"]
+atlas = ExtResource("1_tkecr")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3b3ov"]
+atlas = ExtResource("1_tkecr")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w5ihn"]
+atlas = ExtResource("1_tkecr")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ur2g"]
+atlas = ExtResource("1_tkecr")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ocaou"]
+atlas = ExtResource("1_tkecr")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_urwoy"]
+atlas = ExtResource("1_tkecr")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sbun3"]
+atlas = ExtResource("1_tkecr")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ddo5i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nok0i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uy2so")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3b3ov")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w5ihn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ur2g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ocaou")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_urwoy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sbun3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tkecr"]
+radius = 3.0
+
+[node name="LightAnchor" type="Node2D"]
+z_index = 512
+scale = Vector2(2, 2)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(2.1087549, 2.1168277, 1.7858365, 1)
+texture = ExtResource("2_b420j")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ddo5i")
+autoplay = "default"
+frame_progress = 0.90222925
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(0, -6)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("CircleShape2D_tkecr")

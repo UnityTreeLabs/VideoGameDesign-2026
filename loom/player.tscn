@@ -1,47 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://pwbpf24tg453"]
+[gd_scene load_steps=12 format=3 uid="uid://pwbpf24tg453"]
 
 [ext_resource type="Script" uid="uid://cjvenrv7uebfg" path="res://player_body.gd" id="1_4flbx"]
 [ext_resource type="Texture2D" uid="uid://r1beo4sioeot" path="res://character idle.tres" id="2_onrkg"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_i3pqv"]
-atlas = ExtResource("2_onrkg")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hqtel"]
-atlas = ExtResource("2_onrkg")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sweqy"]
-atlas = ExtResource("2_onrkg")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2hs0m"]
-atlas = ExtResource("2_onrkg")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_1jxqw"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_i3pqv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hqtel")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sweqy")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2hs0m")
-}],
-"loop": true,
-"name": &"Idle",
-"speed": 5.0
-}]
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i3pqv"]
 radius = 6.0
-height = 41.0
+height = 43.0
 
 [sub_resource type="Gradient" id="Gradient_onrkg"]
 offsets = PackedFloat32Array(0, 0.5748792, 0.96564883)
@@ -58,6 +22,57 @@ metadata/_snap_enabled = true
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_onrkg"]
 polygon = PackedVector2Array(2, 23, -4, 23, -1, -20)
+
+[sub_resource type="Animation" id="Animation_i3pqv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ScarfLight:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.125, 0.20703125)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ScarfLight:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-5, 7.749999)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ScarfLight:energy")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.5]
+}
 
 [sub_resource type="Animation" id="Animation_onrkg"]
 resource_name = "idle"
@@ -112,62 +127,23 @@ tracks/3/keys = {
 "values": [1.5, 1.75, 1.5, 1.0]
 }
 
-[sub_resource type="Animation" id="Animation_i3pqv"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ScarfLight:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0.125, 0.20703125)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("ScarfLight:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-5, 7.749999)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("ScarfLight:energy")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.5]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hqtel"]
 _data = {
 &"RESET": SubResource("Animation_i3pqv"),
 &"idle": SubResource("Animation_onrkg")
 }
+
+[sub_resource type="Gradient" id="Gradient_i3pqv"]
+colors = PackedColorArray(1, 1, 0.84705883, 0.34509805, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hqtel"]
+gradient = SubResource("Gradient_i3pqv")
+width = 10
+height = 10
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
 
 [node name="Player" type="Node2D"]
 
@@ -176,16 +152,8 @@ scale = Vector2(2, 2)
 collision_mask = 2
 script = ExtResource("1_4flbx")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="PlayerBody"]
-visible = false
-position = Vector2(0, -1)
-sprite_frames = SubResource("SpriteFrames_1jxqw")
-animation = &"Idle"
-autoplay = "Idle"
-frame = 1
-frame_progress = 0.11955773
-
 [node name="PlayerCollision" type="CollisionShape2D" parent="PlayerBody"]
+top_level = true
 position = Vector2(-0.5, 3.5)
 shape = SubResource("CapsuleShape2D_i3pqv")
 
@@ -198,7 +166,6 @@ position = Vector2(-0.5, 3.5)
 shape = SubResource("CapsuleShape2D_i3pqv")
 
 [node name="PointLight2D" type="PointLight2D" parent="PlayerBody"]
-visible = false
 color = Color(0.9999997, 0.99960405, 0.87527764, 1)
 energy = 0.2
 range_item_cull_mask = 14
@@ -215,7 +182,7 @@ color = Color(0.9372549, 0.9411765, 0.6627451, 1)
 energy = 1.5
 shadow_item_cull_mask = 12
 texture = SubResource("GradientTexture2D_i3pqv")
-height = 10000000.0
+height = 30.0
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="PlayerBody"]
 visible = false
@@ -230,6 +197,12 @@ autoplay = "idle"
 [node name="Sprite2D" type="Sprite2D" parent="PlayerBody"]
 texture = ExtResource("2_onrkg")
 hframes = 4
+
+[node name="Sprite2D2" type="Sprite2D" parent="PlayerBody"]
+visible = false
+modulate = Color(2.126257, 2.126257, 2.126257, 1)
+position = Vector2(-1.5, -11)
+texture = SubResource("GradientTexture2D_hqtel")
 
 [node name="CoyoteTime" type="Timer" parent="."]
 wait_time = 0.1

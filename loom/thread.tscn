@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://giwmiu0vmpw3"]
+[gd_scene load_steps=26 format=3 uid="uid://giwmiu0vmpw3"]
 
 [ext_resource type="Script" uid="uid://xa8tphvsa6q2" path="res://thread.gd" id="1_73fnl"]
 [ext_resource type="Texture2D" uid="uid://dsr5qvqf0bty2" path="res://Placeholder_Tile.png" id="1_o70ij"]
@@ -135,11 +135,8 @@ animations = [{
 "speed": 40.0
 }]
 
-[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_o70ij"]
-points = PackedVector2Array(30, 0, -45.5, -6, -45.5, 6)
-
-[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_3hppu"]
-points = PackedVector2Array(42.5, 0.5, -45.5, -5.5, -45.5, 6.5)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o70ij"]
+size = Vector2(87, 4.5)
 
 [sub_resource type="Gradient" id="Gradient_3hppu"]
 offsets = PackedFloat32Array(0.17391305, 0.71014494, 1)
@@ -179,7 +176,7 @@ width = 1.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ThreadBody"]
 modulate = Color(2.454, 2.363405, 2.0415196, 1)
-position = Vector2(42.509666, -0.49033356)
+position = Vector2(42.51, 0)
 rotation = 0.7853982
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_5cep4")
@@ -188,18 +185,20 @@ autoplay = "creation"
 frame = 16
 frame_progress = 1.0
 
+[node name="Flash" type="Sprite2D" parent="ThreadBody"]
+
 [node name="Area2D" type="Area2D" parent="ThreadBody"]
 collision_layer = 0
-collision_mask = 2
+collision_mask = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ThreadBody/Area2D"]
-position = Vector2(45.01, -0.5)
-shape = SubResource("ConvexPolygonShape2D_o70ij")
+position = Vector2(43.5, 0)
+shape = SubResource("RectangleShape2D_o70ij")
 one_way_collision_margin = 128.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ThreadBody"]
-position = Vector2(45.009666, -0.99033356)
-shape = SubResource("ConvexPolygonShape2D_3hppu")
+position = Vector2(43.5, 0)
+shape = SubResource("RectangleShape2D_o70ij")
 disabled = true
 one_way_collision_margin = 128.0
 

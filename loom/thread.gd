@@ -23,7 +23,8 @@ func _process(delta: float) -> void:
 		rotation = 0
 		var collision = move_and_collide(velocity * delta, false, 0.08, true)
 		if collision != null:
-			if (collision.get_collider() is TileMapLayer and (collision.get_collider().tile_set.get_physics_layer_collision_layer(0) & 8 == 8 or global.pierce_wall)):
+			if ((collision.get_collider() is TileMapLayer and global.pierce_wall and collision.get_collider().tile_set.get_physics_layer_collision_layer(0) & 2 == 2) or ((not collision.get_collider() is TileMapLayer) and collision.get_collider().collision_layer & 8 == 8)):
+				
 				collision_layer = 2
 				freeze = true
 				moving = 0
@@ -35,24 +36,35 @@ func _process(delta: float) -> void:
 				linear_velocity = Vector2(0, 0)
 				finished = true
 				$AnimatedSprite2D.play_backwards("creation")
-		if moving == 0 and move_and_collide(Vector2(0.09, 0).rotated(get_parent().rotation), true, 0.08, true) == null:
-			finished = true
-			$AnimatedSprite2D.play_backwards("creation")
 		$Line2D.remove_point(1)
 		$Line2D.add_point(get_parent().get_parent().get_node("Player/PlayerBody").global_position - global_position)
 		$Line2D.rotation = -get_parent().rotation
 	else:
+		
 		if $Area2D.has_overlapping_bodies() and $AnimatedSprite2D.frame >= 15:
-			collision_layer = 0
-			moving = -0.1
-			start = true
-			finished = true
-			$AnimatedSprite2D.play_backwards("creation")
+			var valid_spawn = false
+			for body in $Area2D.get_overlapping_bodies():
+				if ((body is TileMapLayer and global.pierce_wall and body.tile_set.get_physics_layer_collision_layer(0) & 2 == 2) or ((not body is TileMapLayer) and body.collision_layer & 8 == 8)):
+					valid_spawn = true
+			if valid_spawn:
+				collision_mask = 0
+				moving = 0
+				freeze = true
+				linear_velocity = Vector2(0, 0)
+				collision_layer = 2
+				$CollisionShape2D.disabled = false
+				start = true
+			else:
+				collision_layer = 0
+				moving = -0.1
+				start = true
+				finished = true
+				$AnimatedSprite2D.play_backwards("creation")
 		else:
-			global_position = get_parent().get_parent().get_node("Player/PlayerBody").global_position
+			global_position = get_parent().get_parent().get_node("Player/PlayerBody").global_position + Vector2(20, 0).rotated(global_rotation)
 
 func _on_body_entered(body: Node) -> void:
-	if ((body.get_class() == "TileMapLayer" and body.tile_set.get_physics_layer_collision_layer(0) & 8 == 8) or global.pierce_wall) and moving != 1 and not finished:
+	if ((body is TileMapLayer and global.pierce_wall and body.tile_set.get_physics_layer_collision_layer(0) & 2 == 2) or ((not body is TileMapLayer) and body.collision_layer & 8 == 8)) and moving != 1 and not finished:
 		collision_layer = 2
 		moving = 0
 		linear_velocity = Vector2(0, 0)
