@@ -1,7 +1,43 @@
-[gd_scene load_steps=6 format=3 uid="uid://ccx2rl2c4rtfu"]
+[gd_scene load_steps=11 format=3 uid="uid://ccx2rl2c4rtfu"]
 
 [ext_resource type="Texture2D" uid="uid://cjsp7gln7mvn7" path="res://squirrel.tres" id="1_730o3"]
 [ext_resource type="Script" uid="uid://hkmnbj5r5x8q" path="res://squirrel.gd" id="1_mb0cq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mb0cq"]
+atlas = ExtResource("1_730o3")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rpdj4"]
+atlas = ExtResource("1_730o3")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vpmvj"]
+atlas = ExtResource("1_730o3")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spnep"]
+atlas = ExtResource("1_730o3")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tgunf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mb0cq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rpdj4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vpmvj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spnep")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_mb0cq"]
 polygon = PackedVector2Array(-11.5, 0, -2, 7.5, 10.5, 7.5, 5.5, 6, 5.5, 2, 15.5, 0)
@@ -16,6 +52,7 @@ _data = {
 point_count = 3
 
 [node name="SquirrelEnemy" type="Node2D"]
+modulate = Color(0.715, 0.007, 1.187, 1)
 light_mask = 3
 scale = Vector2(2, 2)
 
@@ -24,14 +61,15 @@ collision_layer = 16
 collision_mask = 2
 script = ExtResource("1_mb0cq")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+sprite_frames = SubResource("SpriteFrames_tgunf")
+autoplay = "default"
+frame_progress = 0.64900726
+
 [node name="LightOccluder2D" type="LightOccluder2D" parent="CharacterBody2D"]
 visible = false
 occluder = SubResource("OccluderPolygon2D_mb0cq")
 occluder_light_mask = 8
-
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
-light_mask = 8
-texture = ExtResource("1_730o3")
 
 [node name="Area2D" type="Area2D" parent="CharacterBody2D"]
 visible = false
@@ -44,7 +82,6 @@ rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_mb0cq")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="CharacterBody2D"]
-visible = false
 position = Vector2(0, -2)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_mb0cq")

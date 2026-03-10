@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://datuojbmkf53o"]
+[gd_scene load_steps=14 format=3 uid="uid://datuojbmkf53o"]
 
 [ext_resource type="Texture2D" uid="uid://mjmvlipr3uil" path="res://Anchor.tres" id="1_tkecr"]
 [ext_resource type="Texture2D" uid="uid://bm17pyrkbmqw6" path="res://Light_Orb.png" id="2_b420j"]
@@ -68,7 +68,10 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tkecr"]
-radius = 3.0
+radius = 6.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tkecr"]
+size = Vector2(18, 31)
 
 [node name="LightAnchor" type="Node2D"]
 z_index = 512
@@ -90,3 +93,12 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource("CircleShape2D_tkecr")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(0, 8)
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(0, -7.5)
+shape = SubResource("RectangleShape2D_tkecr")

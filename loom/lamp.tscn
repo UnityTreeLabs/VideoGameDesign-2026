@@ -1,0 +1,68 @@
+[gd_scene load_steps=8 format=3 uid="uid://cw7peq3450mxo"]
+
+[ext_resource type="Texture2D" uid="uid://n8sqe7gv383q" path="res://lamp.tres" id="1_bekw5"]
+[ext_resource type="Script" uid="uid://cj0c01koyc4et" path="res://lamp.gd" id="1_uno5e"]
+
+[sub_resource type="Gradient" id="Gradient_uno5e"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vxcd3"]
+gradient = SubResource("Gradient_uno5e")
+width = 16
+height = 16
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_1q0j8"]
+offsets = PackedFloat32Array(0, 0.5114504, 1)
+colors = PackedColorArray(1, 0.8745098, 0.60784316, 1, 0.8816794, 0.7710373, 0.53592277, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_uno5e"]
+gradient = SubResource("Gradient_1q0j8")
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vxcd3"]
+radius = 75.0
+
+[node name="Lamp" type="Node2D"]
+scale = Vector2(2, 2)
+script = ExtResource("1_uno5e")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+modulate = Color(3.2944162, 2.6968062, 1.7505909, 1)
+self_modulate = Color(1, 1, 1, 0)
+position = Vector2(0, -50)
+texture = SubResource("GradientTexture2D_vxcd3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -29)
+texture = ExtResource("1_bekw5")
+hframes = 2
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(0, -50)
+scale = Vector2(6.054687, 6.054687)
+color = Color(0.7698917, 0.4884951, 0, 1)
+energy = 0.0
+range_item_cull_mask = 15
+shadow_enabled = true
+shadow_filter = 2
+shadow_filter_smooth = 0.5
+shadow_item_cull_mask = 13
+texture = SubResource("GradientTexture2D_uno5e")
+height = 30.0
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -12)
+shape = SubResource("CircleShape2D_vxcd3")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

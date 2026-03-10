@@ -39,7 +39,9 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	get_parent().queue_free()
+	var tween = create_tween()
+	tween.tween_property(get_parent(), "modulate", Color(1.44, 1.825, 1.035, 1.0) * 3, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.tween_callback(get_parent().queue_free)
 
 
 func _on_chase_start_timeout() -> void:
