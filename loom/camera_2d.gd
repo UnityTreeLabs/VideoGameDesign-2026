@@ -3,8 +3,8 @@ extends Camera2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	position_smoothing_speed = 0
-	offset = player.global_position
+	global_position = player.global_position
+	reset_smoothing()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
