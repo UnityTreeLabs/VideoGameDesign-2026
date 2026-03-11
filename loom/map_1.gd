@@ -3,7 +3,13 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	global.threads = []
+	if global.checkpoints:
+		for lamp in $Key/Lamps.get_children():
+			print(lamp)
+			print(lamp.checkpoint_num)
+			print(global.current_checkpoint)
+			if lamp.checkpoint_num == global.current_checkpoint:
+				$Player/PlayerBody.global_position = lamp.global_position
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

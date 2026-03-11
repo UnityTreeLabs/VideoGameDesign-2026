@@ -139,6 +139,8 @@ func _physics_process(delta: float) -> void:
 		direction = -(int($Sprite2D.flip_h) * 2 - 1)
 		$"../DashDuration".start()
 		
+	if $Area2D.get_overlapping_bodies():
+		_on_area_2d_body_entered($Area2D.get_overlapping_bodies()[0])
 	camera.global_position = global_position
 	camera.position_smoothing_speed = 4
 	#if velocity.x != 0:
@@ -170,14 +172,18 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	if $"../InvDuration".is_stopped():
 		global.health -= 1
 		var tween = create_tween()
-		tween.tween_method(material.set_shader_parameter().bind("flashState"), 0, 1, 1)
-		tween.tween_property(self, "modulate", Color(1.818, 1.825, 1.538) * 1.2, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		tween.tween_property(self, "modulate", Color(1, 1, 1, 0.3), 0.15).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-		tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.15).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT_IN)
-		tween.tween_property(self, "modulate", Color(1, 1, 1, 0.3), 0.15).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-		tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.15).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT_IN)
+		if global.health > 0:
+			global.freeze(0.2)
+			material.set_shader_parameter("flashState", 0.7)
+		tween.tween_callback(material.set_shader_parameter.bind("flashState", 0)).set_delay(0.1)
+		tween.tween_property(self, "modulate", Color(1, 1, 1), 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		tween.tween_property(self, "modulate", Color(1, 1, 1, 0), 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT_IN)
+		tween.tween_property(self, "modulate", Color(1, 1, 1, 0), 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT_IN)
 		if global.health <= 0:
 			global.health = 3
+			material.set_shader_parameter("flashState", 0)
 			get_tree().reload_current_scene()
 		else:
 			$"../InvDuration".start()
