@@ -24,7 +24,24 @@ signal connect_string(coords, threads, type)
 @onready var coyote_time = get_parent().get_node("CoyoteTime")
 
 func _ready() -> void:
-	pass
+	
+	direction = 0
+	can_jump = false
+	can_double = false
+	jumping = false
+	can_shoot = global.thread_max
+	thread_num = 0
+	dashing = false
+	dash_cooldown = false
+	can_dash = false
+	string_cooldown = false
+	vy_before = 0
+	spam_cooldown = false
+	global.threads = []
+	
+	$Area2D.monitoring = false
+	await get_tree().create_timer(5).timeout
+	$Area2D.monitoring = true
 
 func _physics_process(delta: float) -> void:
 	# Handle jump.
@@ -99,14 +116,16 @@ func _physics_process(delta: float) -> void:
 			
 	if Input.is_action_just_pressed("interact") and global.string and not string_cooldown:
 		var start_end = [null, null]
-		$"../StringCooldown".start()
-		string_cooldown = true
 		
 		if global.thread_max >= 2 and global.threads.size() >= 2:
 			connect_string.emit(start_end, [], 1)
+			$"../StringCooldown".start()
+			string_cooldown = true
 		elif $Area2D2.has_overlapping_bodies():
 			start_end[0] = $Area2D2.get_overlapping_bodies()[0].global_position
 			connect_string.emit(start_end, [], 0)
+			$"../StringCooldown".start()
+			string_cooldown = true
 	if Input.is_action_just_pressed("ui_click") and can_shoot and not spam_cooldown:
 		can_shoot -= 1
 		spam_cooldown = true
@@ -139,10 +158,9 @@ func _physics_process(delta: float) -> void:
 		direction = -(int($Sprite2D.flip_h) * 2 - 1)
 		$"../DashDuration".start()
 		
-	if $Area2D.get_overlapping_bodies():
+	if $Area2D.monitoring and $Area2D.get_overlapping_bodies():
 		_on_area_2d_body_entered($Area2D.get_overlapping_bodies()[0])
-	camera.global_position = global_position
-	camera.position_smoothing_speed = 4
+	camera.global_position = (global_position * 9 + get_global_mouse_position())/10
 	#if velocity.x != 0:
 		#camera.position_smoothing_speed = 3.5
 		#camera.global_position = global_position + Vector2(150 * sign(velocity.x), 0)
@@ -173,14 +191,16 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		global.health -= 1
 		var tween = create_tween()
 		if global.health > 0:
-			global.freeze(0.2)
+			global.freeze(0.15)
 			material.set_shader_parameter("flashState", 0.7)
-		tween.tween_callback(material.set_shader_parameter.bind("flashState", 0)).set_delay(0.1)
-		tween.tween_property(self, "modulate", Color(1, 1, 1), 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		tween.tween_property(self, "modulate", Color(1, 1, 1, 0), 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-		tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT_IN)
-		tween.tween_property(self, "modulate", Color(1, 1, 1, 0), 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-		tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT_IN)
+			tween.tween_property($GPUParticles2D, "emitting", true, 0.05)
+			tween.tween_callback(material.set_shader_parameter.bind("flashState", 0)).set_delay(0.1)
+			tween.tween_callback(global.shake.bind(15, 5))
+			tween.tween_property(self, "modulate", Color(1, 1, 1), 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+			tween.tween_property(self, "modulate", Color(1, 1, 1, 0), 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+			tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT_IN)
+			tween.tween_property(self, "modulate", Color(1, 1, 1, 0), 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+			tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT_IN)
 		if global.health <= 0:
 			global.health = 3
 			material.set_shader_parameter("flashState", 0)

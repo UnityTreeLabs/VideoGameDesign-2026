@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://pwbpf24tg453"]
+[gd_scene load_steps=18 format=3 uid="uid://pwbpf24tg453"]
 
 [ext_resource type="Script" uid="uid://cjvenrv7uebfg" path="res://player_body.gd" id="1_4flbx"]
 [ext_resource type="Shader" uid="uid://bjk86hbtjk6ec" path="res://hitflash.gdshader" id="1_i3pqv"]
@@ -18,8 +18,8 @@ colors = PackedColorArray(1, 1, 1, 1, 0.8431839, 0.8431839, 0.84318376, 1, 0, 0,
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_i3pqv"]
 gradient = SubResource("Gradient_onrkg")
-width = 128
-height = 128
+width = 512
+height = 512
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
@@ -153,7 +153,40 @@ metadata/_snap_enabled = true
 [sub_resource type="CircleShape2D" id="CircleShape2D_onrkg"]
 radius = 40.0
 
+[sub_resource type="Curve" id="Curve_i3pqv"]
+_data = [Vector2(0, 1), 0.0, -1.8980492, 0, 0, Vector2(0.61494243, 0.5195791), 0.0, 0.0, 0, 0, Vector2(0.9827585, 0), -3.8325963, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_vpmvj"]
+curve = SubResource("Curve_i3pqv")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hqtel"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(1, -2, 0)
+emission_shape = 1
+emission_sphere_radius = 10.0
+spread = 180.0
+initial_velocity_min = 25.0
+initial_velocity_max = 50.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -15.000002
+linear_accel_max = -5.000002
+radial_accel_min = -100.0
+radial_accel_max = 46.449997
+tangential_accel_min = -2.2351742e-06
+tangential_accel_max = -2.2351742e-06
+damping_min = 10.0
+damping_max = 30.000002
+scale_min = 5.0
+scale_max = 15.0
+scale_curve = SubResource("CurveTexture_vpmvj")
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 1.0
+
 [node name="Player" type="Node2D"]
+modulate = Color(1.572, 1.572, 1.499, 1)
 
 [node name="PlayerBody" type="CharacterBody2D" parent="."]
 material = SubResource("ShaderMaterial_hqtel")
@@ -167,6 +200,7 @@ position = Vector2(-0.5, 3.5)
 shape = SubResource("CapsuleShape2D_i3pqv")
 
 [node name="Area2D" type="Area2D" parent="PlayerBody"]
+scale = Vector2(1.05, 1.05)
 collision_layer = 0
 collision_mask = 16
 
@@ -179,7 +213,9 @@ color = Color(0.9999997, 0.99960405, 0.87527764, 1)
 energy = 0.2
 range_item_cull_mask = 14
 shadow_enabled = true
-shadow_item_cull_mask = 12
+shadow_filter = 2
+shadow_filter_smooth = 4.0
+shadow_item_cull_mask = 14
 texture = SubResource("GradientTexture2D_i3pqv")
 height = 30.0
 
@@ -220,6 +256,17 @@ collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBody/Area2D2"]
 shape = SubResource("CircleShape2D_onrkg")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="PlayerBody"]
+process_mode = 3
+modulate = Color(2.445, 2.454, 2.072, 1)
+z_index = 4096
+emitting = false
+amount = 50
+one_shot = true
+speed_scale = 4.0
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_hqtel")
 
 [node name="CoyoteTime" type="Timer" parent="."]
 wait_time = 0.1

@@ -5,9 +5,6 @@ extends Node2D
 func _ready() -> void:
 	if global.checkpoints:
 		for lamp in $Key/Lamps.get_children():
-			print(lamp)
-			print(lamp.checkpoint_num)
-			print(global.current_checkpoint)
 			if lamp.checkpoint_num == global.current_checkpoint:
 				$Player/PlayerBody.global_position = lamp.global_position
 

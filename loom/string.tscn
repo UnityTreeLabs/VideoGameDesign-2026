@@ -97,7 +97,7 @@ one_way_collision_margin = 5.0
 [node name="StringJoint" type="PinJoint2D" parent="."]
 node_a = NodePath("../StringStart")
 node_b = NodePath("../StartPart")
-bias = 0.9
+bias = 0.5
 softness = 0.1
 
 [node name="Sprite2D" type="Sprite2D" parent="StringJoint"]
@@ -109,7 +109,7 @@ texture = ExtResource("3_31fbk")
 [node name="EndJoint" type="PinJoint2D" parent="."]
 node_a = NodePath("../StartPart")
 node_b = NodePath("../StringEnd")
-bias = 0.9
+bias = 0.5
 softness = 0.1
 
 [node name="Sprite2D" type="Sprite2D" parent="EndJoint"]

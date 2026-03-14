@@ -76,21 +76,21 @@ func _process(delta: float) -> void:
 		else:
 			global_position = get_parent().get_parent().get_node("Player/PlayerBody").global_position + Vector2(20, 0).rotated(global_rotation)
 
-func _on_body_entered(body: Node) -> void:
-	if ((body is TileMapLayer and global.pierce_wall and body.tile_set.get_physics_layer_collision_layer(0) & 2 == 2) or ((not body is TileMapLayer) and body.collision_layer & 8 == 8)) and moving != 1 and not finished:
-		collision_layer = 2
-		moving = 0
-		linear_velocity = Vector2(0, 0)
-	else:
-		collision_layer = 0
-		freeze = true
-		moving = -0.1
-		linear_velocity = Vector2(0, 0)
-		finished = true
-		if string_instance:
-			string_instance.delete()
-		global.threads.erase(self)
-		$AnimatedSprite2D.play_backwards("creation")
+#func _on_body_entered(body: Node) -> void:
+	#if ((body is TileMapLayer and global.pierce_wall and body.tile_set.get_physics_layer_collision_layer(0) & 2 == 2) or ((not body is TileMapLayer) and body.collision_layer & 8 == 8)) and moving != 1 and not finished:
+		#collision_layer = 2
+		#moving = 0
+		#linear_velocity = Vector2(0, 0)
+	#else:
+		#collision_layer = 0
+		#freeze = true
+		#moving = -0.1
+		#linear_velocity = Vector2(0, 0)
+		#finished = true
+		#if string_instance:
+			#string_instance.delete()
+		#global.threads.erase(self)
+		#$AnimatedSprite2D.play_backwards("creation")
 	
 func _on_timer_timeout() -> void:
 	collision_layer = 0

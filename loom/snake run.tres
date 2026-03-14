@@ -1,0 +1,8 @@
+[gd_resource type="CanvasTexture" load_steps=3 format=3 uid="uid://boax7txcw330p"]
+
+[ext_resource type="Texture2D" uid="uid://byj5wni6agjkc" path="res://Snake Run.png" id="1_ohh6d"]
+[ext_resource type="Texture2D" uid="uid://dobirx8uvm5cq" path="res://Snake Run_n_0.png" id="2_n08ar"]
+
+[resource]
+diffuse_texture = ExtResource("1_ohh6d")
+normal_texture = ExtResource("2_n08ar")

@@ -24,6 +24,7 @@ global="*res://global.gd"
 window/size/viewport_width=1296
 window/size/viewport_height=729
 window/stretch/mode="canvas_items"
+mouse_cursor/custom_image="uid://ch1hwyl7t35op"
 window/layer_4="Enemy"
 window/layer_3="Tileset"
 window/layer_2="Background"
@@ -97,6 +98,7 @@ interact={
 [physics]
 
 2d/physics_engine="GodotPhysics2D"
+common/physics_interpolation=true
 
 [rendering]
 

@@ -54,7 +54,7 @@ range_item_cull_mask = 15
 shadow_enabled = true
 shadow_filter = 2
 shadow_filter_smooth = 0.5
-shadow_item_cull_mask = 13
+shadow_item_cull_mask = 15
 texture = SubResource("GradientTexture2D_uno5e")
 height = 30.0
 
