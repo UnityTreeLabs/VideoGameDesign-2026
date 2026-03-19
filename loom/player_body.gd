@@ -39,14 +39,13 @@ func _ready() -> void:
 	spam_cooldown = false
 	global.threads = []
 	
-	$Area2D.monitoring = false
-	await get_tree().create_timer(5).timeout
-	$Area2D.monitoring = true
+	material.set_shader_parameter("scarfGlow", 1.0)
 
 func _physics_process(delta: float) -> void:
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_up") and (can_jump or can_double):
 		velocity.y = JUMP_VELOCITY
+		can_dash = true
 		var squash_tween = create_tween()
 		squash_tween.tween_property($Sprite2D, "scale", Vector2(0.8, 1.1), 0.07).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
 		squash_tween.tween_property($Sprite2D, "scale", Vector2(1, 1), 0.2).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_IN_OUT)
@@ -61,9 +60,9 @@ func _physics_process(delta: float) -> void:
 		jumping = false
 		
 	if Input.is_action_pressed("ui_down"):
-		collision_mask = 2
+		collision_mask = 258
 	else:
-		collision_mask = 66
+		collision_mask = 322
 		
 	
 	# Add the gravity.
@@ -132,10 +131,13 @@ func _physics_process(delta: float) -> void:
 		$"../SpamCooldown".start()
 		var light_tween = create_tween()
 		var mod_tween = create_tween()
-		light_tween.tween_property($PointLight2D, "energy", 0.5, 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		light_tween.tween_property($PointLight2D, "energy", 0.2, 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-		mod_tween.tween_property($"..", "modulate", Color(2.454, 2.363, 2.042) * 1, 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		mod_tween.tween_property($"..", "modulate", Color(1.572, 1.572, 1.499), 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+		var glow_tween = create_tween()
+		light_tween.tween_property($PointLight2D, "energy", 0.3, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		light_tween.tween_property($PointLight2D, "energy", 0.2, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+		mod_tween.tween_property(get_parent(), "modulate", Color(1.572, 1.572, 1.499) * 1.2, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		mod_tween.tween_property(get_parent(), "modulate", Color(1.572, 1.572, 1.499), 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+		glow_tween.tween_method(set_scarf_glow, 1.0, 5.0, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		glow_tween.tween_method(set_scarf_glow, 5.0, 1.0, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 		var timer = get_parent().get_node("BasicCooldown").duplicate()
 		get_parent().add_child(timer)
 		timer.start()
@@ -218,3 +220,6 @@ func _on_string_cooldown_timeout() -> void:
 
 func _on_spam_cooldown_timeout() -> void:
 	spam_cooldown = false
+
+func set_scarf_glow(amount: float) -> void:
+	material.set_shader_parameter("scarfGlow", amount)

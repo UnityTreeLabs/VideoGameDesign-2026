@@ -30,7 +30,7 @@ func _process(delta: float) -> void:
 		if collision != null and freeze == false:
 			if ((collision.get_collider() is TileMapLayer and global.pierce_wall and collision.get_collider().tile_set.get_physics_layer_collision_layer(0) & 2 == 2) or ((not collision.get_collider() is TileMapLayer) and collision.get_collider().collision_layer & 8 == 8)):
 				
-				collision_layer = 2
+				collision_layer = 256
 				freeze = true
 				moving = 0
 				$"../AirTimer".paused = true
@@ -61,7 +61,7 @@ func _process(delta: float) -> void:
 				moving = 0
 				freeze = true
 				linear_velocity = Vector2(0, 0)
-				collision_layer = 2
+				collision_layer = 256
 				$CollisionShape2D.disabled = false
 				start = true
 			else:

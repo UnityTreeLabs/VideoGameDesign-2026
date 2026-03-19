@@ -20,15 +20,14 @@ func _on_body_entered(body: Node) -> void:
 		finished = true
 		var tween = create_tween()
 		var tween2 = create_tween()
-		var tween3 = create_tween()
 		$GPUParticles2D2.process_material.direction = Vector3(-linear_velocity.normalized().x, -linear_velocity.normalized().y, 0)
 		$GPUParticles2D2.emitting = true
 		$GPUParticles2D.emitting = false
 		linear_velocity *= 0.2
-		gravity_scale = 0
-		freeze = true
-		tween3.tween_property(self, "collision_layer", 0, 0).set_delay(0.05)
-		tween3.tween_property(self, "collision_mask", 0, 0)
+		set_deferred("gravity_scale", 0)
+		set_deferred("freeze", true)
+		set_deferred("collision_layer", 0)
+		set_deferred("collision_mask", 0)
 		tween.tween_property($Sprite2D, "scale", Vector2(3, 3), 0.3)
 		tween2.tween_property($Sprite2D, "modulate:a", 0, 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		await $GPUParticles2D2.finished

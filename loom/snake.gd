@@ -6,6 +6,7 @@ const JUMP_VELOCITY = -400.0
 const SHOOT_VELOCITY = 750
 var chasing = false
 var rng = RandomNumberGenerator.new()
+var player = null
 @onready var projectile = preload("res://projectile.tscn")
 
 func _ready() -> void:
@@ -22,8 +23,11 @@ func _physics_process(delta: float) -> void:
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
+	
+	if $AnimatedSprite2D.frame == 3 and $AnimatedSprite2D.animation == "attack" :
+		shoot(player.global_position - global_position + Vector2(0, 25))
 	if $DetectionRange.has_overlapping_bodies():
-		var player = $DetectionRange.get_overlapping_bodies()[0]
+		player = $DetectionRange.get_overlapping_bodies()[0]
 		if not $AnimatedSprite2D.animation == "attack":
 			if player.global_position.x > global_position.x:
 				scale.y = 1
@@ -45,8 +49,6 @@ func _physics_process(delta: float) -> void:
 				$AnimatedSprite2D.play("attack")
 				$ShootCooldown.wait_time = rng.randf_range(1, 2.5)
 				$ShootCooldown.start()
-			if $AnimatedSprite2D.frame == 3 and $AnimatedSprite2D.animation == "attack":
-				shoot(player.global_position - global_position + Vector2(0, 25))
 	else:
 		if (get_parent().global_position - global_position).length() < 50:
 			velocity.x = 0

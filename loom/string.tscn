@@ -72,6 +72,7 @@ script = ExtResource("1_0ftq4")
 end = Vector2(200, 0)
 
 [node name="StringPart" type="RigidBody2D" parent="."]
+disable_mode = 1
 collision_layer = 0
 collision_mask = 0
 linear_damp_mode = 1

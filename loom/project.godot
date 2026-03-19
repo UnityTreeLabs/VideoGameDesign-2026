@@ -24,11 +24,16 @@ global="*res://global.gd"
 window/size/viewport_width=1296
 window/size/viewport_height=729
 window/stretch/mode="canvas_items"
-mouse_cursor/custom_image="uid://ch1hwyl7t35op"
+mouse_cursor/custom_image="uid://gfexsibofy2g"
+mouse_cursor/custom_image_hotspot=Vector2(96, 96)
 window/layer_4="Enemy"
 window/layer_3="Tileset"
 window/layer_2="Background"
 window/layer_1="Player"
+
+[gui]
+
+theme/custom_font="uid://cdbcp6vvglvpr"
 
 [input]
 
@@ -94,10 +99,11 @@ interact={
 2d_physics/layer_5="Enemy"
 2d_physics/layer_6="Anchor"
 2d_physics/layer_7="Thin_Wall"
+2d_physics/layer_8="Unpiercable_Wall"
+2d_physics/layer_9="Still_Thread"
 
 [physics]
 
-2d/physics_engine="GodotPhysics2D"
 common/physics_interpolation=true
 
 [rendering]

@@ -1,7 +1,6 @@
-[gd_scene load_steps=26 format=3 uid="uid://giwmiu0vmpw3"]
+[gd_scene load_steps=25 format=3 uid="uid://giwmiu0vmpw3"]
 
 [ext_resource type="Script" uid="uid://xa8tphvsa6q2" path="res://thread.gd" id="1_73fnl"]
-[ext_resource type="Texture2D" uid="uid://dsr5qvqf0bty2" path="res://Placeholder_Tile.png" id="1_o70ij"]
 [ext_resource type="Texture2D" uid="uid://dx2bkufy56un6" path="res://thread.tres" id="2_3hppu"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_73fnl"]
@@ -153,15 +152,9 @@ metadata/_snap_enabled = true
 
 [node name="Thread" type="Node2D"]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
-modulate = Color(1.8178089, 1.8247963, 1.5383112, 1)
-scale = Vector2(10.4375, 4.6875)
-texture = ExtResource("1_o70ij")
-
 [node name="ThreadBody" type="RigidBody2D" parent="."]
 collision_layer = 4
-collision_mask = 10
+collision_mask = 138
 physics_material_override = SubResource("PhysicsMaterial_73fnl")
 gravity_scale = 0.0
 contact_monitor = true
