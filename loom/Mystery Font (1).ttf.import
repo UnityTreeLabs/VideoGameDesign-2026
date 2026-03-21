@@ -13,24 +13,30 @@ dest_files=["res://.godot/imported/Mystery Font (1).ttf-012b740c4a65b2ec1a689d55
 [params]
 
 Rendering=null
-antialiasing=1
+antialiasing=0
 generate_mipmaps=false
-disable_embedded_bitmaps=true
-multichannel_signed_distance_field=false
+disable_embedded_bitmaps=false
+multichannel_signed_distance_field=true
 msdf_pixel_range=8
 msdf_size=48
 allow_system_fallback=true
 force_autohinter=false
 modulate_color_glyphs=false
-hinting=1
+hinting=0
 subpixel_positioning=4
-keep_rounding_remainders=true
+keep_rounding_remainders=false
 oversampling=0.0
 Fallbacks=null
 fallbacks=[]
 Compress=null
 compress=true
-preload=[]
+preload=[{
+"chars": [],
+"glyphs": [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+"name": "New Configuration",
+"size": Vector2i(16, 0),
+&"variation_embolden": 0.0
+}]
 language_support={}
 script_support={}
 opentype_features={}

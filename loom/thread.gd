@@ -20,12 +20,12 @@ func _ready() -> void:
 	get_parent().get_parent().get_node("Player/PlayerBody").connect_string.connect(_connect_string)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if start:
 		velocity = Vector2(SPEED, 0).rotated(get_parent().rotation) * moving
 		angular_velocity = 0
 		rotation = 0
-		var collision = move_and_collide(velocity * delta, false, 0.08, true)
+		var collision = move_and_collide(velocity * delta, false, 0.08)
 		
 		if collision != null and freeze == false:
 			if ((collision.get_collider() is TileMapLayer and global.pierce_wall and collision.get_collider().tile_set.get_physics_layer_collision_layer(0) & 2 == 2) or ((not collision.get_collider() is TileMapLayer) and collision.get_collider().collision_layer & 8 == 8)):

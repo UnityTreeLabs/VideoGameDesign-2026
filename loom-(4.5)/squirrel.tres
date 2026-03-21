@@ -1,0 +1,8 @@
+[gd_resource type="CanvasTexture" load_steps=3 format=3 uid="uid://cjsp7gln7mvn7"]
+
+[ext_resource type="Texture2D" uid="uid://b8e4ce0gb0mms" path="res://Squirrel Icon.png" id="1_0qrlt"]
+[ext_resource type="Texture2D" uid="uid://crg6jnu5ne3ht" path="res://Squirrel Icon_n.png" id="2_n0uop"]
+
+[resource]
+diffuse_texture = ExtResource("1_0qrlt")
+normal_texture = ExtResource("2_n0uop")

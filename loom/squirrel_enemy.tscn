@@ -1,12 +1,15 @@
-[gd_scene load_steps=16 format=3 uid="uid://ccx2rl2c4rtfu"]
+[gd_scene format=3 uid="uid://ccx2rl2c4rtfu"]
 
 [ext_resource type="Texture2D" uid="uid://cjsp7gln7mvn7" path="res://squirrel.tres" id="1_730o3"]
 [ext_resource type="Script" uid="uid://hkmnbj5r5x8q" path="res://squirrel.gd" id="1_mb0cq"]
-[ext_resource type="Shader" uid="uid://bjk86hbtjk6ec" path="res://hitflash.gdshader" id="1_rpdj4"]
+[ext_resource type="Shader" uid="uid://ig7wdf8mnm2g" path="res://enemy.gdshader" id="1_rpdj4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vpmvj"]
 shader = ExtResource("1_rpdj4")
 shader_parameter/flashState = 0.0
+shader_parameter/outline_color = Color(1.5719986, 0.9754753, 0.89758086, 1)
+shader_parameter/blink_color = Color(1.8247963, 1.2797759, 1.2029141, 1)
+shader_parameter/blink_time_scale = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mb0cq"]
 atlas = ExtResource("1_730o3")
@@ -84,61 +87,63 @@ _data = {
 }
 point_count = 3
 
-[node name="SquirrelEnemy" type="Node2D"]
+[node name="SquirrelEnemy" type="Node2D" unique_id=1036604290]
 light_mask = 3
 scale = Vector2(2, 2)
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1578061017]
 material = SubResource("ShaderMaterial_vpmvj")
 collision_layer = 16
 collision_mask = 2
 script = ExtResource("1_mb0cq")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=191344024]
 modulate = Color(0.715, 0.007, 1.187, 1)
 use_parent_material = true
+position = Vector2(0, -4)
 sprite_frames = SubResource("SpriteFrames_tgunf")
 autoplay = "default"
-frame_progress = 0.64900726
+frame = 2
+frame_progress = 0.7571272
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="CharacterBody2D"]
+[node name="LightOccluder2D" type="LightOccluder2D" parent="CharacterBody2D" unique_id=248837814]
 visible = false
 occluder = SubResource("OccluderPolygon2D_mb0cq")
 occluder_light_mask = 8
 
-[node name="Area2D" type="Area2D" parent="CharacterBody2D"]
+[node name="Area2D" type="Area2D" parent="CharacterBody2D" unique_id=1200910455]
 visible = false
 collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D" unique_id=1649923596]
 position = Vector2(0, -2)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_mb0cq")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1667580992]
 position = Vector2(0, -2)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_mb0cq")
 
-[node name="PlayerDetection" type="RayCast2D" parent="CharacterBody2D"]
+[node name="PlayerDetection" type="RayCast2D" parent="CharacterBody2D" unique_id=1919212665]
 position = Vector2(6.5, 0)
 target_position = Vector2(399.5, 7.5)
 hit_from_inside = true
 
-[node name="FloorDetection" type="RayCast2D" parent="CharacterBody2D"]
+[node name="FloorDetection" type="RayCast2D" parent="CharacterBody2D" unique_id=302186458]
 position = Vector2(22, 0)
 target_position = Vector2(0, 37.5)
 collision_mask = 2
 hit_from_inside = true
 
-[node name="FloorDetection2" type="RayCast2D" parent="CharacterBody2D"]
+[node name="FloorDetection2" type="RayCast2D" parent="CharacterBody2D" unique_id=1263052615]
 position = Vector2(22, -0.5)
 target_position = Vector2(0, 20)
 collision_mask = 2
 hit_from_inside = true
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="CharacterBody2D"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="CharacterBody2D" unique_id=2123850]
 process_mode = 3
 modulate = Color(2.833266, 2.844042, 2.4022217, 1)
 z_index = 4096
@@ -150,16 +155,16 @@ speed_scale = 2.0
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_rpdj4")
 
-[node name="Path2D" type="Path2D" parent="."]
+[node name="Path2D" type="Path2D" parent="." unique_id=860774483]
 curve = SubResource("Curve2D_vpmvj")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D" unique_id=716017882]
 
-[node name="ChaseStart" type="Timer" parent="."]
+[node name="ChaseStart" type="Timer" parent="." unique_id=1537701575]
 wait_time = 0.25
 one_shot = true
 
-[node name="ChaseEnd" type="Timer" parent="."]
+[node name="ChaseEnd" type="Timer" parent="." unique_id=49565736]
 wait_time = 0.25
 one_shot = true
 

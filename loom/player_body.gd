@@ -16,6 +16,7 @@ var string_cooldown = false
 var vy_before = 0
 var spam_cooldown = false
 
+
 signal destroy_thread
 signal connect_string(coords, threads, type)
 
@@ -54,6 +55,9 @@ func _physics_process(delta: float) -> void:
 			can_jump = false
 		else:
 			can_double = false
+			$"../DashCooldown".stop()
+			$"../DashCooldown".timeout.emit()
+			
 		
 		
 	if not (Input.is_action_pressed("ui_up") and jumping and velocity.y < 0):
@@ -83,6 +87,8 @@ func _physics_process(delta: float) -> void:
 		direction = Input.get_axis("ui_left", "ui_right")
 	
 	if direction:
+		if $AnimationPlayer.current_animation != "run":
+			$AnimationPlayer.play("run")
 		if dashing:
 			velocity.x = 4 * direction * SPEED
 		else:
@@ -92,6 +98,8 @@ func _physics_process(delta: float) -> void:
 				velocity.x = move_toward(velocity.x, direction * SPEED, SPEED)
 		$Sprite2D.flip_h = (-direction + 1)/2
 	else:
+		if $AnimationPlayer.current_animation != "idle":
+			$AnimationPlayer.play("idle")
 		if abs(velocity.x) > SPEED:
 			velocity.x = move_toward(velocity.x, 0, abs(velocity.x)/20)
 		else:
@@ -151,8 +159,14 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("dash") and global.dash and can_dash and not dash_cooldown:
 		dashing = true
 		var squash_tween = create_tween()
+		var blink_tween = create_tween()
 		squash_tween.tween_property($Sprite2D, "scale", Vector2(1.3, 0.8), 0.07).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
 		squash_tween.tween_property($Sprite2D, "scale", Vector2(1, 1), 0.12).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_IN_OUT)
+		blink_tween.tween_callback(material.set_shader_parameter.bind("flashState", 1))
+		blink_tween.tween_property($Sprite2D, "modulate:a", 0.0, 0.1)
+		blink_tween.tween_property($Sprite2D, "modulate:a", 1.0, 0.05).set_delay(0.2)
+		blink_tween.tween_callback(material.set_shader_parameter.bind("flashState", 0))
+		
 		$Area2D.monitoring = false
 		can_jump = false
 		can_dash = false
@@ -190,8 +204,17 @@ func _on_dash_duration_timeout() -> void:
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if $"../InvDuration".is_stopped():
-		global.health -= 1
+		if body is TileMapLayer:
+			if body.tile_set.get_physics_layer_collision_layer(0) & 512 == 512:
+				global.health = 0
+			else:
+				global.health -= 1
+		elif body.collision_layer & 512 == 512:
+			global.health = 0
+		else:
+			global.health -= 1
 		var tween = create_tween()
+		$"../InvDuration".start()
 		if global.health > 0:
 			global.freeze(0.15)
 			material.set_shader_parameter("flashState", 0.7)
@@ -204,11 +227,16 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 			tween.tween_property(self, "modulate", Color(1, 1, 1, 0), 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 			tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT_IN)
 		if global.health <= 0:
-			global.health = 3
-			material.set_shader_parameter("flashState", 0)
-			get_tree().reload_current_scene()
-		else:
-			$"../InvDuration".start()
+			global.freeze(0.15)
+			material.set_shader_parameter("flashState", 0.7)
+			tween.tween_callback(global.shake.bind(30, 5))
+			#tween.tween_callback(material.set_shader_parameter.bind("flashState", 0)).set_delay(0.1)
+			tween.tween_property($GPUParticles2D, "emitting", true, 0)
+			tween.tween_property(self, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+			#tween.tween_property(global, "health", 3, 0).set_delay(0.1)
+			tween.tween_callback(material.set_shader_parameter.bind("flashState", 0)).set_delay(0.2)
+			tween.tween_property(global, "health", 3, 0)
+			tween.tween_callback(get_tree().call_deferred.bind("reload_current_scene"))
 
 
 func _on_dash_cooldown_timeout() -> void:

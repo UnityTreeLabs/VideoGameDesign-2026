@@ -1,14 +1,17 @@
-[gd_scene load_steps=47 format=3 uid="uid://dgcyy0rvxp6yh"]
+[gd_scene format=3 uid="uid://dgcyy0rvxp6yh"]
 
-[ext_resource type="Shader" uid="uid://bjk86hbtjk6ec" path="res://hitflash.gdshader" id="1_xrdfw"]
+[ext_resource type="Shader" uid="uid://ig7wdf8mnm2g" path="res://enemy.gdshader" id="1_jufb3"]
 [ext_resource type="Script" uid="uid://b6j3886ciwb1y" path="res://snake.gd" id="2_xrdfw"]
 [ext_resource type="Texture2D" uid="uid://tl6au3yfmr5i" path="res://snake attack.tres" id="3_jufb3"]
 [ext_resource type="Texture2D" uid="uid://cw1hwhoxa2711" path="res://snake idle.tres" id="4_ipggy"]
 [ext_resource type="Texture2D" uid="uid://boax7txcw330p" path="res://snake run.tres" id="5_0ero7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vpmvj"]
-shader = ExtResource("1_xrdfw")
+shader = ExtResource("1_jufb3")
 shader_parameter/flashState = 0.0
+shader_parameter/outline_color = Color(1.572, 0.975, 0.898, 1)
+shader_parameter/blink_color = Color(1, 1, 1, 1)
+shader_parameter/blink_time_scale = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7xyn3"]
 atlas = ExtResource("3_jufb3")
@@ -302,38 +305,38 @@ radius = 216.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_jufb3"]
 radius = 400.0
 
-[node name="SnakeEnemy" type="Node2D"]
+[node name="SnakeEnemy" type="Node2D" unique_id=778773582]
 light_mask = 3
 scale = Vector2(2, 2)
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=2024602284]
 material = SubResource("ShaderMaterial_vpmvj")
 collision_layer = 16
 collision_mask = 2
 script = ExtResource("2_xrdfw")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=1710598381]
 modulate = Color(0.715, 0.007, 1.187, 1)
 use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_jkihp")
 animation = &"attack"
 autoplay = "default"
 
-[node name="Area2D" type="Area2D" parent="CharacterBody2D"]
+[node name="Area2D" type="Area2D" parent="CharacterBody2D" unique_id=1579814709]
 collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D" unique_id=740586347]
 position = Vector2(0, -2)
 shape = SubResource("CapsuleShape2D_mb0cq")
 debug_color = Color(0, 0.6, 0.7019608, 0.11764706)
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1756846293]
 position = Vector2(0, -2)
 shape = SubResource("CapsuleShape2D_mb0cq")
 debug_color = Color(0, 0.6, 0.69803923, 0.11764706)
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="CharacterBody2D"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="CharacterBody2D" unique_id=512480332]
 process_mode = 3
 modulate = Color(2.4448998, 2.454227, 2.0718155, 1)
 z_index = 4096
@@ -345,29 +348,30 @@ speed_scale = 2.0
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_rpdj4")
 
-[node name="AttackRange" type="Area2D" parent="CharacterBody2D"]
+[node name="AttackRange" type="Area2D" parent="CharacterBody2D" unique_id=1025403923]
 collision_layer = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/AttackRange"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/AttackRange" unique_id=1744546472]
 shape = SubResource("CircleShape2D_wlm33")
 debug_color = Color(0, 0.6, 0.7019608, 0.11764706)
 
-[node name="DetectionRange" type="Area2D" parent="CharacterBody2D"]
+[node name="DetectionRange" type="Area2D" parent="CharacterBody2D" unique_id=1420970437]
 collision_layer = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/DetectionRange"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/DetectionRange" unique_id=944494157]
 shape = SubResource("CircleShape2D_jufb3")
 debug_color = Color(0, 0.6, 0.7019608, 0.11764706)
 
-[node name="FloorDetection" type="RayCast2D" parent="CharacterBody2D"]
+[node name="FloorDetection" type="RayCast2D" parent="CharacterBody2D" unique_id=771448992]
 position = Vector2(22, 0)
 target_position = Vector2(0, 37.5)
 collision_mask = 2
 hit_from_inside = true
 
-[node name="ShootCooldown" type="Timer" parent="CharacterBody2D"]
+[node name="ShootCooldown" type="Timer" parent="CharacterBody2D" unique_id=1636560522]
 wait_time = 2.0
 one_shot = true
 
 [connection signal="animation_finished" from="CharacterBody2D/AnimatedSprite2D" to="CharacterBody2D" method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="frame_changed" from="CharacterBody2D/AnimatedSprite2D" to="CharacterBody2D" method="_on_animated_sprite_2d_frame_changed"]
 [connection signal="body_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_on_area_2d_body_entered"]

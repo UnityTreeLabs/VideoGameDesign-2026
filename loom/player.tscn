@@ -1,8 +1,8 @@
-[gd_scene load_steps=18 format=3 uid="uid://pwbpf24tg453"]
+[gd_scene format=3 uid="uid://pwbpf24tg453"]
 
 [ext_resource type="Script" uid="uid://cjvenrv7uebfg" path="res://player_body.gd" id="1_4flbx"]
 [ext_resource type="Shader" uid="uid://bjk86hbtjk6ec" path="res://hitflash.gdshader" id="1_i3pqv"]
-[ext_resource type="Texture2D" uid="uid://r1beo4sioeot" path="res://character idle.tres" id="2_onrkg"]
+[ext_resource type="Texture2D" uid="uid://dktpsngg56rdb" path="res://fox.tres" id="3_i3pqv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hqtel"]
 shader = ExtResource("1_i3pqv")
@@ -136,10 +136,28 @@ tracks/3/keys = {
 "values": [1.5, 1.75, 1.5, 1.0]
 }
 
+[sub_resource type="Animation" id="Animation_hqtel"]
+resource_name = "run"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.099999994, 0.2, 0.3, 0.4, 0.5, 0.6, 0.70000005),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7, 8, 9, 10, 11]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hqtel"]
 _data = {
 &"RESET": SubResource("Animation_i3pqv"),
-&"idle": SubResource("Animation_onrkg")
+&"idle": SubResource("Animation_onrkg"),
+&"run": SubResource("Animation_hqtel")
 }
 
 [sub_resource type="Gradient" id="Gradient_i3pqv"]
@@ -186,49 +204,48 @@ collision_mode = 1
 collision_friction = 0.0
 collision_bounce = 1.0
 
-[node name="Player" type="Node2D"]
+[node name="Player" type="Node2D" unique_id=1999779506]
 modulate = Color(1.572, 1.572, 1.499, 1)
 
-[node name="PlayerBody" type="CharacterBody2D" parent="."]
+[node name="PlayerBody" type="CharacterBody2D" parent="." unique_id=407890846]
 material = SubResource("ShaderMaterial_hqtel")
 scale = Vector2(2, 2)
 collision_mask = 322
 script = ExtResource("1_4flbx")
 
-[node name="PlayerCollision" type="CollisionShape2D" parent="PlayerBody"]
+[node name="PlayerCollision" type="CollisionShape2D" parent="PlayerBody" unique_id=329464534]
 top_level = true
 position = Vector2(-0.5, 3.5)
 shape = SubResource("CapsuleShape2D_i3pqv")
 
-[node name="Area2D" type="Area2D" parent="PlayerBody"]
+[node name="Area2D" type="Area2D" parent="PlayerBody" unique_id=780854181]
 scale = Vector2(1.05, 1.05)
 collision_layer = 0
-collision_mask = 16
+collision_mask = 528
 
-[node name="PlayerCollision" type="CollisionShape2D" parent="PlayerBody/Area2D"]
+[node name="PlayerCollision" type="CollisionShape2D" parent="PlayerBody/Area2D" unique_id=1145082715]
 position = Vector2(-0.5, 3.5)
 shape = SubResource("CapsuleShape2D_i3pqv")
 
-[node name="Area2D2" type="Area2D" parent="PlayerBody"]
+[node name="Area2D2" type="Area2D" parent="PlayerBody" unique_id=900083717]
 visible = false
 collision_layer = 0
 collision_mask = 32
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBody/Area2D2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBody/Area2D2" unique_id=1883818644]
 shape = SubResource("CircleShape2D_onrkg")
 
-[node name="PointLight2D" type="PointLight2D" parent="PlayerBody"]
+[node name="PointLight2D" type="PointLight2D" parent="PlayerBody" unique_id=2100805980]
 color = Color(0.9999997, 0.99960405, 0.87527764, 1)
 energy = 0.2
 range_item_cull_mask = 14
-shadow_enabled = true
 shadow_filter = 2
 shadow_filter_smooth = 4.0
 shadow_item_cull_mask = 14
 texture = SubResource("GradientTexture2D_i3pqv")
 height = 30.0
 
-[node name="ScarfLight" type="PointLight2D" parent="PlayerBody"]
+[node name="ScarfLight" type="PointLight2D" parent="PlayerBody" unique_id=249918812]
 visible = false
 position = Vector2(-5, 7.749999)
 scale = Vector2(0.125, 0.20703125)
@@ -238,28 +255,26 @@ shadow_item_cull_mask = 12
 texture = SubResource("GradientTexture2D_i3pqv")
 height = 30.0
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="PlayerBody"]
+[node name="LightOccluder2D" type="LightOccluder2D" parent="PlayerBody" unique_id=1120814312]
 visible = false
 occluder = SubResource("OccluderPolygon2D_onrkg")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerBody"]
-libraries = {
-&"": SubResource("AnimationLibrary_hqtel")
-}
-autoplay = "idle"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerBody" unique_id=2943263]
+libraries/ = SubResource("AnimationLibrary_hqtel")
+autoplay = &"idle"
 
-[node name="Sprite2D" type="Sprite2D" parent="PlayerBody"]
+[node name="Sprite2D" type="Sprite2D" parent="PlayerBody" unique_id=944955671]
 use_parent_material = true
-texture = ExtResource("2_onrkg")
-hframes = 4
+texture = ExtResource("3_i3pqv")
+hframes = 12
 
-[node name="Sprite2D2" type="Sprite2D" parent="PlayerBody"]
+[node name="Sprite2D2" type="Sprite2D" parent="PlayerBody" unique_id=772418249]
 visible = false
 modulate = Color(2.126257, 2.126257, 2.126257, 1)
 position = Vector2(-1.5, -11)
 texture = SubResource("GradientTexture2D_hqtel")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="PlayerBody"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="PlayerBody" unique_id=2030195477]
 process_mode = 3
 modulate = Color(2.445, 2.454, 2.072, 1)
 z_index = 4096
@@ -270,29 +285,29 @@ speed_scale = 4.0
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_hqtel")
 
-[node name="CoyoteTime" type="Timer" parent="."]
+[node name="CoyoteTime" type="Timer" parent="." unique_id=513461818]
 wait_time = 0.1
 one_shot = true
 
-[node name="BasicCooldown" type="Timer" parent="."]
+[node name="BasicCooldown" type="Timer" parent="." unique_id=248442035]
 wait_time = 2.0
 one_shot = true
 
-[node name="SpamCooldown" type="Timer" parent="."]
+[node name="SpamCooldown" type="Timer" parent="." unique_id=371660285]
 wait_time = 0.2
 one_shot = true
 
-[node name="DashCooldown" type="Timer" parent="."]
+[node name="DashCooldown" type="Timer" parent="." unique_id=393195173]
 one_shot = true
 
-[node name="StringCooldown" type="Timer" parent="."]
+[node name="StringCooldown" type="Timer" parent="." unique_id=1543144926]
 one_shot = true
 
-[node name="DashDuration" type="Timer" parent="."]
+[node name="DashDuration" type="Timer" parent="." unique_id=581346444]
 wait_time = 0.05
 one_shot = true
 
-[node name="InvDuration" type="Timer" parent="."]
+[node name="InvDuration" type="Timer" parent="." unique_id=53702429]
 one_shot = true
 
 [connection signal="body_entered" from="PlayerBody/Area2D" to="PlayerBody" method="_on_area_2d_body_entered"]

@@ -2,11 +2,11 @@ extends Node
 var thread_max = 1
 var threads = []
 var pierce_wall = false
-var dash = false
+var dash = true
 var string = false
-var string_distance = 1000
+var string_distance = 750
 var health = 3
-var double_jump = false
+var double_jump = true
 var checkpoints = []
 var current_checkpoint = null
 var shake_strength = 0
@@ -28,8 +28,9 @@ func _process(delta: float) -> void:
 			shake_camera.offset = Vector2(rng.randf_range(-shake_strength, shake_strength), rng.randf_range(-shake_strength, shake_strength))
 
 func freeze(duration: float) -> void:
-	Engine.time_scale = 0
+	get_tree().paused = true
 	await get_tree().create_timer(duration, true, false, true).timeout
+	get_tree().paused = false
 	Engine.time_scale = 1.2
 
 func shake(strength: float, fade: float) -> void:

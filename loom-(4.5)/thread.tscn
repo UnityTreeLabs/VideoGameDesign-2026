@@ -1,0 +1,222 @@
+[gd_scene load_steps=25 format=3 uid="uid://giwmiu0vmpw3"]
+
+[ext_resource type="Script" uid="uid://xa8tphvsa6q2" path="res://thread.gd" id="1_73fnl"]
+[ext_resource type="Texture2D" uid="uid://dx2bkufy56un6" path="res://thread.tres" id="2_3hppu"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_73fnl"]
+rough = true
+absorbent = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o70ij"]
+atlas = ExtResource("2_3hppu")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6k5dd"]
+atlas = ExtResource("2_3hppu")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jkmvd"]
+atlas = ExtResource("2_3hppu")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qdf2l"]
+atlas = ExtResource("2_3hppu")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fikdx"]
+atlas = ExtResource("2_3hppu")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o2onr"]
+atlas = ExtResource("2_3hppu")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ct0y1"]
+atlas = ExtResource("2_3hppu")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tgi6d"]
+atlas = ExtResource("2_3hppu")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cr2jh"]
+atlas = ExtResource("2_3hppu")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a02dg"]
+atlas = ExtResource("2_3hppu")
+region = Rect2(576, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_30thn"]
+atlas = ExtResource("2_3hppu")
+region = Rect2(640, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p4pcl"]
+atlas = ExtResource("2_3hppu")
+region = Rect2(704, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_287mi"]
+atlas = ExtResource("2_3hppu")
+region = Rect2(768, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ulrlb"]
+atlas = ExtResource("2_3hppu")
+region = Rect2(832, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_13a5u"]
+atlas = ExtResource("2_3hppu")
+region = Rect2(896, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gmggk"]
+atlas = ExtResource("2_3hppu")
+region = Rect2(960, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kr0x0"]
+atlas = ExtResource("2_3hppu")
+region = Rect2(1024, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5cep4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o70ij")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6k5dd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jkmvd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qdf2l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fikdx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o2onr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ct0y1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tgi6d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cr2jh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a02dg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_30thn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p4pcl")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_287mi")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_ulrlb")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_13a5u")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_gmggk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kr0x0")
+}],
+"loop": false,
+"name": &"creation",
+"speed": 40.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o70ij"]
+size = Vector2(87, 4.5)
+
+[sub_resource type="Gradient" id="Gradient_3hppu"]
+offsets = PackedFloat32Array(0.17391305, 0.71014494, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_o70ij"]
+gradient = SubResource("Gradient_3hppu")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
+
+[node name="Thread" type="Node2D"]
+
+[node name="ThreadBody" type="RigidBody2D" parent="."]
+collision_layer = 4
+collision_mask = 138
+physics_material_override = SubResource("PhysicsMaterial_73fnl")
+gravity_scale = 0.0
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_73fnl")
+glow = 0.75
+
+[node name="Line2D" type="Line2D" parent="ThreadBody"]
+visible = false
+points = PackedVector2Array(0, 0, 0, 0)
+width = 1.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ThreadBody"]
+modulate = Color(2.454, 2.363405, 2.0415196, 1)
+position = Vector2(42.51, 0)
+rotation = 0.7853982
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_5cep4")
+animation = &"creation"
+autoplay = "creation"
+frame = 16
+frame_progress = 1.0
+
+[node name="Flash" type="Sprite2D" parent="ThreadBody"]
+
+[node name="Area2D" type="Area2D" parent="ThreadBody"]
+collision_layer = 0
+collision_mask = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ThreadBody/Area2D"]
+position = Vector2(43.5, 0)
+shape = SubResource("RectangleShape2D_o70ij")
+one_way_collision_margin = 128.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ThreadBody"]
+position = Vector2(43.5, 0)
+shape = SubResource("RectangleShape2D_o70ij")
+disabled = true
+one_way_collision_margin = 128.0
+
+[node name="PointLight2D" type="PointLight2D" parent="ThreadBody"]
+visible = false
+position = Vector2(42, -1.0000019)
+scale = Vector2(1.8125, 0.671875)
+color = Color(0.93625724, 0.9417558, 0.661988, 1)
+energy = 3.0
+range_item_cull_mask = 15
+shadow_item_cull_mask = 13
+texture = SubResource("GradientTexture2D_o70ij")
+height = 30.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 15.0
+one_shot = true
+autostart = true
+
+[node name="AirTimer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[connection signal="body_entered" from="ThreadBody" to="ThreadBody" method="_on_body_entered"]
+[connection signal="animation_finished" from="ThreadBody/AnimatedSprite2D" to="ThreadBody" method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="frame_changed" from="ThreadBody/AnimatedSprite2D" to="ThreadBody" method="_on_animated_sprite_2d_frame_changed"]
+[connection signal="timeout" from="Timer" to="ThreadBody" method="_on_timer_timeout"]
+[connection signal="timeout" from="AirTimer" to="ThreadBody" method="_on_air_timer_timeout"]

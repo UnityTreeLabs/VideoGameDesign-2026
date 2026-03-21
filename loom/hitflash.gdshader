@@ -2,6 +2,7 @@ shader_type canvas_item;
 uniform float flashState : hint_range(0, 1) = 0;
 uniform float scarfGlow;
 
+
 void fragment() {
     vec4 texture_color = texture(TEXTURE, UV);
 	vec4 cur_color = COLOR;

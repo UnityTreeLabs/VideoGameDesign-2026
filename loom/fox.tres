@@ -1,0 +1,8 @@
+[gd_resource type="CanvasTexture" format=3 uid="uid://dktpsngg56rdb"]
+
+[ext_resource type="Texture2D" uid="uid://coiwqo3oxrx3g" path="res://Fox Combined.png" id="1_y8raj"]
+[ext_resource type="Texture2D" uid="uid://p6l7qqvjipsg" path="res://Fox Combined_n.png" id="2_mptxe"]
+
+[resource]
+diffuse_texture = ExtResource("1_y8raj")
+normal_texture = ExtResource("2_mptxe")

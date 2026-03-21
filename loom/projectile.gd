@@ -26,6 +26,7 @@ func _on_body_entered(body: Node) -> void:
 		linear_velocity *= 0.2
 		set_deferred("gravity_scale", 0)
 		set_deferred("freeze", true)
+		
 		set_deferred("collision_layer", 0)
 		set_deferred("collision_mask", 0)
 		tween.tween_property($Sprite2D, "scale", Vector2(3, 3), 0.3)

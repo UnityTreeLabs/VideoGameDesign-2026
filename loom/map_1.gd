@@ -34,7 +34,7 @@ func _on_dash_collect(body: Node2D) -> void:
 
 func _on_thread_collect(body: Node2D) -> void:
 	# Oryx and Crane
-	global.alert("a", "Increased Needle Capacity")
+	global.alert("The Endless Quiver", "Increased Needle Capacity")
 	global.thread_max = 2
 	$Player/PlayerBody.can_shoot += 1
 	get_node("Key/ExtraThreadPower").queue_free()

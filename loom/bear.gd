@@ -4,6 +4,7 @@ extends CharacterBody2D
 const SPEED = 7500
 const JUMP_VELOCITY = -400.0
 const SHOOT_VELOCITY = 2000
+var active = false
 var rng = RandomNumberGenerator.new()
 var player = null
 @export var health = 3
@@ -21,7 +22,7 @@ func _physics_process(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	
-	if $AnimatedSprite2D.frame == 3 and $AnimatedSprite2D.animation == "attack" :
+	if $AnimatedSprite2D.frame == 3 and $AnimatedSprite2D.animation == "attack" and active:
 		shoot(player.global_position - global_position + Vector2(0, 25))
 	if true:
 		player = get_tree().current_scene.get_node("Player/PlayerBody")
