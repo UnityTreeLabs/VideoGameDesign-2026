@@ -63,7 +63,7 @@ func _physics_process(delta: float) -> void:
 	if not (Input.is_action_pressed("ui_up") and jumping and velocity.y < 0):
 		jumping = false
 		
-	if Input.is_action_pressed("ui_down"):
+	if Input.is_action_pressed("ui_down") or $Area2D3.has_overlapping_bodies():
 		collision_mask = 258
 	else:
 		collision_mask = 322

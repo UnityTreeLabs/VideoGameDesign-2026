@@ -2,11 +2,11 @@ extends Node
 var thread_max = 1
 var threads = []
 var pierce_wall = false
-var dash = true
+var dash = false
 var string = false
 var string_distance = 750
 var health = 3
-var double_jump = true
+var double_jump = false
 var checkpoints = []
 var current_checkpoint = null
 var shake_strength = 0

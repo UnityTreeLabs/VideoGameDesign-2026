@@ -8,6 +8,7 @@ var chasing = false
 var rng = RandomNumberGenerator.new()
 
 func _ready() -> void:
+	$"../Path2D/PathFollow2D".progress_ratio = randf_range(0.0, 1.0)
 	$AnimatedSprite2D.set_frame_and_progress(rng.randi_range(0, 3), rng.randf())
 	$"../ChaseStart".wait_time = randf_range(0.1, 0.3)
 	$"../ChaseEnd".wait_time = randf_range(0.1, 0.3)

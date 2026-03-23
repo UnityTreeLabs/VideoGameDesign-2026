@@ -14,8 +14,13 @@ func _ready() -> void:
 	rng.randomize()
 	material = material.duplicate()
 	$AttackRange.scale.x = rng.randf_range(0.75, 1)
-	$AttackRange.scale.y = rng.randf_range(0.75, 1)
+	$AttackRange.scale.y = $AttackRange.scale.x
 	$FloorDetection.position.x = randi_range(20, 40)
+
+func _process(delta: float) -> void:
+	if $AnimatedSprite2D.frame == 3 and $AnimatedSprite2D.animation == "attack":
+		shoot(player.global_position - global_position + Vector2(0, 25))
+	
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -25,8 +30,6 @@ func _physics_process(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	
-	if $AnimatedSprite2D.frame == 3 and $AnimatedSprite2D.animation == "attack":
-		shoot(player.global_position - global_position + Vector2(0, 25))
 	if $DetectionRange.has_overlapping_bodies():
 		player = $DetectionRange.get_overlapping_bodies()[0]
 		if not $AnimatedSprite2D.animation == "attack":
@@ -105,7 +108,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 
 func shoot(location: Vector2) -> void:
 	var object = projectile.instantiate()
-	var g = get_gravity().y + 50
+	var g = 1030
 	location.x += rng.randf_range(-50, 50)
 	location.y += rng.randf_range(-20, 20)
 	object.global_position = global_position + Vector2(0, -25)

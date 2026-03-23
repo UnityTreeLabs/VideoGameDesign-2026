@@ -112,7 +112,7 @@ func _on_destroy_thread() -> void:
 		
 
 func _connect_string(coords: Array, threads: Array, type: int = 0) -> void:
-	if moving == 0:
+	if moving == 0 and not $AnimatedSprite2D.is_playing():
 		if type == 0 and global.threads[0] == self:
 			coords[1] = global_position
 			if string_instance:
