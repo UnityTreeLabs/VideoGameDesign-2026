@@ -1487,7 +1487,7 @@ tile_map_data = PackedByteArray("AAADAAoAAQABAAEAAAADAAkAAQABAAEAAAADAAgAAQABAAA
 tile_set = SubResource("TileSet_n2bu5")
 
 [node name="Player" parent="." unique_id=1704721836 instance=ExtResource("1_thia8")]
-position = Vector2(78, 454)
+position = Vector2(112, 464)
 
 [node name="Key" type="Node2D" parent="." unique_id=1561054156]
 
@@ -1572,14 +1572,14 @@ texture = SubResource("AtlasTexture_xyxd8")
 position = Vector2(3602, 710)
 notif = true
 header = "DEATHFALL"
-text = "The depths"
+text = "The arduous depths"
 
 [node name="Lamp2" parent="Key/Lamps" unique_id=1517467621 instance=ExtResource("8_nhuiu")]
 position = Vector2(174, -252)
 checkpoint_num = 1
 notif = true
 header = "INNER WOODS"
-text = "The heart of Darkness"
+text = "The heart of the Darkness"
 
 [node name="Lamp3" parent="Key/Lamps" unique_id=1688798921 instance=ExtResource("8_nhuiu")]
 position = Vector2(-1506, 1542)
@@ -1590,7 +1590,7 @@ position = Vector2(4258, 324)
 checkpoint_num = 3
 notif = true
 header = "TRODDEN ROAD"
-text = "The "
+text = "The dawn of adventure"
 
 [node name="Lamp5" parent="Key/Lamps" unique_id=1913475562 instance=ExtResource("8_nhuiu")]
 position = Vector2(7264, 1416)
@@ -1601,7 +1601,7 @@ position = Vector2(54, 1030)
 checkpoint_num = 5
 notif = true
 header = "WINDED PEAK"
-text = "The long climb"
+text = "The formidable climb upwards"
 
 [node name="Lamp7" parent="Key/Lamps" unique_id=144482178 instance=ExtResource("8_nhuiu")]
 position = Vector2(6538, 258)
@@ -1780,7 +1780,8 @@ position = Vector2(706, 1575)
 position = Vector2(1570, 1318)
 
 [node name="Bear" parent="Enemies" unique_id=1492767427 instance=ExtResource("13_eo5y4")]
-position = Vector2(588, -928)
+z_index = -512
+position = Vector2(890, -1004)
 
 [node name="Spikes" type="TileMapLayer" parent="." unique_id=1065229785]
 modulate = Color(0.84313726, 0.69411767, 0.93333334, 1)

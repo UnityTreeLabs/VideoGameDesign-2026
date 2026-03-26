@@ -15,6 +15,8 @@ var can_dash = false
 var string_cooldown = false
 var vy_before = 0
 var spam_cooldown = false
+var dying = false
+
 @onready var trans_screen = Transition.get_node("Screen")
 
 signal destroy_thread
@@ -25,7 +27,7 @@ signal connect_string(coords, threads, type)
 @onready var coyote_time = get_parent().get_node("CoyoteTime")
 
 func _ready() -> void:
-	
+	dying = false
 	direction = 0
 	can_jump = false
 	can_double = false
@@ -44,154 +46,155 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	# Handle jump.
-	if Input.is_action_just_pressed("ui_up") and (can_jump or can_double):
-		if $AnimationPlayer.current_animation == "idle":
-			$AnimationPlayer.play("start_jump")
-		else:
-			$AnimationPlayer.play("jump_up")
-		velocity.y = JUMP_VELOCITY
-		can_dash = true
-		var squash_tween = create_tween()
-		squash_tween.tween_property($Sprite2D, "scale", Vector2(0.8, 1.1), 0.07).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
-		squash_tween.tween_property($Sprite2D, "scale", Vector2(1, 1), 0.2).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_IN_OUT)
-		jumping = true
-		if can_jump:
-			can_jump = false
-		else:
-			can_double = false
-			$"../DashCooldown".stop()
-			$"../DashCooldown".timeout.emit()
-			
-		
-		
-	if not (Input.is_action_pressed("ui_up") and jumping and velocity.y < 0):
-		jumping = false
-		
-	if Input.is_action_pressed("ui_down") or $Area2D3.has_overlapping_bodies():
-		collision_mask = 258
-	else:
-		collision_mask = 322
-		
-	
-	# Add the gravity.
-	if not is_on_floor():
-		if coyote_time.is_stopped() and can_jump:
-			coyote_time.start()
-		if not dashing:
-			velocity += get_gravity() * delta * (1.25 - int(jumping) * 0.6)
-	elif not dashing:
-		if global.double_jump:
-			can_double = true
-		can_jump = true
-		can_dash = true
-		
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	if not dashing:
-		direction = Input.get_axis("ui_left", "ui_right")
-	
-	if is_on_floor() and $AnimationPlayer.current_animation == "jump_down":
-		if abs(velocity.x) < 10:
-			$AnimationPlayer.play("end_jump")
-		else:
-			$AnimationPlayer.play("run")
-	
-	if direction:
-		if is_on_floor() and velocity.y == 0 and $AnimationPlayer.current_animation != "end_jump":
-			if $AnimationPlayer.current_animation != "run":
-				$AnimationPlayer.play("run")
-		if dashing:
-			velocity.x = 4 * direction * SPEED
-		else:
-			if sign(velocity.x) == sign(direction*SPEED) and abs(velocity.x) > abs(direction*SPEED):
-				velocity.x = move_toward(velocity.x, direction * SPEED, abs(velocity.x)/20)
+	if not dying:
+		if Input.is_action_just_pressed("ui_up") and (can_jump or can_double):
+			if $AnimationPlayer.current_animation == "idle":
+				$AnimationPlayer.play("start_jump")
 			else:
-				velocity.x = move_toward(velocity.x, direction * SPEED, SPEED)
-		$Sprite2D.flip_h = (-direction + 1)/2
-	else:
-		if is_on_floor() and velocity.y == 0 and $AnimationPlayer.current_animation != "end_jump":
-			if $AnimationPlayer.current_animation != "idle":
-				$AnimationPlayer.play("idle")
-		if abs(velocity.x) > SPEED:
-			velocity.x = move_toward(velocity.x, 0, abs(velocity.x)/20)
+				$AnimationPlayer.play("jump_up")
+			velocity.y = JUMP_VELOCITY
+			can_dash = true
+			var squash_tween = create_tween()
+			squash_tween.tween_property($Sprite2D, "scale", Vector2(0.8, 1.1), 0.07).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
+			squash_tween.tween_property($Sprite2D, "scale", Vector2(1, 1), 0.2).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_IN_OUT)
+			jumping = true
+			if can_jump:
+				can_jump = false
+			else:
+				can_double = false
+				$"../DashCooldown".stop()
+				$"../DashCooldown".timeout.emit()
+				
+			
+			
+		if not (Input.is_action_pressed("ui_up") and jumping and velocity.y < 0):
+			jumping = false
+			
+		if Input.is_action_pressed("ui_down") or $Area2D3.has_overlapping_bodies():
+			collision_mask = 258
 		else:
+			collision_mask = 322
 			
-			velocity.x = move_toward(velocity.x, 0, abs(velocity.x)/2)
-	if not is_on_floor():
-		if velocity.y > -10 and $AnimationPlayer.current_animation != "jump_transition" and $AnimationPlayer.current_animation != "jump_down":
-			$AnimationPlayer.play("jump_transition")
-	if abs(velocity.x) < 2 * SPEED:
-		$Area2D.monitoring = true
 		
-	#apply_floor_snap()
-	#floor_snap_length = 5
-	floor_max_angle = 3 * PI / 8
-	floor_stop_on_slope = false
-	
-	vy_before = velocity.y
-	move_and_slide()
-	for i in get_slide_collision_count():
-		var collider = get_slide_collision(i).get_collider()
-		if collider is RigidBody2D and collider.name != "ThreadBody":
-			collider.apply_central_impulse(-get_slide_collision(i).get_normal() * FORCE)
-			#collider.apply_central_impulse(-get_slide_collision(i).get_normal() * FORCE * (vy_before/200)**2)
+		# Add the gravity.
+		if not is_on_floor():
+			if coyote_time.is_stopped() and can_jump:
+				coyote_time.start()
+			if not dashing:
+				velocity += get_gravity() * delta * (1.25 - int(jumping) * 0.6)
+		elif not dashing:
+			if global.double_jump:
+				can_double = true
+			can_jump = true
+			can_dash = true
 			
-	if Input.is_action_just_pressed("interact") and global.string and not string_cooldown:
-		var start_end = [null, null]
+		# Get the input direction and handle the movement/deceleration.
+		# As good practice, you should replace UI actions with custom gameplay actions.
+		if not dashing:
+			direction = Input.get_axis("ui_left", "ui_right")
 		
-		if global.thread_max >= 2 and global.threads.size() >= 2:
-			connect_string.emit(start_end, [], 1)
-			$"../StringCooldown".start()
-			string_cooldown = true
-		elif $Area2D2.has_overlapping_bodies():
-			start_end[0] = $Area2D2.get_overlapping_bodies()[0].global_position
-			connect_string.emit(start_end, [], 0)
-			$"../StringCooldown".start()
-			string_cooldown = true
-	if Input.is_action_just_pressed("ui_click") and can_shoot and not spam_cooldown:
-		can_shoot -= 1
-		spam_cooldown = true
-		$"../SpamCooldown".start()
-		var light_tween = create_tween()
-		var mod_tween = create_tween()
-		var glow_tween = create_tween()
-		light_tween.tween_property($PointLight2D, "energy", 0.3, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		light_tween.tween_property($PointLight2D, "energy", 0.2, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-		mod_tween.tween_property(get_parent(), "modulate", Color(1.572, 1.572, 1.499) * 1.2, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		mod_tween.tween_property(get_parent(), "modulate", Color(1.572, 1.572, 1.499), 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-		glow_tween.tween_method(set_scarf_glow, 1.0, 5.0, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-		glow_tween.tween_method(set_scarf_glow, 5.0, 1.0, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
-		var timer = get_parent().get_node("BasicCooldown").duplicate()
-		get_parent().add_child(timer)
-		timer.start()
-		if global.thread_max <= global.threads.size():
-			destroy_thread.emit()
-		var instance = thread.instantiate()
-		instance.global_position = global_position
-		instance.rotation = atan2(get_local_mouse_position().y, get_local_mouse_position().x)
-		get_parent().get_parent().add_child(instance)
-	
-	if Input.is_action_just_pressed("dash") and global.dash and can_dash and not dash_cooldown:
-		dashing = true
-		var squash_tween = create_tween()
-		var blink_tween = create_tween()
-		squash_tween.tween_property($Sprite2D, "scale", Vector2(1.3, 0.8), 0.07).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
-		squash_tween.tween_property($Sprite2D, "scale", Vector2(1, 1), 0.12).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_IN_OUT)
-		blink_tween.tween_callback(material.set_shader_parameter.bind("flashState", 1))
-		blink_tween.tween_property($Sprite2D, "modulate:a", 0.0, 0.1)
-		blink_tween.tween_property($Sprite2D, "modulate:a", 1.0, 0.05).set_delay(0.2)
-		blink_tween.tween_callback(material.set_shader_parameter.bind("flashState", 0))
+		if is_on_floor() and $AnimationPlayer.current_animation == "jump_down":
+			if abs(velocity.x) < 10:
+				$AnimationPlayer.play("end_jump")
+			else:
+				$AnimationPlayer.play("run")
 		
-		$Area2D.monitoring = false
-		can_jump = false
-		can_dash = false
-		dash_cooldown = true
-		direction = -(int($Sprite2D.flip_h) * 2 - 1)
-		$"../DashDuration".start()
+		if direction:
+			if is_on_floor() and velocity.y == 0 and $AnimationPlayer.current_animation != "end_jump":
+				if $AnimationPlayer.current_animation != "run":
+					$AnimationPlayer.play("run")
+			if dashing:
+				velocity.x = 4 * direction * SPEED
+			else:
+				if sign(velocity.x) == sign(direction*SPEED) and abs(velocity.x) > abs(direction*SPEED):
+					velocity.x = move_toward(velocity.x, direction * SPEED, abs(velocity.x)/20)
+				else:
+					velocity.x = move_toward(velocity.x, direction * SPEED, SPEED)
+			$Sprite2D.flip_h = (-direction + 1)/2
+		else:
+			if is_on_floor() and velocity.y == 0 and $AnimationPlayer.current_animation != "end_jump":
+				if $AnimationPlayer.current_animation != "idle":
+					$AnimationPlayer.play("idle")
+			if abs(velocity.x) > SPEED:
+				velocity.x = move_toward(velocity.x, 0, abs(velocity.x)/20)
+			else:
+				
+				velocity.x = move_toward(velocity.x, 0, abs(velocity.x)/2)
+		if not is_on_floor():
+			if velocity.y > -10 and $AnimationPlayer.current_animation != "jump_transition" and $AnimationPlayer.current_animation != "jump_down":
+				$AnimationPlayer.play("jump_transition")
+		if abs(velocity.x) < 2 * SPEED:
+			$Area2D.monitoring = true
+			
+		#apply_floor_snap()
+		#floor_snap_length = 5
+		floor_max_angle = 3 * PI / 8
+		floor_stop_on_slope = false
 		
-	if $Area2D.monitoring and $Area2D.get_overlapping_bodies():
-		_on_area_2d_body_entered($Area2D.get_overlapping_bodies()[0])
-	camera.global_position = (global_position * 9 + get_global_mouse_position())/10
+		vy_before = velocity.y
+		move_and_slide()
+		for i in get_slide_collision_count():
+			var collider = get_slide_collision(i).get_collider()
+			if collider is RigidBody2D and collider.name != "ThreadBody":
+				collider.apply_central_impulse(-get_slide_collision(i).get_normal() * FORCE)
+				#collider.apply_central_impulse(-get_slide_collision(i).get_normal() * FORCE * (vy_before/200)**2)
+				
+		if Input.is_action_just_pressed("interact") and global.string and not string_cooldown:
+			var start_end = [null, null]
+			
+			if global.thread_max >= 2 and global.threads.size() >= 2:
+				connect_string.emit(start_end, [], 1)
+				$"../StringCooldown".start()
+				string_cooldown = true
+			elif $Area2D2.has_overlapping_bodies():
+				start_end[0] = $Area2D2.get_overlapping_bodies()[0].global_position
+				connect_string.emit(start_end, [], 0)
+				$"../StringCooldown".start()
+				string_cooldown = true
+		if Input.is_action_just_pressed("ui_click") and can_shoot and not spam_cooldown:
+			can_shoot -= 1
+			spam_cooldown = true
+			$"../SpamCooldown".start()
+			var light_tween = create_tween()
+			var mod_tween = create_tween()
+			var glow_tween = create_tween()
+			light_tween.tween_property($PointLight2D, "energy", 0.3, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+			light_tween.tween_property($PointLight2D, "energy", 0.2, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+			mod_tween.tween_property(get_parent(), "modulate", Color(1.572, 1.572, 1.499) * 1.2, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+			mod_tween.tween_property(get_parent(), "modulate", Color(1.572, 1.572, 1.499), 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+			glow_tween.tween_method(set_scarf_glow, 1.0, 5.0, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+			glow_tween.tween_method(set_scarf_glow, 5.0, 1.0, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+			var timer = get_parent().get_node("BasicCooldown").duplicate()
+			get_parent().add_child(timer)
+			timer.start()
+			if global.thread_max <= global.threads.size():
+				destroy_thread.emit()
+			var instance = thread.instantiate()
+			instance.global_position = global_position
+			instance.rotation = atan2(get_local_mouse_position().y, get_local_mouse_position().x)
+			get_parent().get_parent().add_child(instance)
+		
+		if Input.is_action_just_pressed("dash") and global.dash and can_dash and not dash_cooldown:
+			dashing = true
+			var squash_tween = create_tween()
+			var blink_tween = create_tween()
+			squash_tween.tween_property($Sprite2D, "scale", Vector2(1.3, 0.8), 0.07).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
+			squash_tween.tween_property($Sprite2D, "scale", Vector2(1, 1), 0.12).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_IN_OUT)
+			blink_tween.tween_callback(material.set_shader_parameter.bind("flashState", 1))
+			blink_tween.tween_property($Sprite2D, "modulate:a", 0.0, 0.1)
+			blink_tween.tween_property($Sprite2D, "modulate:a", 1.0, 0.05).set_delay(0.2)
+			blink_tween.tween_callback(material.set_shader_parameter.bind("flashState", 0))
+			
+			$Area2D.monitoring = false
+			can_jump = false
+			can_dash = false
+			dash_cooldown = true
+			direction = -(int($Sprite2D.flip_h) * 2 - 1)
+			$"../DashDuration".start()
+			
+		if $Area2D.monitoring and $Area2D.get_overlapping_bodies():
+			_on_area_2d_body_entered($Area2D.get_overlapping_bodies()[0])
+		camera.global_position = (global_position * 9 + get_global_mouse_position())/10
 	#if velocity.x != 0:
 		#camera.position_smoothing_speed = 3.5
 		#camera.global_position = global_position + Vector2(150 * sign(velocity.x), 0)
@@ -242,6 +245,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 			tween.tween_property(self, "modulate", Color(1, 1, 1, 0), 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 			tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT_IN)
 		if global.health <= 0:
+			dying = true
 			global.freeze(0.15)
 			material.set_shader_parameter("flashState", 0.7)
 			tween.tween_callback(global.shake.bind(30, 5))

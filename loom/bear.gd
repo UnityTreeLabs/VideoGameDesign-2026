@@ -1,15 +1,18 @@
 extends CharacterBody2D
 
 
-const SPEED = 7500
+const SPEED = 30000
 const JUMP_VELOCITY = -400.0
-const SHOOT_VELOCITY = 2000
+const SHOOT_VELOCITY = 500
 var active = false
 var rng = RandomNumberGenerator.new()
 var player = null
 var charge = false
 var roar = false
-@export var health = 10
+var attack_pattern = 0
+var proj_num = 12
+var flipped = -1
+@export var health = 20
 @onready var projectile = preload("res://projectile.tscn")
 
 func _ready() -> void:
@@ -23,8 +26,41 @@ func _physics_process(delta: float) -> void:
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	
-	
+	if active:
+		if $AttackCooldown.is_stopped():
+			if attack_pattern == 0:
+				$AnimatedSprite2D.play("roar")
+				$AttackCooldown.wait_time = randf_range(3.0, 4.0)
+				$AttackCooldown.start()
+				attack_pattern = 1
+			else:
+				$AnimatedSprite2D.play("charge")
+				$AttackCooldown.wait_time = randf_range(3.0, 4.0)
+				$AttackCooldown.start()
+				attack_pattern = 0
+		if $AnimatedSprite2D.animation == "roar" and $AnimatedSprite2D.frame >= 4 and $AnimatedSprite2D.frame <= 14:
+			global.shake(1, 5)
+			if $ShootCooldown.is_stopped():
+				player = get_tree().current_scene.get_node("Player/PlayerBody")
+				shoot(player.global_position - global_position)
+				$ShootCooldown.wait_time = randf_range(0.4, 0.75)
+				$ShootCooldown.start()
+		if $AnimatedSprite2D.animation == "charge":
+			if (position.x >= 0 and flipped == 1):
+				flipped = -1
+				rotation_degrees = 180
+				scale.y = -1
+				$AnimatedSprite2D.play("idle")
+				velocity.x = 0
+			elif (position.x <= -314 and flipped == -1):
+				flipped = 1
+				rotation_degrees = 0
+				scale.y = 1
+				$AnimatedSprite2D.play("idle")
+				velocity.x = 0
+			else:
+				velocity.x = delta * SPEED * flipped
+			
 	
 	move_and_slide()
 
@@ -52,21 +88,18 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 
 
 func _on_animated_sprite_2d_animation_finished() -> void:
-	if $AnimatedSprite2D.animation == "start_run":
-		if $AnimatedSprite2D.frame == 0:
-			$AnimatedSprite2D.play("default")
-		else:
-			$AnimatedSprite2D.play("running")
-	elif $AnimatedSprite2D.animation == "attack":
-		$AnimatedSprite2D.play("default")
+	if $AnimatedSprite2D.animation == "roar":
+		$AnimatedSprite2D.play("idle")
 
 func shoot(location: Vector2) -> void:
-	var object = projectile.instantiate()
-	var g = get_gravity().y + 50
-	location.x += rng.randf_range(-50, 50)
-	location.y += rng.randf_range(-20, 20)
-	object.global_position = global_position + Vector2(0, -25)
-	object.start_velocity = Vector2(SHOOT_VELOCITY, 0).rotated(atan2(SHOOT_VELOCITY ** 2 - sqrt(SHOOT_VELOCITY ** 4 - g * (g * location.x ** 2 + 2 * SHOOT_VELOCITY ** 2 * velocity.y)), g * location.x)).bounce(Vector2(0, 1))
-	get_parent().get_parent().add_child(object)
-	object.force_update_transform()
-	object.show()
+	location -= Vector2(225 * flipped, -30)
+	for i in range(proj_num):
+		var object = projectile.instantiate()
+		object.particles = false
+		object.gravity = false
+		object.color = Color(3.061, 1.567, 1.37, 1.0)
+		object.global_position = global_position + Vector2(225 * flipped, -30)
+		object.start_velocity = Vector2(SHOOT_VELOCITY, 0).rotated(atan2(location.y, location.x) + i * 2 * PI / proj_num)
+		get_parent().get_parent().add_child(object)
+		object.force_update_transform()
+		object.show()
