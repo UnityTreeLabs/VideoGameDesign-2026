@@ -7,12 +7,14 @@ const SHOOT_VELOCITY = 2000
 var active = false
 var rng = RandomNumberGenerator.new()
 var player = null
-@export var health = 3
+var charge = false
+var roar = false
+@export var health = 10
 @onready var projectile = preload("res://projectile.tscn")
 
 func _ready() -> void:
 	rng.randomize()
-	material = material.duplicate()	
+	material = material.duplicate()
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -22,52 +24,7 @@ func _physics_process(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	
-	if $AnimatedSprite2D.frame == 3 and $AnimatedSprite2D.animation == "attack" and active:
-		shoot(player.global_position - global_position + Vector2(0, 25))
-	if true:
-		player = get_tree().current_scene.get_node("Player/PlayerBody")
-		if not $AnimatedSprite2D.animation == "attack":
-			if player.global_position.x > global_position.x:
-				scale.y = 1
-				rotation = 0
-				$GPUParticles2D.scale.y = 1
-				$GPUParticles2D.rotation = 0
-				velocity.x = SPEED * delta
-			else:
-				rotation_degrees = 180
-				scale.y = -1
-				$GPUParticles2D.scale.y = -1
-				$GPUParticles2D.rotation_degrees = 180
-				velocity.x = -SPEED * delta
-		if true:
-			velocity.x = 0
-			if $ShootCooldown.is_stopped() and $AnimatedSprite2D.animation == "default":
-				$AnimatedSprite2D.play("attack")
-				$ShootCooldown.wait_time = rng.randf_range(1, 2.5)
-				$ShootCooldown.start()
-	else:
-		if (get_parent().global_position - global_position).length() < 50:
-			velocity.x = 0
-		elif get_parent().global_position.x > global_position.x:
-			scale.y = 1
-			rotation = 0
-			$GPUParticles2D.scale.y = 1
-			$GPUParticles2D.rotation = 0
-			velocity.x = (SPEED * delta)
-		else:
-			rotation_degrees = 180
-			scale.y = -1
-			$GPUParticles2D.scale.y = -1
-			$GPUParticles2D.rotation_degrees = 180
-			velocity.x = -SPEED * delta
-	if $AnimatedSprite2D.animation == "attack":
-		velocity.x = 0
-	if velocity.x == 0 and $AnimatedSprite2D.animation != "default" and $AnimatedSprite2D.animation != "attack":
-		$AnimatedSprite2D.play_backwards("start_run")
-	elif velocity.x != 0 and $AnimatedSprite2D.animation == "default":
-		$AnimatedSprite2D.play("start_run")
-	if $AnimatedSprite2D.animation == "start_run":
-		velocity.x *= $AnimatedSprite2D.frame / 10.0
+	
 	
 	move_and_slide()
 

@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 
-const SPEED = 10000
+const SPEED = 8000
 const JUMP_VELOCITY = -400.0
 @onready var follow_point = get_parent().get_node("Path2D/PathFollow2D")
 var chasing = false
@@ -16,7 +16,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
-	follow_point.progress_ratio += delta * 0.25
+	follow_point.progress_ratio += delta * 0.2
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 

@@ -83,6 +83,22 @@ tracks/3/keys = {
 "values": [1.5]
 }
 
+[sub_resource type="Animation" id="Animation_sweqy"]
+resource_name = "end_jump"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [24, 25, 26]
+}
+
 [sub_resource type="Animation" id="Animation_onrkg"]
 resource_name = "idle"
 length = 0.8
@@ -136,6 +152,56 @@ tracks/3/keys = {
 "values": [1.5, 1.75, 1.5, 1.0]
 }
 
+[sub_resource type="Animation" id="Animation_b26j0"]
+resource_name = "jump_down"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [20, 21, 22, 23]
+}
+
+[sub_resource type="Animation" id="Animation_2hs0m"]
+resource_name = "jump_transition"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [19]
+}
+
+[sub_resource type="Animation" id="Animation_1jxqw"]
+resource_name = "jump_up"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [15, 16, 17, 18]
+}
+
 [sub_resource type="Animation" id="Animation_hqtel"]
 resource_name = "run"
 length = 0.8
@@ -153,11 +219,32 @@ tracks/0/keys = {
 "values": [4, 5, 6, 7, 8, 9, 10, 11]
 }
 
+[sub_resource type="Animation" id="Animation_dw050"]
+resource_name = "start_jump"
+length = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [12, 13, 14]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hqtel"]
 _data = {
 &"RESET": SubResource("Animation_i3pqv"),
+&"end_jump": SubResource("Animation_sweqy"),
 &"idle": SubResource("Animation_onrkg"),
-&"run": SubResource("Animation_hqtel")
+&"jump_down": SubResource("Animation_b26j0"),
+&"jump_transition": SubResource("Animation_2hs0m"),
+&"jump_up": SubResource("Animation_1jxqw"),
+&"run": SubResource("Animation_hqtel"),
+&"start_jump": SubResource("Animation_dw050")
 }
 
 [sub_resource type="Gradient" id="Gradient_i3pqv"]
@@ -275,7 +362,7 @@ autoplay = &"idle"
 [node name="Sprite2D" type="Sprite2D" parent="PlayerBody" unique_id=944955671]
 use_parent_material = true
 texture = ExtResource("3_i3pqv")
-hframes = 12
+hframes = 27
 
 [node name="Sprite2D2" type="Sprite2D" parent="PlayerBody" unique_id=772418249]
 visible = false
@@ -295,11 +382,11 @@ explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_hqtel")
 
 [node name="CoyoteTime" type="Timer" parent="." unique_id=513461818]
-wait_time = 0.1
+wait_time = 0.2
 one_shot = true
 
 [node name="BasicCooldown" type="Timer" parent="." unique_id=248442035]
-wait_time = 2.0
+wait_time = 1.5
 one_shot = true
 
 [node name="SpamCooldown" type="Timer" parent="." unique_id=371660285]
@@ -320,6 +407,7 @@ one_shot = true
 one_shot = true
 
 [connection signal="body_entered" from="PlayerBody/Area2D" to="PlayerBody" method="_on_area_2d_body_entered"]
+[connection signal="animation_finished" from="PlayerBody/AnimationPlayer" to="PlayerBody" method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="CoyoteTime" to="PlayerBody" method="_on_coyote_time_timeout"]
 [connection signal="timeout" from="BasicCooldown" to="PlayerBody" method="_on_basic_cooldown_timeout"]
 [connection signal="timeout" from="SpamCooldown" to="PlayerBody" method="_on_spam_cooldown_timeout"]

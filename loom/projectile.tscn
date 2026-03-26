@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://f7ofji28mj4b"]
+[gd_scene format=3 uid="uid://f7ofji28mj4b"]
 
 [ext_resource type="Texture2D" uid="uid://bm17pyrkbmqw6" path="res://Light_Orb.png" id="1_a85iw"]
 [ext_resource type="Script" uid="uid://mu2l1lx33bj" path="res://projectile.gd" id="1_qxf0c"]
@@ -49,7 +49,7 @@ collision_mode = 1
 collision_friction = 0.0
 collision_bounce = 1.0
 
-[node name="Projectile" type="RigidBody2D"]
+[node name="Projectile" type="RigidBody2D" unique_id=1918348115]
 collision_layer = 16
 collision_mask = 7
 physics_material_override = SubResource("PhysicsMaterial_qxf0c")
@@ -60,23 +60,23 @@ max_contacts_reported = 1
 linear_velocity = Vector2(500, 0)
 script = ExtResource("1_qxf0c")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=9226450]
 shape = SubResource("CircleShape2D_dgwo2")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=539080121]
 modulate = Color(1.998, 1.585, 3.061, 1)
 position = Vector2(0, 12)
 scale = Vector2(2, 2)
 texture = ExtResource("1_a85iw")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=505822689]
 modulate = Color(1.3706126, 0.8745043, 1.8247963, 1)
 show_behind_parent = true
 lifetime = 0.25
 explosiveness = 0.5
 process_material = SubResource("ParticleProcessMaterial_qxf0c")
 
-[node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="." unique_id=253134269]
 modulate = Color(1.998, 1.585, 3.061, 1)
 show_behind_parent = true
 emitting = false

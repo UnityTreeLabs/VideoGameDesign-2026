@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://dk3k1vd8yf5qt"]
+[gd_scene format=3 uid="uid://dk3k1vd8yf5qt"]
 
 [ext_resource type="Shader" uid="uid://bjk86hbtjk6ec" path="res://hitflash.gdshader" id="1_hq7sg"]
 [ext_resource type="Script" uid="uid://c5lf5svyeelia" path="res://bear.gd" id="2_6uh6h"]
@@ -297,37 +297,37 @@ collision_mode = 1
 collision_friction = 0.0
 collision_bounce = 1.0
 
-[node name="Bear" type="Node2D"]
+[node name="Bear" type="Node2D" unique_id=993812984]
 scale = Vector2(2, 2)
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=369011516]
 material = SubResource("ShaderMaterial_whgdy")
 collision_layer = 16
 collision_mask = 2
 script = ExtResource("2_6uh6h")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=537870268]
 modulate = Color(0.715, 0.007, 1.187, 1)
 use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_fkj2a")
 animation = &"attack"
 autoplay = "default"
 
-[node name="Area2D" type="Area2D" parent="CharacterBody2D"]
+[node name="Area2D" type="Area2D" parent="CharacterBody2D" unique_id=302806929]
 collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D" unique_id=237318716]
 position = Vector2(0, -2)
 shape = SubResource("CapsuleShape2D_m7aab")
 debug_color = Color(0, 0.6, 0.7019608, 0.11764706)
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="CharacterBody2D" unique_id=124951355]
 position = Vector2(0, -2)
 shape = SubResource("CapsuleShape2D_m7aab")
 debug_color = Color(0, 0.6, 0.69803923, 0.11764706)
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="CharacterBody2D"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="CharacterBody2D" unique_id=1098894577]
 process_mode = 3
 modulate = Color(2.4448998, 2.454227, 2.0718155, 1)
 z_index = 4096
@@ -339,7 +339,7 @@ speed_scale = 2.0
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_dvex4")
 
-[node name="ShootCooldown" type="Timer" parent="CharacterBody2D"]
+[node name="AttackCooldown" type="Timer" parent="CharacterBody2D" unique_id=1134442892]
 wait_time = 2.0
 one_shot = true
 

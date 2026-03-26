@@ -22,6 +22,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 global="*res://global.gd"
+Transition="*uid://cmpfw3oritsv4"
+Sound="*uid://c6774blbbtdhy"
 
 [display]
 

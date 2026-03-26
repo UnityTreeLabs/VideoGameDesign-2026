@@ -42,10 +42,12 @@ func alert(header: String, text: String) -> void:
 	var tween = create_tween()
 	var header_node = get_tree().current_scene.get_node("CanvasLayer/UI/Header")
 	var text_node = get_tree().current_scene.get_node("CanvasLayer/UI/Text")
+	header_node.modulate.a = 0
+	text_node.modulate.a = 0
 	header_node.text = header
 	text_node.text = text
-	tween.tween_property(header_node, "modulate:a", 1.0, 1.0)
-	tween.tween_property(text_node, "modulate:a", 1.0, 1.5)
+	tween.tween_property(header_node, "modulate:a", 1.0, 1.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(text_node, "modulate:a", 1.0, 1.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	
-	tween.tween_property(header_node, "modulate:a", 0.0, 1.0)
-	tween.tween_property(text_node, "modulate:a", 0.0, 0.5)
+	tween.tween_property(header_node, "modulate:a", 0.0, 1.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT_IN)
+	tween.tween_property(text_node, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT_IN)

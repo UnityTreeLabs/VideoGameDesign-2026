@@ -9,9 +9,7 @@ void fragment() {
 	
     COLOR = mix(vec4(5, 5, 5, cur_color.a), cur_color, 1.0 - flashState);
 	
-	if (texture_color.b < 0.93 && texture_color.r >= 0.9 && texture_color.g >= 0.9){
-		COLOR += vec4(1.353, 1.301, 1.123, 0) * scarfGlow;
-	} else if (COLOR.a != 0.0) {
-		
+	if (texture_color.b < 0.93 && texture_color.r >= 0.9 && texture_color.g >= 0.9 && texture_color.a > 0.5){
+		COLOR = mix(vec4(1.353, 1.301, 1.123, 0) * scarfGlow, cur_color, 1.0);
 	}
 }

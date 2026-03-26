@@ -51,7 +51,7 @@ func _physics_process(delta: float) -> void:
 			velocity.x = 0
 			if $ShootCooldown.is_stopped() and $AnimatedSprite2D.animation == "default":
 				$AnimatedSprite2D.play("attack")
-				$ShootCooldown.wait_time = rng.randf_range(1, 2.5)
+				$ShootCooldown.wait_time = rng.randf_range(2.0, 3.5)
 				$ShootCooldown.start()
 	else:
 		if (get_parent().global_position - global_position).length() < 50:

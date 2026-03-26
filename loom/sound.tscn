@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://c6774blbbtdhy"]
+
+[ext_resource type="AudioStream" uid="uid://ucq4fktn5pbh" path="res://whispers of the light.mp3" id="1_3j8lq"]
+
+[node name="Sound" type="Node2D" unique_id=1346473685]
+
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=1742368249]
+process_mode = 3
+stream = ExtResource("1_3j8lq")
+volume_db = -20.0
+autoplay = true

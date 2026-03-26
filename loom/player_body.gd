@@ -15,7 +15,7 @@ var can_dash = false
 var string_cooldown = false
 var vy_before = 0
 var spam_cooldown = false
-
+@onready var trans_screen = Transition.get_node("Screen")
 
 signal destroy_thread
 signal connect_string(coords, threads, type)
@@ -45,6 +45,10 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_up") and (can_jump or can_double):
+		if $AnimationPlayer.current_animation == "idle":
+			$AnimationPlayer.play("start_jump")
+		else:
+			$AnimationPlayer.play("jump_up")
 		velocity.y = JUMP_VELOCITY
 		can_dash = true
 		var squash_tween = create_tween()
@@ -86,9 +90,16 @@ func _physics_process(delta: float) -> void:
 	if not dashing:
 		direction = Input.get_axis("ui_left", "ui_right")
 	
-	if direction:
-		if $AnimationPlayer.current_animation != "run":
+	if is_on_floor() and $AnimationPlayer.current_animation == "jump_down":
+		if abs(velocity.x) < 10:
+			$AnimationPlayer.play("end_jump")
+		else:
 			$AnimationPlayer.play("run")
+	
+	if direction:
+		if is_on_floor() and velocity.y == 0 and $AnimationPlayer.current_animation != "end_jump":
+			if $AnimationPlayer.current_animation != "run":
+				$AnimationPlayer.play("run")
 		if dashing:
 			velocity.x = 4 * direction * SPEED
 		else:
@@ -98,13 +109,17 @@ func _physics_process(delta: float) -> void:
 				velocity.x = move_toward(velocity.x, direction * SPEED, SPEED)
 		$Sprite2D.flip_h = (-direction + 1)/2
 	else:
-		if $AnimationPlayer.current_animation != "idle":
-			$AnimationPlayer.play("idle")
+		if is_on_floor() and velocity.y == 0 and $AnimationPlayer.current_animation != "end_jump":
+			if $AnimationPlayer.current_animation != "idle":
+				$AnimationPlayer.play("idle")
 		if abs(velocity.x) > SPEED:
 			velocity.x = move_toward(velocity.x, 0, abs(velocity.x)/20)
 		else:
 			
 			velocity.x = move_toward(velocity.x, 0, abs(velocity.x)/2)
+	if not is_on_floor():
+		if velocity.y > -10 and $AnimationPlayer.current_animation != "jump_transition" and $AnimationPlayer.current_animation != "jump_down":
+			$AnimationPlayer.play("jump_transition")
 	if abs(velocity.x) < 2 * SPEED:
 		$Area2D.monitoring = true
 		
@@ -203,7 +218,7 @@ func _on_dash_duration_timeout() -> void:
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	if $"../InvDuration".is_stopped():
+	if $"../InvDuration".is_stopped() and global.health >= 1:
 		if body is TileMapLayer:
 			if body.tile_set.get_physics_layer_collision_layer(0) & 512 == 512:
 				global.health = 0
@@ -235,6 +250,8 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 			tween.tween_property(self, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 			#tween.tween_property(global, "health", 3, 0).set_delay(0.1)
 			tween.tween_callback(material.set_shader_parameter.bind("flashState", 0)).set_delay(0.2)
+			tween.tween_callback(trans_screen.material.set_shader_parameter.bind("reverse", false))
+			tween.tween_method(set_trans, 0.0, 1.0, 2.0).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 			tween.tween_property(global, "health", 3, 0)
 			tween.tween_callback(get_tree().call_deferred.bind("reload_current_scene"))
 
@@ -251,3 +268,17 @@ func _on_spam_cooldown_timeout() -> void:
 
 func set_scarf_glow(amount: float) -> void:
 	material.set_shader_parameter("scarfGlow", amount)
+
+func set_trans(progress: float) -> void:
+	trans_screen.material.set_shader_parameter("progress", progress)
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "jump_transition":
+		$AnimationPlayer.play("jump_down")
+	elif anim_name == "end_jump":
+		if velocity.x == 0:
+			$AnimationPlayer.play("idle")
+		else:
+			$AnimationPlayer.play("run")
+	elif anim_name == "start_jump":
+		$AnimationPlayer.play("jump_up")

@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://cmpfw3oritsv4"]
+
+[ext_resource type="Shader" uid="uid://dspi4b1bbi7d0" path="res://screen_trans.gdshader" id="1_2gi1b"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jspdm"]
+shader = ExtResource("1_2gi1b")
+shader_parameter/reverse = false
+shader_parameter/progress = 0.0
+
+[node name="Transition" type="CanvasLayer" unique_id=104595530]
+layer = 2
+
+[node name="Screen" type="ColorRect" parent="." unique_id=589146410]
+top_level = true
+z_index = 4096
+z_as_relative = false
+material = SubResource("ShaderMaterial_jspdm")
+offset_right = 1296.0
+offset_bottom = 729.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true

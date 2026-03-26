@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cw7peq3450mxo"]
+[gd_scene format=3 uid="uid://cw7peq3450mxo"]
 
 [ext_resource type="Texture2D" uid="uid://n8sqe7gv383q" path="res://lamp.tres" id="1_bekw5"]
 [ext_resource type="Script" uid="uid://cj0c01koyc4et" path="res://lamp.gd" id="1_uno5e"]
@@ -30,22 +30,22 @@ fill_to = Vector2(0.5, 0)
 [sub_resource type="CircleShape2D" id="CircleShape2D_vxcd3"]
 radius = 75.0
 
-[node name="Lamp" type="Node2D"]
+[node name="Lamp" type="Node2D" unique_id=1030653565]
 scale = Vector2(2, 2)
 script = ExtResource("1_uno5e")
 
-[node name="Sprite2D2" type="Sprite2D" parent="."]
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=414173635]
 modulate = Color(3.2944162, 2.6968062, 1.7505909, 1)
 self_modulate = Color(1, 1, 1, 0)
 position = Vector2(0, -50)
 texture = SubResource("GradientTexture2D_vxcd3")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=872353350]
 position = Vector2(0, -29)
 texture = ExtResource("1_bekw5")
 hframes = 2
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1606348682]
 position = Vector2(0, -50)
 scale = Vector2(6.054687, 6.054687)
 color = Color(0.7698917, 0.4884951, 0, 1)
@@ -58,10 +58,10 @@ shadow_item_cull_mask = 15
 texture = SubResource("GradientTexture2D_uno5e")
 height = 30.0
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1167802276]
 collision_layer = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1170297062]
 position = Vector2(0, -12)
 shape = SubResource("CircleShape2D_vxcd3")
 

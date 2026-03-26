@@ -1,8 +1,145 @@
-[gd_scene load_steps=2 format=3 uid="uid://ckjxrtvyq2ewo"]
+[gd_scene format=3 uid="uid://ckjxrtvyq2ewo"]
 
 [ext_resource type="Script" uid="uid://dn2xm8iyw1m6x" path="res://menu.gd" id="1_lti8b"]
+[ext_resource type="Texture2D" uid="uid://bi1vpdm1lswvt" path="res://Layer 5.png" id="2_nrnbx"]
+[ext_resource type="Texture2D" uid="uid://cxvg4e17owsa6" path="res://Layer 4.png" id="3_iqepy"]
+[ext_resource type="Texture2D" uid="uid://lf38waexiyba" path="res://Layer 3.png" id="4_h1wq0"]
+[ext_resource type="Texture2D" uid="uid://02ket433rn7c" path="res://Layer 2.png" id="5_dwrpx"]
+[ext_resource type="Texture2D" uid="uid://c4bhqoyof5ihc" path="res://Layer 1.png" id="6_g7jxm"]
+[ext_resource type="Script" uid="uid://ca5rwhp66tmve" path="res://camera_2d.gd" id="7_jspdm"]
+[ext_resource type="Script" uid="uid://6o6o1u4abrun" path="res://leaves.gd" id="8_oxnod"]
+[ext_resource type="Texture2D" uid="uid://mtuwnedv235r" path="res://Leaves.png" id="9_gd0jp"]
+[ext_resource type="Shader" uid="uid://bv8ed3b1deiwu" path="res://title.gdshader" id="10_h1wq0"]
+[ext_resource type="Texture2D" uid="uid://de3csk7rgosod" path="res://Title.png" id="11_dwrpx"]
+[ext_resource type="Shader" uid="uid://dspi4b1bbi7d0" path="res://screen_trans.gdshader" id="13_g7jxm"]
 
-[node name="Menu" type="Control"]
+[sub_resource type="Environment" id="Environment_4ndjb"]
+background_mode = 3
+background_color = Color(1, 1, 1, 1)
+background_canvas_max_layer = 1
+ambient_light_color = Color(0.2627451, 0.53333336, 0.30980393, 1)
+glow_enabled = true
+glow_levels/1 = 1.0
+glow_levels/2 = 1.0
+glow_levels/3 = 2.0
+glow_levels/4 = 1.0
+glow_levels/5 = 0.5
+glow_normalized = true
+glow_intensity = 1.0
+glow_bloom = 0.3
+glow_hdr_threshold = 0.5
+glow_hdr_scale = 4.0
+glow_hdr_luminance_cap = 256.0
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_3ls4m"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5h80m"]
+atlas = ExtResource("9_gd0jp")
+region = Rect2(0, 0, 64, 16)
+
+[sub_resource type="Curve" id="Curve_w25hu"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.40789473, 0.69538933), 0.0, 0.0, 0, 0, Vector2(0.6885965, 0.7789116), 4.0680294, 4.0680294, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_2421v"]
+curve = SubResource("Curve_w25hu")
+
+[sub_resource type="Curve" id="Curve_td6mg"]
+_data = [Vector2(0, 0.70093), 0.0, 0.0, 0, 0, Vector2(0.341954, 1), 0.0, 0.0, 0, 0, Vector2(0.7442528, 0), 0.0, 0.0, 0, 0, Vector2(1, 0.6977484), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_guify"]
+_data = [Vector2(0, 0.69456685), 0.0, 0.0, 0, 0, Vector2(0.37068963, 0), 0.0, 0.0, 0, 0, Vector2(0.74137926, 1), 0.0, 0.0, 0, 0, Vector2(0.99712634, 0.71047485), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_ud82j"]
+curve_x = SubResource("Curve_td6mg")
+curve_y = SubResource("Curve_guify")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_oil5j"]
+lifetime_randomness = 0.3
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(579, 532, 0)
+emission_shape_scale = Vector3(0.6, 0.5, 0)
+emission_shape = 3
+emission_box_extents = Vector3(5000, 1000, 1)
+direction = Vector3(1, 1, 0)
+spread = 15.0
+initial_velocity_min = 200.0
+initial_velocity_max = 300.0
+angular_velocity_min = -45.000015
+angular_velocity_max = 44.999985
+directional_velocity_min = -1.6093254e-05
+directional_velocity_max = 0.9999839
+directional_velocity_curve = SubResource("CurveXYZTexture_ud82j")
+gravity = Vector3(0, 0, 0)
+scale_min = 1.9
+scale_max = 2.1
+alpha_curve = SubResource("CurveTexture_2421v")
+anim_speed_min = 5.0
+anim_speed_max = 5.0
+anim_offset_max = 1.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8uog0"]
+atlas = ExtResource("9_gd0jp")
+region = Rect2(0, 16, 64, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k5x1w"]
+atlas = ExtResource("9_gd0jp")
+region = Rect2(0, 32, 64, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rkpqm"]
+atlas = ExtResource("9_gd0jp")
+region = Rect2(0, 48, 64, 16)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g7jxm"]
+shader = ExtResource("10_h1wq0")
+shader_parameter/scarfGlow = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jspdm"]
+shader = ExtResource("13_g7jxm")
+shader_parameter/reverse = false
+shader_parameter/progress = 0.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dwrpx"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1.353256, 1.3480214, 1.3009094, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g7jxm"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1.5720325, 1.5055057, 0.9128128, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[node name="Menu" type="Control" unique_id=801331518]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,3 +147,185 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_lti8b")
+
+[node name="Background" type="Node2D" parent="." unique_id=2083004457]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Background" unique_id=206548694]
+environment = SubResource("Environment_4ndjb")
+
+[node name="Layer5" type="Parallax2D" parent="Background" unique_id=1903696729]
+modulate = Color(0.7121294, 0.7121294, 0.71212935, 1)
+z_index = -1024
+scroll_scale = Vector2(0, 0)
+scroll_offset = Vector2(-1, 0)
+repeat_size = Vector2(1296, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/Layer5" unique_id=664934962]
+scale = Vector2(2, 2)
+texture = ExtResource("2_nrnbx")
+centered = false
+
+[node name="Layer4" type="Parallax2D" parent="Background" unique_id=742852819]
+modulate = Color(0.7121294, 0.7121294, 0.71212935, 1)
+z_index = -1024
+scroll_scale = Vector2(0.1, 0)
+scroll_offset = Vector2(-1, 0)
+repeat_size = Vector2(1296, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/Layer4" unique_id=1514404229]
+scale = Vector2(2, 2)
+texture = ExtResource("3_iqepy")
+centered = false
+
+[node name="Layer3" type="Parallax2D" parent="Background" unique_id=1070737909]
+modulate = Color(0.7121294, 0.7121294, 0.71212935, 1)
+z_index = -1024
+scroll_scale = Vector2(0.25, 0)
+scroll_offset = Vector2(-1, 0)
+repeat_size = Vector2(1296, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/Layer3" unique_id=2059673502]
+scale = Vector2(2, 2)
+texture = ExtResource("4_h1wq0")
+centered = false
+
+[node name="Layer2" type="Parallax2D" parent="Background" unique_id=568829990]
+modulate = Color(0.7121294, 0.7121294, 0.71212935, 1)
+z_index = -1024
+scroll_scale = Vector2(0.4, 0)
+scroll_offset = Vector2(-1, 0)
+repeat_size = Vector2(1296, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/Layer2" unique_id=1717328281]
+scale = Vector2(2, 2)
+texture = ExtResource("5_dwrpx")
+centered = false
+
+[node name="Layer1" type="Parallax2D" parent="Background" unique_id=527718006]
+modulate = Color(0.7121294, 0.7121294, 0.71212935, 1)
+z_index = -1024
+scroll_scale = Vector2(0.5, 0)
+scroll_offset = Vector2(-1, 0)
+repeat_size = Vector2(1296, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/Layer1" unique_id=1502508246]
+scale = Vector2(2, 2)
+texture = ExtResource("6_g7jxm")
+centered = false
+
+[node name="Camera2D" type="Camera2D" parent="Background" unique_id=945026445]
+limit_enabled = false
+limit_left = -75
+limit_top = -1479
+limit_right = 1221
+limit_bottom = -750
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 1.0
+script = ExtResource("7_jspdm")
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="Background" unique_id=853235681]
+rotation = 0.34906584
+scale = Vector2(0.99999994, 0.99999994)
+energy = 0.25
+range_item_cull_mask = 15
+shadow_enabled = true
+shadow_filter = 1
+shadow_filter_smooth = 0.5
+shadow_item_cull_mask = 13
+height = 0.3
+
+[node name="AmbientLight2D" type="DirectionalLight2D" parent="Background" unique_id=156221709]
+rotation = 0.34906584
+scale = Vector2(0.99999994, 0.99999994)
+energy = 0.1
+range_item_cull_mask = 15
+shadow_filter = 2
+shadow_item_cull_mask = 0
+height = 0.3
+
+[node name="Leaves" type="Node2D" parent="Background" unique_id=555432748]
+script = ExtResource("8_oxnod")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Background/Leaves" unique_id=219023219]
+material = SubResource("CanvasItemMaterial_3ls4m")
+amount = 5
+texture = SubResource("AtlasTexture_5h80m")
+lifetime = 3.0
+preprocess = 1.0
+visibility_rect = Rect2(0, 0, 20000, 5000)
+trail_lifetime = 0.2
+process_material = SubResource("ParticleProcessMaterial_oil5j")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="Background/Leaves" unique_id=1445737704]
+material = SubResource("CanvasItemMaterial_3ls4m")
+amount = 5
+texture = SubResource("AtlasTexture_8uog0")
+lifetime = 3.0
+preprocess = 1.0
+visibility_rect = Rect2(0, 0, 20000, 20000)
+trail_lifetime = 0.2
+process_material = SubResource("ParticleProcessMaterial_oil5j")
+
+[node name="GPUParticles2D3" type="GPUParticles2D" parent="Background/Leaves" unique_id=1903725039]
+material = SubResource("CanvasItemMaterial_3ls4m")
+amount = 5
+texture = SubResource("AtlasTexture_k5x1w")
+lifetime = 3.0
+preprocess = 1.0
+visibility_rect = Rect2(0, 0, 20000, 20000)
+trail_lifetime = 0.2
+process_material = SubResource("ParticleProcessMaterial_oil5j")
+
+[node name="GPUParticles2D4" type="GPUParticles2D" parent="Background/Leaves" unique_id=855894449]
+material = SubResource("CanvasItemMaterial_3ls4m")
+amount = 5
+texture = SubResource("AtlasTexture_rkpqm")
+lifetime = 3.0
+preprocess = 1.0
+visibility_rect = Rect2(0, 0, 20000, 20000)
+trail_lifetime = 0.2
+process_material = SubResource("ParticleProcessMaterial_oil5j")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=838763682]
+
+[node name="Title" type="TextureRect" parent="CanvasLayer" unique_id=538138271]
+modulate = Color(1, 1, 1, 0)
+material = SubResource("ShaderMaterial_g7jxm")
+offset_left = 136.0
+offset_top = 109.0
+offset_right = 1160.0
+offset_bottom = 621.0
+texture = ExtResource("11_dwrpx")
+
+[node name="Transition" type="ColorRect" parent="CanvasLayer" unique_id=1945616997]
+z_index = 4096
+material = SubResource("ShaderMaterial_jspdm")
+offset_right = 1296.0
+offset_bottom = 729.0
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="PlayButton" type="Button" parent="CanvasLayer" unique_id=298070021]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(10, 10)
+offset_left = 576.0
+offset_top = 500.0
+offset_right = 720.0
+offset_bottom = 578.0
+theme_override_colors/font_color = Color(1.1638972, 1.1593663, 1.118589, 1)
+theme_override_colors/font_hover_color = Color(1.572, 1.566, 1.512, 1)
+theme_override_constants/line_spacing = -42
+theme_override_styles/normal = SubResource("StyleBoxFlat_dwrpx")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g7jxm")
+disabled = true
+text = "
+PLAY"
+alignment = 0
+
+[connection signal="pressed" from="CanvasLayer/PlayButton" to="." method="_on_play_button_pressed"]

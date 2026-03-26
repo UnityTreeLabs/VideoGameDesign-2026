@@ -1,11 +1,11 @@
 extends Camera2D
-@onready var player = get_parent().get_parent().get_node("Player/PlayerBody")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	global_position = player.global_position
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	#get_viewport_rect().size/2
+	global_position.x += get_local_mouse_position().x

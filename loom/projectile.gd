@@ -1,12 +1,19 @@
 extends RigidBody2D
 @export var start = Vector2(0, 0)
 @export var start_velocity = Vector2(0, 0)
+var gravity = true
+var particles = true
+var color = Color(1.998, 1.585, 3.061)
 var finished = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#global_position = start
 	collision_layer = 16
+	gravity_scale = int(gravity)
+	$GPUParticles2D.emitting = particles
+	$Sprite2D.modulate = color
+	$GPUParticles2D2.modulate = color
 	linear_velocity = start_velocity
 
 

@@ -1,5 +1,8 @@
 extends Node2D
 @export var checkpoint_num = 0
+@export var notif = false
+@export var header = ""
+@export var text = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -16,6 +19,8 @@ func _process(delta: float) -> void:
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if global.current_checkpoint != checkpoint_num:
+		if notif:
+			global.alert(header, text)
 		global.checkpoints.append(checkpoint_num)
 		global.current_checkpoint = checkpoint_num
 		var light_tween = create_tween()
