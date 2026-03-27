@@ -17,6 +17,9 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 config/name="loom"
 run/main_scene="uid://ckjxrtvyq2ewo"
 config/features=PackedStringArray("4.6", "Forward Plus")
+boot_splash/stretch_mode=0
+boot_splash/use_filter=false
+boot_splash/image="uid://de3csk7rgosod"
 config/icon="res://icon.svg"
 
 [autoload]
