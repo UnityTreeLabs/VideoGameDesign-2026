@@ -292,7 +292,7 @@ collision_friction = 0.0
 collision_bounce = 1.0
 
 [node name="Player" type="Node2D" unique_id=1999779506]
-modulate = Color(1.572, 1.572, 1.499, 1)
+modulate = Color(1.353256, 1.353256, 1.29044, 1)
 
 [node name="PlayerBody" type="CharacterBody2D" parent="." unique_id=407890846]
 material = SubResource("ShaderMaterial_hqtel")

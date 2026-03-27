@@ -33,8 +33,8 @@ Sound="*uid://c6774blbbtdhy"
 window/size/viewport_width=1296
 window/size/viewport_height=729
 window/stretch/mode="canvas_items"
-mouse_cursor/custom_image="uid://gfexsibofy2g"
-mouse_cursor/custom_image_hotspot=Vector2(96, 96)
+mouse_cursor/custom_image="uid://ds14ywcifgke0"
+mouse_cursor/custom_image_hotspot=Vector2(16, 0)
 window/layer_4="Enemy"
 window/layer_3="Tileset"
 window/layer_2="Background"
@@ -122,6 +122,9 @@ common/physics_interpolation=true
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+rendering_device/fallback_to_opengl3=false
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
 lights_and_shadows/directional_shadow/size=1024
 lights_and_shadows/directional_shadow/size.mobile=1024
 2d/shadow_atlas/size=512

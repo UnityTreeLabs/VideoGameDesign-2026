@@ -29,7 +29,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if $Enemies/Bear == null and not $Player/PlayerBody.dying and not game_end:
+	if get_node("Enemies/Bear") == null and not $Player/PlayerBody.dying and not game_end:
 		print("yess")
 		game_end = true
 		Transition.get_node("Screen").material.set_shader_parameter("reverse", false)

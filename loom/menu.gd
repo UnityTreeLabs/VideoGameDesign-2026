@@ -22,6 +22,8 @@ func _process(delta: float) -> void:
 
 func _on_play_button_pressed() -> void:
 	$CanvasLayer/PlayButton.disabled = true
+	Transition.get_node("Screen").material.set_shader_parameter("reverse", false)
+	Transition.get_node("Screen").material.set_shader_parameter("progress", 0.0)
 	var tween = create_tween()
 	tween.tween_method(set_trans, 0.0, 1.0, 2.0).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 	tween.tween_callback(get_tree().change_scene_to_file.bind("res://map_1.tscn"))

@@ -37,10 +37,10 @@ glow_levels/3 = 2.0
 glow_levels/4 = 1.0
 glow_levels/5 = 0.5
 glow_normalized = true
-glow_intensity = 1.0
-glow_bloom = 0.3
+glow_intensity = 0.75
+glow_bloom = 0.2
 glow_hdr_threshold = 0.5
-glow_hdr_scale = 4.0
+glow_hdr_scale = 0.5
 glow_hdr_luminance_cap = 256.0
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ud82j"]
@@ -1539,6 +1539,7 @@ tile_map_data = PackedByteArray("AAADAAoAAQABAAEAAAADAAkAAQABAAEAAAADAAgAAQABAAA
 tile_set = SubResource("TileSet_n2bu5")
 
 [node name="Player" parent="." unique_id=1704721836 instance=ExtResource("1_thia8")]
+modulate = Color(1.353256, 1.353256, 1.29044, 1)
 position = Vector2(94, 460)
 
 [node name="Key" type="Node2D" parent="." unique_id=1561054156]
@@ -1852,7 +1853,7 @@ tile_set = SubResource("TileSet_e31gr")
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1676343896]
 top_level = true
 z_index = 4000
-color = Color(0.446777, 0.44677705, 0.44677693, 1)
+color = Color(0.5429824, 0.54298156, 0.54298174, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=691098544]
 
@@ -1888,7 +1889,6 @@ amount = 25
 one_shot = true
 speed_scale = 2.0
 explosiveness = 0.5
-trail_enabled = true
 process_material = SubResource("ParticleProcessMaterial_g4m70")
 
 [node name="Heart2" type="TextureRect" parent="CanvasLayer/UI" unique_id=1061642078]
@@ -1907,7 +1907,6 @@ amount = 25
 one_shot = true
 speed_scale = 2.0
 explosiveness = 0.5
-trail_enabled = true
 process_material = SubResource("ParticleProcessMaterial_g4m70")
 
 [node name="Heart3" type="TextureRect" parent="CanvasLayer/UI" unique_id=822575627]
@@ -1926,7 +1925,6 @@ amount = 25
 one_shot = true
 speed_scale = 2.0
 explosiveness = 0.5
-trail_enabled = true
 process_material = SubResource("ParticleProcessMaterial_g4m70")
 
 [node name="Header" type="RichTextLabel" parent="CanvasLayer/UI" unique_id=1333165682]
