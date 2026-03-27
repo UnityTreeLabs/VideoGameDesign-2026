@@ -83,6 +83,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		tween.tween_property(particles, "emitting", true, 0)
 		tween.tween_property($AnimatedSprite2D, "modulate:a", 0, 0.1)
 		tween.tween_property(get_parent(), "process_mode", PROCESS_MODE_DISABLED, 0)
+		tween.tween_callback(global.alert.bind("BEAR DEFEATED", "The gloom has been repelled"))
 		await particles.finished
 		get_parent().queue_free()
 
