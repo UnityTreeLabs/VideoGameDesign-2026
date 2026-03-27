@@ -9,7 +9,7 @@ var destroy = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	distance = (start - end).length()
-	if distance > global.string_distance:
+	if distance > global.string_distance or distance < 32:
 		queue_free()
 	global_position = start
 	$StringEnd.global_position = end

@@ -1701,7 +1701,7 @@ position = Vector2(938, 1238)
 rotation = -9.424778
 
 [node name="LightAnchor13" parent="Key/Anchors" unique_id=1199122539 instance=ExtResource("5_2421v")]
-position = Vector2(98, 1388)
+position = Vector2(208, 1388)
 rotation = -6.2831855
 
 [node name="BossZone" type="Area2D" parent="Key" unique_id=1875897668]
