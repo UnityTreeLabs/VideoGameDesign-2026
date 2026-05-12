@@ -3,13 +3,14 @@
 [ext_resource type="Texture2D" uid="uid://cjsp7gln7mvn7" path="res://squirrel.tres" id="1_730o3"]
 [ext_resource type="Script" uid="uid://hkmnbj5r5x8q" path="res://squirrel.gd" id="1_mb0cq"]
 [ext_resource type="Shader" uid="uid://ig7wdf8mnm2g" path="res://enemy.gdshader" id="1_rpdj4"]
+[ext_resource type="Material" uid="uid://lbqlxj8tg7hv" path="res://squirrel_death.tres" id="4_vpmvj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vpmvj"]
 shader = ExtResource("1_rpdj4")
 shader_parameter/flashState = 0.0
-shader_parameter/outline_color = Color(1.5719986, 0.9754753, 0.89758086, 1)
-shader_parameter/blink_color = Color(1.8247963, 1.2797759, 1.2029141, 1)
-shader_parameter/blink_time_scale = 0.0
+shader_parameter/outline_color = Color(1.8247963, 1.1470146, 1.0491903, 0.27450982)
+shader_parameter/blink_color = Color(1.8247963, 1.1470146, 1.0491903, 0.5882353)
+shader_parameter/blink_time_scale = 4.0000000596048
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mb0cq"]
 atlas = ExtResource("1_730o3")
@@ -52,34 +53,6 @@ polygon = PackedVector2Array(-11.5, 0, -2, 7.5, 10.5, 7.5, 5.5, 6, 5.5, 2, 15.5,
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mb0cq"]
 height = 32.0
-
-[sub_resource type="Curve" id="Curve_rpdj4"]
-_data = [Vector2(0, 1), 0.0, -1.8980492, 0, 0, Vector2(1, 0.315957), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_vpmvj"]
-curve = SubResource("Curve_rpdj4")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rpdj4"]
-lifetime_randomness = 1.0
-particle_flag_disable_z = true
-emission_shape_offset = Vector3(1, -2, 0)
-emission_shape = 1
-emission_sphere_radius = 10.0
-spread = 10.0
-initial_velocity_min = 25.0
-initial_velocity_max = 50.0
-gravity = Vector3(0, 98, 0)
-linear_accel_min = -15.000002
-linear_accel_max = -5.000002
-damping_min = 10.0
-damping_max = 30.000002
-scale_min = 3.0
-scale_max = 10.0
-scale_curve = SubResource("CurveTexture_vpmvj")
-collision_mode = 1
-collision_friction = 0.0
-collision_bounce = 1.0
 
 [sub_resource type="Curve2D" id="Curve2D_vpmvj"]
 _data = {
@@ -153,7 +126,7 @@ lifetime = 3.0
 one_shot = true
 speed_scale = 2.0
 explosiveness = 1.0
-process_material = SubResource("ParticleProcessMaterial_rpdj4")
+process_material = ExtResource("4_vpmvj")
 
 [node name="Path2D" type="Path2D" parent="." unique_id=860774483]
 curve = SubResource("Curve2D_vpmvj")

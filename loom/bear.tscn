@@ -3,13 +3,14 @@
 [ext_resource type="Shader" uid="uid://ig7wdf8mnm2g" path="res://enemy.gdshader" id="1_balfo"]
 [ext_resource type="Script" uid="uid://c5lf5svyeelia" path="res://bear.gd" id="2_6uh6h"]
 [ext_resource type="Texture2D" uid="uid://dpnhegksqg6up" path="res://bear.tres" id="3_balfo"]
+[ext_resource type="Material" uid="uid://cm024sgy5u7sh" path="res://bear_death.tres" id="4_hq7sg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_whgdy"]
 shader = ExtResource("1_balfo")
 shader_parameter/flashState = 0.0
-shader_parameter/outline_color = Color(1.572, 0.975, 0.898, 1)
-shader_parameter/blink_color = Color(1, 1, 1, 1)
-shader_parameter/blink_time_scale = 0.0
+shader_parameter/outline_color = Color(1.825, 1.147, 1.049, 0.275)
+shader_parameter/blink_color = Color(1.8247963, 1.1470146, 1.0491903, 0.5882353)
+shader_parameter/blink_time_scale = 4.0000000596048
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hq7sg"]
 
@@ -246,35 +247,6 @@ animations = [{
 radius = 48.0
 height = 200.0
 
-[sub_resource type="Curve" id="Curve_spswc"]
-_data = [Vector2(0, 1), 0.0, -1.8980492, 0, 0, Vector2(1, 0.315957), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_ipggy"]
-curve = SubResource("Curve_spswc")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dvex4"]
-lifetime_randomness = 1.0
-particle_flag_disable_z = true
-emission_shape_offset = Vector3(1, -2, 0)
-emission_shape_scale = Vector3(8, 4, 1)
-emission_shape = 1
-emission_sphere_radius = 10.0
-spread = 10.0
-initial_velocity_min = 25.0
-initial_velocity_max = 50.0
-gravity = Vector3(0, 98, 0)
-linear_accel_min = -15.000002
-linear_accel_max = -5.000002
-damping_min = 10.0
-damping_max = 30.000002
-scale_min = 6.0
-scale_max = 20.0
-scale_curve = SubResource("CurveTexture_ipggy")
-collision_mode = 1
-collision_friction = 0.0
-collision_bounce = 1.0
-
 [node name="Bear" type="Node2D" unique_id=993812984]
 scale = Vector2(2, 2)
 
@@ -306,9 +278,11 @@ shape = SubResource("CapsuleShape2D_m7aab")
 debug_color = Color(0, 0.6, 0.7019608, 0.11764706)
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="CharacterBody2D" unique_id=124951355]
+visible = false
 position = Vector2(6, 9)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_m7aab")
+disabled = true
 debug_color = Color(0, 0.6, 0.69803923, 0.11764706)
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="CharacterBody2D" unique_id=1098894577]
@@ -321,7 +295,7 @@ lifetime = 5.0
 one_shot = true
 speed_scale = 2.0
 explosiveness = 1.0
-process_material = SubResource("ParticleProcessMaterial_dvex4")
+process_material = ExtResource("4_hq7sg")
 
 [node name="AttackCooldown" type="Timer" parent="CharacterBody2D" unique_id=1134442892]
 wait_time = 2.0
@@ -330,6 +304,9 @@ one_shot = true
 [node name="ShootCooldown" type="Timer" parent="CharacterBody2D" unique_id=1329210268]
 wait_time = 0.5
 one_shot = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CharacterBody2D" unique_id=251206358]
+polygon = PackedVector2Array(51, -7.5, 76, 57, -87.5, 57, -83, -23, 84, -49, 109, -21)
 
 [connection signal="animation_finished" from="CharacterBody2D/AnimatedSprite2D" to="CharacterBody2D" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_on_area_2d_body_entered"]

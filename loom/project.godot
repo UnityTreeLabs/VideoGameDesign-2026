@@ -27,6 +27,7 @@ config/icon="res://icon.svg"
 global="*res://global.gd"
 Transition="*uid://cmpfw3oritsv4"
 Sound="*uid://c6774blbbtdhy"
+Ui="*uid://b3k700f8ga1ok"
 
 [display]
 

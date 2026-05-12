@@ -15,7 +15,7 @@ var string_instance = null
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	global.threads.append(self)
-	global_position = get_parent().get_parent().get_node("Player/PlayerBody").global_position
+	global_position = get_parent().get_parent().get_node("Player/PlayerBody").global_position + Vector2(20, 0).rotated(global_rotation)
 	get_parent().get_parent().get_node("Player/PlayerBody").destroy_thread.connect(_on_destroy_thread)
 	get_parent().get_parent().get_node("Player/PlayerBody").connect_string.connect(_connect_string)
 
@@ -44,6 +44,8 @@ func _physics_process(delta: float) -> void:
 				if string_instance:
 					string_instance.delete()
 				global.threads.erase(self)
+				var tween = create_tween()
+				tween.tween_property(self, "modulate:a", 0.0, 0.7).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 				$AnimatedSprite2D.play_backwards("creation")
 		$Line2D.remove_point(1)
 		$Line2D.add_point(get_parent().get_parent().get_node("Player/PlayerBody").global_position - global_position)
@@ -72,9 +74,9 @@ func _physics_process(delta: float) -> void:
 				if string_instance:
 					string_instance.delete()
 				global.threads.erase(self)
+				var tween = create_tween()
+				tween.tween_property(self, "modulate:a", 0.0, 0.7).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 				$AnimatedSprite2D.play_backwards("creation")
-		else:
-			global_position = get_parent().get_parent().get_node("Player/PlayerBody").global_position + Vector2(20, 0).rotated(global_rotation)
 
 #func _on_body_entered(body: Node) -> void:
 	#if ((body is TileMapLayer and global.pierce_wall and body.tile_set.get_physics_layer_collision_layer(0) & 2 == 2) or ((not body is TileMapLayer) and body.collision_layer & 8 == 8)) and moving != 1 and not finished:
@@ -98,6 +100,8 @@ func _on_timer_timeout() -> void:
 	if string_instance:
 		string_instance.delete()
 	global.threads.erase(self)
+	var tween = create_tween()
+	tween.tween_property(self, "modulate:a", 0.0, 0.7).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	$AnimatedSprite2D.play_backwards("creation")
 
 func _on_destroy_thread() -> void:
@@ -108,6 +112,8 @@ func _on_destroy_thread() -> void:
 		if string_instance:
 			string_instance.delete()
 		global.threads.erase(self)
+		var tween = create_tween()
+		tween.tween_property(self, "modulate:a", 0.0, 0.7).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 		$AnimatedSprite2D.play_backwards("creation")
 		
 
@@ -162,6 +168,8 @@ func _on_air_timer_timeout() -> void:
 		if string_instance:
 			string_instance.delete()
 		global.threads.erase(self)
+		var tween = create_tween()
+		tween.tween_property(self, "modulate:a", 0.0, 0.7).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 		$AnimatedSprite2D.play_backwards("creation")
 
 

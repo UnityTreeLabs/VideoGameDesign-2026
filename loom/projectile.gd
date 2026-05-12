@@ -25,6 +25,8 @@ func _process(delta: float) -> void:
 func _on_body_entered(body: Node) -> void:
 	if not finished:
 		finished = true
+		if body.name == "PlayerBody":
+			body._on_area_2d_body_entered(self)
 		var tween = create_tween()
 		var tween2 = create_tween()
 		$GPUParticles2D2.process_material.direction = Vector3(-linear_velocity.normalized().x, -linear_velocity.normalized().y, 0)

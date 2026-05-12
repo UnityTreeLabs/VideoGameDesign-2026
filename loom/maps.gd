@@ -1,36 +1,53 @@
 extends Node2D
 var game_end = false
+@export var screen_num = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Ui.show()
 	game_end = false
 	Transition.get_node("Screen").material.set_shader_parameter("progress", 0.0)
-	Transition.get_node("Screen").material.set_shader_parameter("reverse", true)
 	var trans_tween = create_tween()
-	trans_tween.tween_method(set_trans, 0.0, 1.0, 2.0).set_delay(0.0).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
-	if global.string:
-		get_node("Key/StringPower").queue_free()
-	if global.dash:
-		get_node("Key/DashPower").queue_free()
-	if global.double_jump:
-		get_node("Key/DoubleJumpPower").queue_free()
-	if global.thread_max == 2:
-		get_node("Key/ExtraThreadPower").queue_free()
-	if global.pierce_wall:
-		get_node("Key/PiercePower").queue_free()
-	if not global.forest:
-		global.alert("STARLESS GROVE", "The darkness where light dies")
-		global.forest = true
-	if global.checkpoints:
+	trans_tween.tween_callback($Background/Camera2D.reset_smoothing).set_delay(0.2)
+	if global.checkpoint_spawn and $Key/Lamps:
 		for lamp in $Key/Lamps.get_children():
 			if lamp.checkpoint_num == global.current_checkpoint:
 				$Player/PlayerBody.global_position = lamp.global_position
+	else:
+		for trans in $Key/Transitions.get_children():
+			if trans.ID == global.spawn_location:
+				$Player/PlayerBody.global_position = trans.global_position
+				$Player/PlayerBody/Sprite2D.flip_h = trans.speed.x
+	if screen_num == 1 and global.intro:
+		global.intro = false
+		Transition.get_node("Screen").color = Color("000000")
+		Transition.get_node("Screen").material.set_shader_parameter("reverse", false)
+		$CanvasModulate.color = Color(4.416, 4.416, 4.416, 1.0)
+		Ui.get_node("UI/ColorRect").show()
+		trans_tween.tween_property(Ui.get_node("UI/ColorRect"), "modulate:a", 0, 3.0).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+		trans_tween.parallel().tween_property($CanvasModulate, "color", Color("8a8a8a"), 3.0).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+	else:
+		Transition.get_node("Screen").material.set_shader_parameter("reverse", true)
+		trans_tween.tween_method(set_trans, 0.0, 1.0, 2.0).set_delay(0.0).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	if global.string and get_node("Key/StringPower"):
+		get_node("Key/StringPower").queue_free()
+	if global.dash and get_node("Key/DashPower"):
+		get_node("Key/DashPower").queue_free()
+	if global.double_jump and get_node("Key/DoubleJumpPower"):
+		get_node("Key/DoubleJumpPower").queue_free()
+	if global.thread_max == 2 and get_node("Key/ExtraThreadPower"):
+		get_node("Key/ExtraThreadPower").queue_free()
+	if global.pierce_wall and get_node("Key/PiercePower"):
+		get_node("Key/PiercePower").queue_free()
+	await trans_tween.finished
+	if not global.forest:
+		global.alert("STARLESS GROVE", "The darkness where light dies")
+		global.forest = true
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if get_node("Enemies/Bear") == null and not $Player/PlayerBody.dying and not game_end:
-		print("yess")
+	if screen_num == 0 and get_node("Enemies/Bear") == null and not $Player/PlayerBody.dying and not game_end:
 		game_end = true
 		Transition.get_node("Screen").material.set_shader_parameter("reverse", false)
 		Transition.get_node("Screen").material.set_shader_parameter("progress", 0)

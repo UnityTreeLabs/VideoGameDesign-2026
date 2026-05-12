@@ -1,0 +1,197 @@
+[gd_scene format=3 uid="uid://b3k700f8ga1ok"]
+
+[ext_resource type="Script" uid="uid://iba0e8op5ct3" path="res://ui.gd" id="1_0mc3e"]
+[ext_resource type="Shader" uid="uid://dspi4b1bbi7d0" path="res://screen_trans.gdshader" id="2_2n5f6"]
+[ext_resource type="Shader" uid="uid://e7n638ve4cb7" path="res://heart_glow.gdshader" id="3_27c8x"]
+[ext_resource type="Texture2D" uid="uid://c5gxflklrh26o" path="res://hearts.png" id="4_2n5f6"]
+[ext_resource type="Texture2D" uid="uid://cwxjf56xju6ot" path="res://heart_atlas.tres" id="4_vrfts"]
+[ext_resource type="Material" uid="uid://dnjbofk8lltta" path="res://shatter_particles.tres" id="6_n8582"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qb5ut"]
+shader = ExtResource("2_2n5f6")
+shader_parameter/reverse = true
+shader_parameter/progress = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nw521"]
+shader = ExtResource("3_27c8x")
+shader_parameter/flashState = 0.0
+shader_parameter/scarfGlow = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eo5y4"]
+shader = ExtResource("3_27c8x")
+shader_parameter/flashState = 0.0
+shader_parameter/scarfGlow = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0mc3e"]
+atlas = ExtResource("4_2n5f6")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bsonp"]
+shader = ExtResource("3_27c8x")
+shader_parameter/flashState = 0.0
+shader_parameter/scarfGlow = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2n5f6"]
+atlas = ExtResource("4_2n5f6")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pahgl"]
+bg_color = Color(0, 0, 0, 0.78431374)
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=329369360]
+
+[node name="UI" type="Control" parent="." unique_id=467469181]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1296.0
+offset_bottom = 729.0
+script = ExtResource("1_0mc3e")
+
+[node name="Transition" type="ColorRect" parent="UI" unique_id=2119491857]
+visible = false
+z_index = 4096
+material = SubResource("ShaderMaterial_qb5ut")
+layout_mode = 0
+offset_right = 1296.0
+offset_bottom = 729.0
+color = Color(0, 0, 0, 1)
+
+[node name="Heart1" type="TextureRect" parent="UI" unique_id=1743156145]
+z_index = 2048
+material = SubResource("ShaderMaterial_nw521")
+layout_mode = 0
+offset_left = 84.0
+offset_top = 64.0
+offset_right = 148.0
+offset_bottom = 128.0
+texture = ExtResource("4_vrfts")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="UI/Heart1" unique_id=535182651]
+emitting = false
+amount = 25
+one_shot = true
+speed_scale = 2.0
+explosiveness = 0.5
+process_material = ExtResource("6_n8582")
+
+[node name="Heart2" type="TextureRect" parent="UI" unique_id=606076229]
+z_index = 2048
+material = SubResource("ShaderMaterial_eo5y4")
+layout_mode = 0
+offset_left = 132.0
+offset_top = 64.0
+offset_right = 196.0
+offset_bottom = 128.0
+texture = SubResource("AtlasTexture_0mc3e")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="UI/Heart2" unique_id=1070827655]
+emitting = false
+amount = 25
+one_shot = true
+speed_scale = 2.0
+explosiveness = 0.5
+process_material = ExtResource("6_n8582")
+
+[node name="Heart3" type="TextureRect" parent="UI" unique_id=1401687919]
+z_index = 2048
+material = SubResource("ShaderMaterial_bsonp")
+layout_mode = 0
+offset_left = 180.0
+offset_top = 64.0
+offset_right = 244.0
+offset_bottom = 128.0
+texture = SubResource("AtlasTexture_2n5f6")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="UI/Heart3" unique_id=415019974]
+emitting = false
+amount = 25
+one_shot = true
+speed_scale = 2.0
+explosiveness = 0.5
+process_material = ExtResource("6_n8582")
+
+[node name="Header" type="RichTextLabel" parent="UI" unique_id=179028928]
+modulate = Color(1, 1, 1, 0)
+self_modulate = Color(1.353256, 1.3009094, 1.1229308, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -361.0
+offset_top = -272.5
+offset_right = 361.0
+offset_bottom = -193.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/selection_color = Color(0.101960786, 0.101960786, 1, 0)
+theme_override_constants/paragraph_separation = -40
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+justification_flags = 161
+custom_effects = [null]
+
+[node name="Panel" type="Panel" parent="UI/Header" unique_id=1894339053]
+show_behind_parent = true
+layout_mode = 0
+offset_left = 80.0
+offset_top = -15.0
+offset_right = 642.0
+offset_bottom = 64.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_pahgl")
+
+[node name="Text" type="RichTextLabel" parent="UI" unique_id=1864490389]
+modulate = Color(1, 1, 1, 0)
+self_modulate = Color(1.353256, 1.3009094, 1.1229308, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -361.0
+offset_top = -209.5
+offset_right = 361.0
+offset_bottom = -130.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/selection_color = Color(0.101960786, 0.101960786, 1, 0)
+theme_override_constants/paragraph_separation = -20
+theme_override_font_sizes/normal_font_size = 8
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+justification_flags = 161
+custom_effects = [null]
+
+[node name="Panel" type="Panel" parent="UI/Text" unique_id=1664317969]
+show_behind_parent = true
+layout_mode = 0
+offset_left = 7.0
+offset_top = 12.0
+offset_right = 715.0
+offset_bottom = 57.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_pahgl")
+
+[node name="ColorRect" type="ColorRect" parent="UI" unique_id=759242952]
+visible = false
+z_index = 4096
+layout_mode = 0
+offset_right = 1296.0
+offset_bottom = 729.0
+
+[node name="Checkpoint" type="RichTextLabel" parent="UI" unique_id=807126050]
+modulate = Color(1, 1, 1, 0)
+self_modulate = Color(1.353, 1.301, 1.123, 1)
+clip_contents = false
+layout_mode = 0
+offset_left = 76.0
+offset_top = 676.0
+offset_right = 116.0
+offset_bottom = 716.0
+theme_override_colors/selection_color = Color(0.101960786, 0.101960786, 1, 0)
+theme_override_font_sizes/normal_font_size = 10
+text = "Checkpoint Saved"
+autowrap_mode = 0

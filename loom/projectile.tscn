@@ -2,6 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://bm17pyrkbmqw6" path="res://Light_Orb.png" id="1_a85iw"]
 [ext_resource type="Script" uid="uid://mu2l1lx33bj" path="res://projectile.gd" id="1_qxf0c"]
+[ext_resource type="Material" uid="uid://dojgb6wy0t457" path="res://projectile_trail.tres" id="3_dgwo2"]
+[ext_resource type="Material" uid="uid://1adxbylyctkr" path="res://projectile_splash.tres" id="4_sxmqc"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qxf0c"]
 friction = 0.0
@@ -10,47 +12,8 @@ bounce = 1.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_dgwo2"]
 radius = 13.0
 
-[sub_resource type="Curve" id="Curve_qxf0c"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.42528734, 0.32232016), -0.8593155, -0.8593155, 0, 0, Vector2(1, 0.086882114), 0.0, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_dgwo2"]
-curve = SubResource("Curve_qxf0c")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qxf0c"]
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 13.0
-gravity = Vector3(0, 98, 0)
-scale_min = 5.0
-scale_max = 10.0
-scale_curve = SubResource("CurveTexture_dgwo2")
-
-[sub_resource type="Curve" id="Curve_dgwo2"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.6235632, 0.6182085), -1.1514833, -1.1514833, 0, 0, Vector2(1, 0), -1.7612275, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_sxmqc"]
-curve = SubResource("Curve_dgwo2")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dgwo2"]
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 13.0
-direction = Vector3(0, -1, 0)
-initial_velocity_min = 100.0
-initial_velocity_max = 200.0
-gravity = Vector3(0, 1000, 0)
-scale_min = 10.0
-scale_max = 20.0
-scale_curve = SubResource("CurveTexture_dgwo2")
-alpha_curve = SubResource("CurveTexture_sxmqc")
-collision_mode = 1
-collision_friction = 0.0
-collision_bounce = 1.0
-
 [node name="Projectile" type="RigidBody2D" unique_id=1918348115]
-collision_layer = 16
+collision_layer = 0
 collision_mask = 7
 physics_material_override = SubResource("PhysicsMaterial_qxf0c")
 can_sleep = false
@@ -74,7 +37,7 @@ modulate = Color(1.3706126, 0.8745043, 1.8247963, 1)
 show_behind_parent = true
 lifetime = 0.25
 explosiveness = 0.5
-process_material = SubResource("ParticleProcessMaterial_qxf0c")
+process_material = ExtResource("3_dgwo2")
 
 [node name="GPUParticles2D2" type="GPUParticles2D" parent="." unique_id=253134269]
 modulate = Color(1.998, 1.585, 3.061, 1)
@@ -84,6 +47,6 @@ amount = 5
 lifetime = 0.5
 one_shot = true
 explosiveness = 1.0
-process_material = SubResource("ParticleProcessMaterial_dgwo2")
+process_material = ExtResource("4_sxmqc")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

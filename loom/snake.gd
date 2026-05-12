@@ -5,6 +5,7 @@ const SPEED = 7500
 const JUMP_VELOCITY = -400.0
 const SHOOT_VELOCITY = 750
 
+var health = 2
 var chasing = false
 var rng = RandomNumberGenerator.new()
 var player = null
@@ -83,18 +84,23 @@ func _physics_process(delta: float) -> void:
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	var tween = create_tween()
 	material.set_shader_parameter("flashState", 0.7)
-	var particles = $GPUParticles2D
-	
-	particles.process_material.direction = Vector3((global_position - body.global_position).x, (global_position - body.global_position).y, 0)
-	collision_layer = 0
+	health -= 1
 	global.freeze(0.1)
 	global.shake(10, 5)
-	tween.tween_callback(material.set_shader_parameter.bind("flashState", 0)).set_delay(0.1)
-	tween.tween_property(particles, "emitting", true, 0)
-	tween.tween_property($AnimatedSprite2D, "modulate:a", 0, 0.1)
-	tween.tween_property(get_parent(), "process_mode", PROCESS_MODE_DISABLED, 0)
-	await particles.finished
-	get_parent().queue_free()
+	
+	if health == 0:
+		var particles = $GPUParticles2D
+		
+		particles.process_material.direction = Vector3((global_position - body.global_position).x, (global_position - body.global_position).y, 0)
+		collision_layer = 0
+		tween.tween_callback(material.set_shader_parameter.bind("flashState", 0)).set_delay(0.1)
+		tween.tween_property(particles, "emitting", true, 0)
+		tween.tween_property($AnimatedSprite2D, "modulate:a", 0, 0.1)
+		tween.tween_property(get_parent(), "process_mode", PROCESS_MODE_DISABLED, 0)
+		await particles.finished
+		get_parent().queue_free()
+	else:
+		tween.tween_callback(material.set_shader_parameter.bind("flashState", 0)).set_delay(0.1)
 
 
 func _on_animated_sprite_2d_animation_finished() -> void:

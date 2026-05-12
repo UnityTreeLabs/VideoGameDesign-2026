@@ -19,6 +19,7 @@ func _process(delta: float) -> void:
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if global.current_checkpoint != checkpoint_num:
+		Ui.get_node("UI").checkpoint()
 		if notif:
 			global.alert(header, text)
 		global.checkpoints.append(checkpoint_num)

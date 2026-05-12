@@ -5,13 +5,14 @@
 [ext_resource type="Texture2D" uid="uid://tl6au3yfmr5i" path="res://snake attack.tres" id="3_jufb3"]
 [ext_resource type="Texture2D" uid="uid://cw1hwhoxa2711" path="res://snake idle.tres" id="4_ipggy"]
 [ext_resource type="Texture2D" uid="uid://boax7txcw330p" path="res://snake run.tres" id="5_0ero7"]
+[ext_resource type="Material" uid="uid://gla4beaggwo0" path="res://snake_death.tres" id="6_ipggy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vpmvj"]
 shader = ExtResource("1_jufb3")
 shader_parameter/flashState = 0.0
-shader_parameter/outline_color = Color(1.572, 0.975, 0.898, 1)
-shader_parameter/blink_color = Color(1, 1, 1, 1)
-shader_parameter/blink_time_scale = 0.0
+shader_parameter/outline_color = Color(1.825, 1.147, 1.049, 0.275)
+shader_parameter/blink_color = Color(1.8247963, 1.1470146, 1.0491903, 0.5882353)
+shader_parameter/blink_time_scale = 4.0000000596048
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7xyn3"]
 atlas = ExtResource("3_jufb3")
@@ -271,34 +272,6 @@ animations = [{
 radius = 15.5
 height = 36.0
 
-[sub_resource type="Curve" id="Curve_rpdj4"]
-_data = [Vector2(0, 1), 0.0, -1.8980492, 0, 0, Vector2(1, 0.315957), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_ipggy"]
-curve = SubResource("Curve_rpdj4")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rpdj4"]
-lifetime_randomness = 1.0
-particle_flag_disable_z = true
-emission_shape_offset = Vector3(1, -2, 0)
-emission_shape = 1
-emission_sphere_radius = 10.0
-spread = 10.0
-initial_velocity_min = 25.0
-initial_velocity_max = 50.0
-gravity = Vector3(0, 98, 0)
-linear_accel_min = -15.000002
-linear_accel_max = -5.000002
-damping_min = 10.0
-damping_max = 30.000002
-scale_min = 6.0
-scale_max = 20.0
-scale_curve = SubResource("CurveTexture_ipggy")
-collision_mode = 1
-collision_friction = 0.0
-collision_bounce = 1.0
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_wlm33"]
 radius = 216.0
 
@@ -346,7 +319,7 @@ lifetime = 3.0
 one_shot = true
 speed_scale = 2.0
 explosiveness = 1.0
-process_material = SubResource("ParticleProcessMaterial_rpdj4")
+process_material = ExtResource("6_ipggy")
 
 [node name="AttackRange" type="Area2D" parent="CharacterBody2D" unique_id=1025403923]
 collision_layer = 0

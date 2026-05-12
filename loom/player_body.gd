@@ -47,7 +47,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	# Handle jump.
 	if not dying:
-		if Input.is_action_just_pressed("ui_up") and (can_jump or can_double):
+		if $InputManager.jump and (can_jump or can_double):
 			if $AnimationPlayer.current_animation == "idle":
 				$AnimationPlayer.play("start_jump")
 			else:
@@ -139,7 +139,7 @@ func _physics_process(delta: float) -> void:
 				collider.apply_central_impulse(-get_slide_collision(i).get_normal() * FORCE)
 				#collider.apply_central_impulse(-get_slide_collision(i).get_normal() * FORCE * (vy_before/200)**2)
 				
-		if Input.is_action_just_pressed("interact") and global.string and not string_cooldown:
+		if $InputManager.interact and global.string and not string_cooldown:
 			var start_end = [null, null]
 			
 			if global.thread_max >= 2 and global.threads.size() >= 2:
@@ -151,7 +151,7 @@ func _physics_process(delta: float) -> void:
 				connect_string.emit(start_end, [], 0)
 				$"../StringCooldown".start()
 				string_cooldown = true
-		if Input.is_action_just_pressed("ui_click") and can_shoot and not spam_cooldown:
+		if $InputManager.click and can_shoot and not spam_cooldown:
 			can_shoot -= 1
 			spam_cooldown = true
 			$"../SpamCooldown".start()
@@ -174,7 +174,7 @@ func _physics_process(delta: float) -> void:
 			instance.rotation = atan2(get_local_mouse_position().y, get_local_mouse_position().x)
 			get_parent().get_parent().add_child(instance)
 		
-		if Input.is_action_just_pressed("dash") and global.dash and can_dash and not dash_cooldown:
+		if $InputManager.dash and global.dash and can_dash and not dash_cooldown:
 			dashing = true
 			var squash_tween = create_tween()
 			var blink_tween = create_tween()
@@ -195,6 +195,10 @@ func _physics_process(delta: float) -> void:
 		if $Area2D.monitoring and $Area2D.get_overlapping_bodies():
 			_on_area_2d_body_entered($Area2D.get_overlapping_bodies()[0])
 		camera.global_position = (global_position * 9 + get_global_mouse_position())/10
+	$InputManager.click = false 
+	$InputManager.dash = false 
+	$InputManager.jump = false 
+	$InputManager.interact = false 
 	#if velocity.x != 0:
 		#camera.position_smoothing_speed = 3.5
 		#camera.global_position = global_position + Vector2(150 * sign(velocity.x), 0)
@@ -221,7 +225,7 @@ func _on_dash_duration_timeout() -> void:
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	if $"../InvDuration".is_stopped() and global.health >= 1:
+	if $"../InvDuration".is_stopped() and global.health >= 1 and $Area2D.monitoring:
 		if body is TileMapLayer:
 			if body.tile_set.get_physics_layer_collision_layer(0) & 512 == 512:
 				global.health = 0
@@ -246,6 +250,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 			tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT_IN)
 		if global.health <= 0:
 			dying = true
+			$Area2D.set_deferred("monitoring", false)
 			global.freeze(0.15)
 			material.set_shader_parameter("flashState", 0.7)
 			tween.tween_callback(global.shake.bind(30, 5))
@@ -254,10 +259,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 			tween.tween_property(self, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 			#tween.tween_property(global, "health", 3, 0).set_delay(0.1)
 			tween.tween_callback(material.set_shader_parameter.bind("flashState", 0)).set_delay(0.2)
-			tween.tween_callback(trans_screen.material.set_shader_parameter.bind("reverse", false))
-			tween.tween_method(set_trans, 0.0, 1.0, 2.0).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
-			tween.tween_property(global, "health", 3, 0)
-			tween.tween_callback(get_tree().call_deferred.bind("reload_current_scene"))
+			tween.tween_callback(global.change_scene.bind(str(floori(global.current_checkpoint/10.0)), global.current_checkpoint % 10, 1))
 
 
 func _on_dash_cooldown_timeout() -> void:

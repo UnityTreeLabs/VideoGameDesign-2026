@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://ocpn5k6ly8e2"]
 
-[ext_resource type="Script" uid="uid://cpad2mtxvv1bl" path="res://map_1.gd" id="1_bhpv2"]
+[ext_resource type="Script" uid="uid://cpad2mtxvv1bl" path="res://maps.gd" id="1_bhpv2"]
 [ext_resource type="PackedScene" uid="uid://pwbpf24tg453" path="res://player.tscn" id="1_thia8"]
 [ext_resource type="Texture2D" uid="uid://bi1vpdm1lswvt" path="res://Layer 5.png" id="2_k8g01"]
 [ext_resource type="Texture2D" uid="uid://cxvg4e17owsa6" path="res://Layer 4.png" id="3_vuwjt"]
@@ -24,6 +24,7 @@
 [ext_resource type="Script" uid="uid://iba0e8op5ct3" path="res://ui.gd" id="14_pahgl"]
 [ext_resource type="Texture2D" uid="uid://d2pnq152evq2c" path="res://Heart2.png" id="16_nw521"]
 [ext_resource type="Shader" uid="uid://dspi4b1bbi7d0" path="res://screen_trans.gdshader" id="24_e31gr"]
+[ext_resource type="Material" uid="uid://dnjbofk8lltta" path="res://shatter_particles.tres" id="25_qb5ut"]
 
 [sub_resource type="Environment" id="Environment_il6ja"]
 background_mode = 3
@@ -960,44 +961,6 @@ frame_0/duration = 0.0
 frame_1/texture = ExtResource("16_nw521")
 frame_1/duration = 0.0
 
-[sub_resource type="Curve" id="Curve_pahgl"]
-_data = [Vector2(0, 0.7136564), 0.0, 0.0, 0, 0, Vector2(0.26724136, 1), 0.0, 0.0, 0, 0, Vector2(0.87931025, 0), -0.083620586, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_eo5y4"]
-curve = SubResource("Curve_pahgl")
-
-[sub_resource type="Curve" id="Curve_bsonp"]
-_data = [Vector2(0, 0.19823796), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_yp6yu"]
-curve = SubResource("Curve_bsonp")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g4m70"]
-particle_flag_disable_z = true
-emission_shape_offset = Vector3(32, 32, 0)
-emission_shape = 1
-emission_sphere_radius = 8.0
-direction = Vector3(0, -1, 0)
-spread = 180.0
-initial_velocity_min = 100.0
-initial_velocity_max = 150.0
-gravity = Vector3(0, 50, 0)
-linear_accel_min = -2.2351742e-06
-linear_accel_max = -2.2351742e-06
-radial_accel_min = -2.2351742e-06
-radial_accel_max = -2.2351742e-06
-tangential_accel_min = -2.2351742e-06
-tangential_accel_max = -2.2351742e-06
-damping_min = 100.00001
-damping_max = 100.00001
-scale_min = 2.5
-scale_max = 5.0
-scale_curve = SubResource("CurveTexture_yp6yu")
-color = Color(1.825, 1.755, 1.517, 1)
-alpha_curve = SubResource("CurveTexture_eo5y4")
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eo5y4"]
 shader = ExtResource("14_g4m70")
 shader_parameter/flashState = 0.0
@@ -1498,7 +1461,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/selection_color = Color(0.101960786, 0.101960786, 1, 0)
 theme_override_font_sizes/normal_font_size = 8
-text = "Shoot the Anchor to create a platform"
+text = "Shoot the Anchor to create a needle platform"
 autowrap_mode = 0
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1522,7 +1485,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/selection_color = Color(0.101960786, 0.101960786, 1, 0)
 theme_override_font_sizes/normal_font_size = 8
-text = "Use your cursor to aim and click"
+text = "Use your cursor to aim and click to shoot"
 autowrap_mode = 0
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1539,8 +1502,7 @@ tile_map_data = PackedByteArray("AAADAAoAAQABAAEAAAADAAkAAQABAAEAAAADAAgAAQABAAA
 tile_set = SubResource("TileSet_n2bu5")
 
 [node name="Player" parent="." unique_id=1704721836 instance=ExtResource("1_thia8")]
-modulate = Color(1.353256, 1.353256, 1.29044, 1)
-position = Vector2(94, 460)
+position = Vector2(166, 450)
 
 [node name="Key" type="Node2D" parent="." unique_id=1561054156]
 
@@ -1834,7 +1796,7 @@ position = Vector2(1570, 1318)
 
 [node name="Bear" parent="Enemies" unique_id=1492767427 instance=ExtResource("13_eo5y4")]
 z_index = -512
-position = Vector2(890, -1004)
+position = Vector2(891, -1004)
 
 [node name="Spikes" type="TileMapLayer" parent="." unique_id=1065229785]
 modulate = Color(0.84313726, 0.69411767, 0.93333334, 1)
@@ -1889,7 +1851,7 @@ amount = 25
 one_shot = true
 speed_scale = 2.0
 explosiveness = 0.5
-process_material = SubResource("ParticleProcessMaterial_g4m70")
+process_material = ExtResource("25_qb5ut")
 
 [node name="Heart2" type="TextureRect" parent="CanvasLayer/UI" unique_id=1061642078]
 z_index = 2048
@@ -1907,7 +1869,7 @@ amount = 25
 one_shot = true
 speed_scale = 2.0
 explosiveness = 0.5
-process_material = SubResource("ParticleProcessMaterial_g4m70")
+process_material = ExtResource("25_qb5ut")
 
 [node name="Heart3" type="TextureRect" parent="CanvasLayer/UI" unique_id=822575627]
 z_index = 2048
@@ -1925,7 +1887,7 @@ amount = 25
 one_shot = true
 speed_scale = 2.0
 explosiveness = 0.5
-process_material = SubResource("ParticleProcessMaterial_g4m70")
+process_material = ExtResource("25_qb5ut")
 
 [node name="Header" type="RichTextLabel" parent="CanvasLayer/UI" unique_id=1333165682]
 modulate = Color(1, 1, 1, 0)
@@ -1943,6 +1905,7 @@ offset_bottom = -193.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/selection_color = Color(0.101960786, 0.101960786, 1, 0)
+theme_override_constants/paragraph_separation = -40
 autowrap_mode = 0
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1974,6 +1937,7 @@ offset_bottom = -130.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/selection_color = Color(0.101960786, 0.101960786, 1, 0)
+theme_override_constants/paragraph_separation = -20
 theme_override_font_sizes/normal_font_size = 8
 autowrap_mode = 0
 horizontal_alignment = 1

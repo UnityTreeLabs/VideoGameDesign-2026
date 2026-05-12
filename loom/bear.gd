@@ -10,7 +10,7 @@ var player = null
 var charge = false
 var roar = false
 var attack_pattern = 0
-var proj_num = 12
+var proj_num = 6
 var flipped = -1
 @export var health = 20
 @onready var projectile = preload("res://projectile.tscn")
@@ -75,7 +75,6 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	global.freeze(0.1)
 	global.shake(10, 5)
 	health -= 1
-	tween.tween_callback(material.set_shader_parameter.bind("flashState", 0)).set_delay(0.1)
 	if health == 0:
 		collision_layer = 0
 		global.freeze(1)
@@ -86,6 +85,9 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		tween.tween_callback(global.alert.bind("BEAR DEFEATED", "The gloom has been repelled"))
 		await particles.finished
 		get_parent().queue_free()
+	else:
+		
+		tween.tween_callback(material.set_shader_parameter.bind("flashState", 0)).set_delay(0.1)
 
 
 func _on_animated_sprite_2d_animation_finished() -> void:
@@ -94,13 +96,14 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 
 func shoot(location: Vector2) -> void:
 	location -= Vector2(225 * flipped, -30)
+	var offset = randf_range(3*PI/7, 3*PI/9)
 	for i in range(proj_num):
 		var object = projectile.instantiate()
 		object.particles = false
 		object.gravity = false
 		object.color = Color(3.061, 1.567, 1.37, 1.0)
 		object.global_position = global_position + Vector2(225 * flipped, -30)
-		object.start_velocity = Vector2(SHOOT_VELOCITY, 0).rotated(atan2(location.y, location.x) + i * 2 * PI / proj_num)
+		object.start_velocity = Vector2(SHOOT_VELOCITY, 0).rotated(atan2(location.y, location.x) + i  * 3 * PI / proj_num / 4  - offset)
 		get_parent().get_parent().add_child(object)
 		object.force_update_transform()
 		object.show()

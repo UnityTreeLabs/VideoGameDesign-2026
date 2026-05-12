@@ -1,0 +1,136 @@
+[gd_scene format=3 uid="uid://ccibyhs2fk3m1"]
+
+[ext_resource type="Shader" uid="uid://ig7wdf8mnm2g" path="res://enemy.gdshader" id="1_hkuvh"]
+[ext_resource type="Script" uid="uid://b4b6x6j1pgfrc" path="res://bird.gd" id="2_hkuvh"]
+[ext_resource type="Texture2D" uid="uid://cjsp7gln7mvn7" path="res://squirrel.tres" id="3_h40ig"]
+[ext_resource type="Material" uid="uid://lbqlxj8tg7hv" path="res://squirrel_death.tres" id="4_je0vq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vpmvj"]
+shader = ExtResource("1_hkuvh")
+shader_parameter/flashState = 0.0
+shader_parameter/outline_color = Color(1.8247963, 1.1470146, 1.0491903, 0.27450982)
+shader_parameter/blink_color = Color(1.8247963, 1.1470146, 1.0491903, 0.5882353)
+shader_parameter/blink_time_scale = 4.0000000596048
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mb0cq"]
+atlas = ExtResource("3_h40ig")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rpdj4"]
+atlas = ExtResource("3_h40ig")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vpmvj"]
+atlas = ExtResource("3_h40ig")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spnep"]
+atlas = ExtResource("3_h40ig")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tgunf"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mb0cq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rpdj4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vpmvj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spnep")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_mb0cq"]
+polygon = PackedVector2Array(-11.5, 0, -2, 7.5, 10.5, 7.5, 5.5, 6, 5.5, 2, 15.5, 0)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mb0cq"]
+height = 32.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qu1vt"]
+radius = 200.0
+
+[node name="BirdEnemy" type="Node2D" unique_id=1036604290]
+light_mask = 3
+scale = Vector2(2, 2)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1578061017]
+material = SubResource("ShaderMaterial_vpmvj")
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("2_hkuvh")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=191344024]
+modulate = Color(0.715, 0.007, 1.187, 1)
+use_parent_material = true
+position = Vector2(0, -4)
+sprite_frames = SubResource("SpriteFrames_tgunf")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="CharacterBody2D" unique_id=248837814]
+visible = false
+occluder = SubResource("OccluderPolygon2D_mb0cq")
+occluder_light_mask = 8
+
+[node name="Area2D" type="Area2D" parent="CharacterBody2D" unique_id=1200910455]
+visible = false
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D" unique_id=1649923596]
+position = Vector2(0, -2)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_mb0cq")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1667580992]
+position = Vector2(0, -2)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_mb0cq")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="CharacterBody2D" unique_id=2123850]
+process_mode = 3
+modulate = Color(2.833266, 2.844042, 2.4022217, 1)
+z_index = 4096
+emitting = false
+amount = 50
+lifetime = 3.0
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+process_material = ExtResource("4_je0vq")
+
+[node name="PlayerDetection" type="Area2D" parent="CharacterBody2D" unique_id=706313124]
+position = Vector2(0, -2)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/PlayerDetection" unique_id=152341174]
+shape = SubResource("CircleShape2D_qu1vt")
+
+[node name="WallDetection" type="RayCast2D" parent="CharacterBody2D" unique_id=874711912]
+collision_mask = 2
+
+[node name="AttackStartup" type="Timer" parent="CharacterBody2D" unique_id=1965128464]
+wait_time = 3.0
+one_shot = true
+
+[node name="AttackDuration" type="Timer" parent="CharacterBody2D" unique_id=654495617]
+wait_time = 0.75
+one_shot = true
+
+[connection signal="body_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="CharacterBody2D/PlayerDetection" to="CharacterBody2D" method="_on_player_detection_body_entered"]
+[connection signal="timeout" from="CharacterBody2D/AttackStartup" to="CharacterBody2D" method="_on_attack_startup_timeout"]
+[connection signal="timeout" from="CharacterBody2D/AttackDuration" to="CharacterBody2D" method="_on_attack_duration_timeout"]

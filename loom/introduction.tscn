@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://ctauxn6wvh3wa"]
+
+[ext_resource type="Script" uid="uid://crr264fg7ldom" path="res://introduction.gd" id="1_oqkmi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oqkmi"]
+content_margin_left = 200.0
+content_margin_top = 100.0
+content_margin_right = 200.0
+content_margin_bottom = 0.0
+
+[sub_resource type="Environment" id="Environment_ibnd7"]
+background_mode = 3
+background_color = Color(1, 1, 1, 1)
+background_canvas_max_layer = 1
+ambient_light_color = Color(0.2627451, 0.53333336, 0.30980393, 1)
+glow_enabled = true
+glow_levels/1 = 1.0
+glow_levels/2 = 1.0
+glow_levels/3 = 2.0
+glow_levels/4 = 1.0
+glow_levels/5 = 0.5
+glow_normalized = true
+glow_intensity = 0.75
+glow_bloom = 0.2
+glow_hdr_threshold = 0.5
+glow_hdr_scale = 0.5
+glow_hdr_luminance_cap = 256.0
+
+[node name="Introduction" type="Node2D" unique_id=776390014]
+script = ExtResource("1_oqkmi")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=103293069]
+offset_right = 1296.0
+offset_bottom = 729.0
+color = Color(0, 0, 0, 1)
+
+[node name="Visible" type="RichTextLabel" parent="." unique_id=1431909405]
+self_modulate = Color(1.1638972, 1.118589, 0.96454215, 1)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 1296.0
+offset_bottom = 729.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/selection_color = Color(0.101960786, 0.101960786, 1, 0)
+theme_override_constants/line_separation = 75
+theme_override_constants/paragraph_separation = 0
+theme_override_font_sizes/normal_font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxEmpty_oqkmi")
+bbcode_enabled = true
+text = "The Gloom is spreading."
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+justification_flags = 161
+visible_characters = 0
+visible_characters_behavior = 1
+visible_ratio = 0.0
+
+[node name="Weaver" type="RichTextLabel" parent="." unique_id=1209367705]
+modulate = Color(1, 1, 1, 0)
+self_modulate = Color(1.5720325, 1.5115535, 1.3059255, 1)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 1296.0
+offset_bottom = 729.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/selection_color = Color(0.101960786, 0.101960786, 1, 0)
+theme_override_constants/paragraph_separation = -150
+theme_override_font_sizes/normal_font_size = 32
+text = "THE WEAVER"
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+justification_flags = 161
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1534982106]
+environment = SubResource("Environment_ibnd7")
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=40242389]
+modulate = Color(1, 1, 1, 0)
+offset_right = 1296.0
+offset_bottom = 729.0
+color = Color(1.353256, 1.353256, 1.353256, 1)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1572739184]

@@ -20,6 +20,6 @@ void fragment() {
 	within = within || texture(TEXTURE, UV + pixel_size * vec2(-1.0, -1.0)).a > 0.0;
 	within = within || texture(TEXTURE, UV + pixel_size * vec2(-1.0, 0.0)).a > 0.0;
 	bool outline = within && texture(TEXTURE, UV).a == 0.0;
-	COLOR = mix(COLOR, COLOR * blink_color, 0.5 - 0.5 * cos(TIME * blink_time_scale));
-	COLOR = float(!outline) * COLOR + float(outline) * outline_color;
+	//COLOR = mix(COLOR, COLOR * blink_color, 0.5 - 0.5 * cos(TIME * blink_time_scale));
+	COLOR = mix(float(!outline) * COLOR + float(outline) * outline_color, float(!outline) * COLOR + float(outline) * blink_color,  0.5 - 0.5 * cos(TIME * blink_time_scale));
 }
