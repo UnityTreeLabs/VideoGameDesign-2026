@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 
-const SPEED = 750
+const SPEED = 600
 const JUMP_VELOCITY = -400.0
 var chasing = false
 var diving = false
@@ -80,9 +80,11 @@ func _on_player_detection_body_entered(body: Node2D) -> void:
 func _on_attack_startup_timeout() -> void:
 	if chasing:
 		diving = true
-		attack_velocity = (Vector2(3, 0) * SPEED).rotated(atan2(player.global_position.y - global_position.y, player.global_position.x - global_position.x))/(atan((player.global_position - global_position).length() - 10) + PI/2)
+		$AnimatedSprite2D.play("attack")
+		attack_velocity = (Vector2(3.125, 0) * SPEED).rotated(atan2(player.global_position.y - global_position.y, player.global_position.x - global_position.x))/(atan((player.global_position - global_position).length() - 10) + PI/2)
 		$AttackDuration.start()
 
 func _on_attack_duration_timeout() -> void:
 	diving = false
+	$AnimatedSprite2D.play("idle")
 	$AttackStartup.start()

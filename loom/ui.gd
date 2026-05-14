@@ -1,5 +1,6 @@
 extends Control
 var health = 3
+var seals = [false, false, false, false]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -34,7 +35,10 @@ func _process(delta: float) -> void:
 				get_node("Heart" + str(i)).texture.region.position.x = 32
 				get_node("Heart" + str(i)).get_node("GPUParticles2D").emitting = true
 			health = global.health
-			
+	for i in range(4):
+		if global.seals[i] and not seals[i]:
+			var tween = create_tween()
+			tween.tween_property(get_node("Seal" + str(i)), "modulate", Color(1, 1, 1), 1.0).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 
 func flash(progress: float, num: int) -> void:
 	get_node("Heart" + str(num)).material.set_shader_parameter("flashState", progress)

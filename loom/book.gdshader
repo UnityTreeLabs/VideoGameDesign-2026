@@ -6,7 +6,7 @@ void vertex() {
 
 void fragment() {
 	if (COLOR.b > 0.8 && COLOR.r > 0.8 && COLOR.g > 0.8) {
-		COLOR += vec4(1.0, 1.0, 1.0, 1.0) * 2.0;
+		COLOR += vec4(1.0, 1.0, 1.0, 1.0) * 0.5;
 	}
 }
 

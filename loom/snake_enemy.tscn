@@ -345,6 +345,10 @@ hit_from_inside = true
 wait_time = 2.0
 one_shot = true
 
+[node name="WallDetection" type="RayCast2D" parent="CharacterBody2D" unique_id=807369642]
+target_position = Vector2(30, 0)
+collision_mask = 2
+
 [connection signal="animation_finished" from="CharacterBody2D/AnimatedSprite2D" to="CharacterBody2D" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="frame_changed" from="CharacterBody2D/AnimatedSprite2D" to="CharacterBody2D" method="_on_animated_sprite_2d_frame_changed"]
 [connection signal="body_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_on_area_2d_body_entered"]

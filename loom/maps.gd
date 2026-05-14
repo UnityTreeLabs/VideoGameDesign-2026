@@ -18,6 +18,10 @@ func _ready() -> void:
 			if trans.ID == global.spawn_location:
 				$Player/PlayerBody.global_position = trans.global_position
 				$Player/PlayerBody/Sprite2D.flip_h = trans.speed.x
+	if screen_num == 12:
+		for child in $Enemies.get_children():
+			child.hide()
+			child.process_mode = Node.PROCESS_MODE_DISABLED
 	if screen_num == 1 and global.intro:
 		global.intro = false
 		Transition.get_node("Screen").color = Color("000000")
@@ -39,6 +43,14 @@ func _ready() -> void:
 		get_node("Key/ExtraThreadPower").queue_free()
 	if global.pierce_wall and get_node("Key/PiercePower"):
 		get_node("Key/PiercePower").queue_free()
+	if global.seals[0] and get_node("Key/Seal4"):
+		get_node("Key/Seal4").queue_free()
+	if global.seals[1] and get_node("Key/Seal5"):
+		get_node("Key/Seal5").queue_free()
+	if global.seals[2] and get_node("Key/Seal6"):
+		get_node("Key/Seal6").queue_free()
+	if global.seals[3] and get_node("Key/Seal8"):
+		get_node("Key/Seal8").queue_free()
 	await trans_tween.finished
 	if not global.forest:
 		global.alert("STARLESS GROVE", "The darkness where light dies")
@@ -47,7 +59,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if screen_num == 0 and get_node("Enemies/Bear") == null and not $Player/PlayerBody.dying and not game_end:
+	if screen_num == 14 and get_node("Enemies/Bear") == null and not $Player/PlayerBody.dying and not game_end:
 		game_end = true
 		Transition.get_node("Screen").material.set_shader_parameter("reverse", false)
 		Transition.get_node("Screen").material.set_shader_parameter("progress", 0)
@@ -93,10 +105,10 @@ func _on_double_jump_collect(body: Node2D) -> void:
 
 func _on_boss_zone_body_entered(body: Node2D) -> void:
 	$Key/BossZone.set_deferred("monitoring", false)
-	$Background/Camera2D.limit_enabled = true
+	$Background/Camera2D.limit_left = 1420
 	var spikes = []
-	for i in range(-2, 1):
-		for j in range(-16, -12):
+	for i in range(22, 25):
+		for j in range(-20, -16):
 			spikes.append(Vector2i(i, j))
 	$Spikes.set_cells_terrain_connect(spikes, 0, 0)
 	var map = []
@@ -107,3 +119,34 @@ func _on_boss_zone_body_entered(body: Node2D) -> void:
 
 func set_trans(progress: float) -> void:
 	Transition.get_node("Screen").material.set_shader_parameter("progress", progress)
+
+
+func _on_5_seal(body: Node2D) -> void:
+	global.alert("SEAL COLLECTED", "Earn more seals by completing challenges")
+	global.seals[1] = true
+	get_node("Key/Seal5").queue_free()
+
+
+func _on_4_seal(body: Node2D) -> void:
+	global.alert("SEAL COLLECTED", "Earn more seals by completing challenges")
+	global.seals[0] = true
+	get_node("Key/Seal4").queue_free()
+
+
+func _on_6_seal(body: Node2D) -> void:
+	global.alert("SEAL COLLECTED", "Earn more seals by completing challenges")
+	global.seals[2] = true
+	get_node("Key/Seal6").queue_free()
+
+
+func _on_arena_zone_body_entered(body: Node2D) -> void:
+	$Key/ArenaZone.set_deferred("monitoring", false)
+	for child in $Enemies.get_children():
+		var tween = create_tween()
+		child.show()
+		tween.tween_method(set_flash.bind(child.get_node("CharacterBody2D").material), 1.0, 0.0, 0.5)
+		child.process_mode = Node.PROCESS_MODE_INHERIT
+		
+
+func set_flash(val: float, material: ShaderMaterial) -> void:
+	material.set_shader_parameter("flashState", val)

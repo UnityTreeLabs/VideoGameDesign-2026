@@ -1,12 +1,12 @@
 extends Node
-var thread_max = 2
+var thread_max = 1
 var threads = []
-var pierce_wall = true
-var dash = true
-var string = true
+var pierce_wall = false
+var dash = false
+var string = false
 var string_distance = 750
 var health = 3
-var double_jump = true
+var double_jump = false
 var checkpoints = []
 var current_checkpoint = 10
 var shake_strength = 0
@@ -18,6 +18,7 @@ var loaded = false
 var intro = true
 var checkpoint_spawn = true
 var spawn_location = 0
+var seals = [false, false, false, false]
 @onready var trans_screen = Transition.get_node("Screen")
 
 # Called when the node enters the scene tree for the first time.

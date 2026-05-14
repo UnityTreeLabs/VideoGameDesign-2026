@@ -43,6 +43,7 @@ func _ready() -> void:
 	if parts_list:
 		parts_list[0].get_node("AnimatedSprite2D").play()
 		parts_list[0].get_node("AnimatedSprite2D").show()
+		parts_list[0].get_node("Line2D").show()
 		$EndJoint.global_position = $StringEnd.global_position
 		$EndJoint.node_a = parts_list[-1].get_path()
 		#var new_joint = $StringJoint.duplicate()
@@ -74,12 +75,14 @@ func _thread_anim(part: Node2D):
 		if parts_list.size() > animation_part_n + 1:
 			animation_part_n += 1
 			parts_list[animation_part_n].get_node("AnimatedSprite2D").show()
+			parts_list[animation_part_n].get_node("Line2D").show()
 			parts_list[animation_part_n].get_node("AnimatedSprite2D").play()
 	elif destroy:
 		if animation_part_n == 0:
 			queue_free()
 		else:
 			parts_list[animation_part_n].get_node("AnimatedSprite2D").hide()
+			parts_list[animation_part_n].get_node("Line2D").hide()
 			parts_list[animation_part_n].collision_layer = 0
 			animation_part_n -= 1
 			parts_list[animation_part_n].get_node("AnimatedSprite2D").speed_scale = -1

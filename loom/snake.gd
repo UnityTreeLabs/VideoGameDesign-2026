@@ -46,7 +46,7 @@ func _physics_process(delta: float) -> void:
 				$GPUParticles2D.scale.y = -1
 				$GPUParticles2D.rotation_degrees = 180
 				velocity.x = -SPEED * delta
-		if not $FloorDetection.is_colliding():
+		if not $FloorDetection.is_colliding() or $WallDetection.is_colliding():
 			velocity.x = 0
 		if $AttackRange.has_overlapping_bodies():
 			velocity.x = 0

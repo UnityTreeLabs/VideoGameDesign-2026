@@ -14,4 +14,5 @@ func _process(delta: float) -> void:
 
 func transition(body: Node2D) -> void:
 	set_deferred("monitoring", false)
+	body.get_node("Area2D").process_mode = Node.PROCESS_MODE_DISABLED
 	global.change_scene(target.left(-1), int(target[-1]), 0) 

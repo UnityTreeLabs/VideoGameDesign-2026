@@ -52,7 +52,7 @@ func _physics_process(delta: float) -> void:
 				scale.y = -1
 				$AnimatedSprite2D.play("idle")
 				velocity.x = 0
-			elif (position.x <= -314 and flipped == -1):
+			elif (position.x <= -676 and flipped == -1):
 				flipped = 1
 				rotation_degrees = 0
 				scale.y = 1

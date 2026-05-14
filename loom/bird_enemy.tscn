@@ -2,7 +2,7 @@
 
 [ext_resource type="Shader" uid="uid://ig7wdf8mnm2g" path="res://enemy.gdshader" id="1_hkuvh"]
 [ext_resource type="Script" uid="uid://b4b6x6j1pgfrc" path="res://bird.gd" id="2_hkuvh"]
-[ext_resource type="Texture2D" uid="uid://cjsp7gln7mvn7" path="res://squirrel.tres" id="3_h40ig"]
+[ext_resource type="Texture2D" uid="uid://bxckba4o5vu74" path="res://bird.tres" id="3_hkuvh"]
 [ext_resource type="Material" uid="uid://lbqlxj8tg7hv" path="res://squirrel_death.tres" id="4_je0vq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vpmvj"]
@@ -12,41 +12,97 @@ shader_parameter/outline_color = Color(1.8247963, 1.1470146, 1.0491903, 0.274509
 shader_parameter/blink_color = Color(1.8247963, 1.1470146, 1.0491903, 0.5882353)
 shader_parameter/blink_time_scale = 4.0000000596048
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mb0cq"]
-atlas = ExtResource("3_h40ig")
+[sub_resource type="AtlasTexture" id="AtlasTexture_qu1vt"]
+atlas = ExtResource("3_hkuvh")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h40ig"]
+atlas = ExtResource("3_hkuvh")
+region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_je0vq"]
+atlas = ExtResource("3_hkuvh")
+region = Rect2(320, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7phma"]
+atlas = ExtResource("3_hkuvh")
+region = Rect2(352, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0grp7"]
+atlas = ExtResource("3_hkuvh")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rpdj4"]
-atlas = ExtResource("3_h40ig")
+[sub_resource type="AtlasTexture" id="AtlasTexture_syc6c"]
+atlas = ExtResource("3_hkuvh")
 region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vpmvj"]
-atlas = ExtResource("3_h40ig")
+[sub_resource type="AtlasTexture" id="AtlasTexture_b21y2"]
+atlas = ExtResource("3_hkuvh")
 region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_spnep"]
-atlas = ExtResource("3_h40ig")
+[sub_resource type="AtlasTexture" id="AtlasTexture_u3mfr"]
+atlas = ExtResource("3_hkuvh")
 region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hgw6p"]
+atlas = ExtResource("3_hkuvh")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dcwea"]
+atlas = ExtResource("3_hkuvh")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sn0wh"]
+atlas = ExtResource("3_hkuvh")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f8be2"]
+atlas = ExtResource("3_hkuvh")
+region = Rect2(224, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_tgunf"]
 animations = [{
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qu1vt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h40ig")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_je0vq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7phma")
+}],
 "loop": true,
 "name": &"attack",
-"speed": 5.0
+"speed": 13.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_mb0cq")
+"texture": SubResource("AtlasTexture_0grp7")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_syc6c")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rpdj4")
+"texture": SubResource("AtlasTexture_b21y2")
+}, {
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_u3mfr")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vpmvj")
+"texture": SubResource("AtlasTexture_hgw6p")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_dcwea")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_spnep")
+"texture": SubResource("AtlasTexture_sn0wh")
+}, {
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_f8be2")
 }],
 "loop": true,
 "name": &"idle",
@@ -77,8 +133,10 @@ modulate = Color(0.715, 0.007, 1.187, 1)
 use_parent_material = true
 position = Vector2(0, -4)
 sprite_frames = SubResource("SpriteFrames_tgunf")
-animation = &"idle"
+animation = &"attack"
 autoplay = "idle"
+frame_progress = 0.44591036
+flip_h = true
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="CharacterBody2D" unique_id=248837814]
 visible = false

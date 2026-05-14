@@ -6,6 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://c5gxflklrh26o" path="res://hearts.png" id="4_2n5f6"]
 [ext_resource type="Texture2D" uid="uid://cwxjf56xju6ot" path="res://heart_atlas.tres" id="4_vrfts"]
 [ext_resource type="Material" uid="uid://dnjbofk8lltta" path="res://shatter_particles.tres" id="6_n8582"]
+[ext_resource type="Texture2D" uid="uid://dew10gujsootk" path="res://Four Pronged Star.png" id="7_2n5f6"]
+[ext_resource type="Texture2D" uid="uid://v4oyyk7vtmbr" path="res://Five Pronged Star.png" id="8_q77pa"]
+[ext_resource type="Texture2D" uid="uid://c7woae438qfe8" path="res://Six Pronged Star.png" id="9_n8582"]
+[ext_resource type="Texture2D" uid="uid://rjir6r8xy7hx" path="res://Eight Prong Star.png" id="10_c6dx3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qb5ut"]
 shader = ExtResource("2_2n5f6")
@@ -119,14 +123,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -361.0
+offset_left = -360.0
 offset_top = -272.5
-offset_right = 361.0
+offset_right = 362.0
 offset_bottom = -193.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/selection_color = Color(0.101960786, 0.101960786, 1, 0)
-theme_override_constants/paragraph_separation = -40
+theme_override_constants/paragraph_separation = -47
 autowrap_mode = 0
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -193,5 +197,53 @@ offset_right = 116.0
 offset_bottom = 716.0
 theme_override_colors/selection_color = Color(0.101960786, 0.101960786, 1, 0)
 theme_override_font_sizes/normal_font_size = 10
-text = "Checkpoint Saved"
+text = "Checkpoint saved"
 autowrap_mode = 0
+
+[node name="Seal0" type="TextureRect" parent="UI" unique_id=1353968687]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(1.736039, 2.454227, 1.736039, 1)
+layout_mode = 0
+offset_left = 964.0
+offset_top = 56.0
+offset_right = 1004.0
+offset_bottom = 96.0
+scale = Vector2(2, 2)
+texture = ExtResource("7_2n5f6")
+stretch_mode = 3
+
+[node name="Seal1" type="TextureRect" parent="UI" unique_id=786003107]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(2.454227, 1.736039, 1.736039, 1)
+layout_mode = 0
+offset_left = 1024.0
+offset_top = 56.0
+offset_right = 1064.0
+offset_bottom = 96.0
+scale = Vector2(2, 2)
+texture = ExtResource("8_q77pa")
+stretch_mode = 3
+
+[node name="Seal2" type="TextureRect" parent="UI" unique_id=393597871]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(1.736039, 2.2397034, 2.454227, 1)
+layout_mode = 0
+offset_left = 1084.0
+offset_top = 56.0
+offset_right = 1124.0
+offset_bottom = 96.0
+scale = Vector2(2, 2)
+texture = ExtResource("9_n8582")
+stretch_mode = 3
+
+[node name="Seal3" type="TextureRect" parent="UI" unique_id=957451388]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(1.9692171, 1.736039, 2.454227, 1)
+layout_mode = 0
+offset_left = 1144.0
+offset_top = 56.0
+offset_right = 1184.0
+offset_bottom = 96.0
+scale = Vector2(2, 2)
+texture = ExtResource("10_c6dx3")
+stretch_mode = 3
