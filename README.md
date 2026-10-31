@@ -1,1 +1,2 @@
-# VideoGameDesign-2026
+# Loom - 2026 VGD
+
