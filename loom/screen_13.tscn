@@ -1145,7 +1145,7 @@ texture = SubResource("AtlasTexture_xyxd8")
 visible = false
 position = Vector2(1120, -2552)
 scale = Vector2(0.4, 0.4)
-checkpoint_num = 121
+checkpoint_num = 131
 header = "DEATHFALL"
 text = "The arduous depths"
 
