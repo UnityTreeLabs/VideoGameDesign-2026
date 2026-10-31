@@ -8,3 +8,5 @@ The loom-(4.5) folder contains the assets for the version of Loom produced befor
 * .gd extension are script files
 * .tres extension are resource files
 * .tscn extension are scenes in Godot
+
+P.S.: There are a lot of references to Thread, which actually means Needle. It was initially called thread for some reason and never got changed.
